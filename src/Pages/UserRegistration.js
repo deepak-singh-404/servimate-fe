@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import googleApikey from '../utils/googleapi'
 import Geocode from 'react-geocode'
-import {useDispatch} from 'react-redux'
-import {userRegister} from '../redux/actions/userAction'
+import {useDispatch, useSelector} from 'react-redux'
+import {userRegister} from '../redux/actions/adminAction'
 import {Form, Button, Container, Row, Col} from 'react-bootstrap'
 
+
+//Component
+import Loader from '../Components/Loader'
 
 Geocode.setApiKey(googleApikey)
 Geocode.enableDebug()
@@ -12,6 +15,11 @@ Geocode.enableDebug()
 
 
 const UserRegistration = () => {
+    const dispatch  =  useDispatch()
+    const data = useSelector((store)=>store.userRoot)
+
+    const {loader} = data
+
     const [user, setUser] =  useState({name:"",
      email:"",
      password:"",
@@ -19,27 +27,36 @@ const UserRegistration = () => {
      address: ""
     })
 
-    const dispatch  =  useDispatch()
+    const [location, setLocation] = useState("")
 
-    useEffect(() => {
+    const getLocationHelper = ()=>{
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
                 Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then((res) => {
-                    const result = res.results[0]
-                    setUser({...user, address:result.formatted_address})
+                    setLocation(res.result[0])
                 })
             })
         } else {
             alert("Pls turn on your location")
         }
+    }
+
+    useEffect(() => {
+        getLocationHelper()
     }, [])
     
     const formHandler = (e)=>{
         e.preventDefault()
-        dispatch(userRegister(user))
+        if(user.address){
+            dispatch(userRegister(user))
+        }
+        else{
+            alert("Your location is turned off or please refresh page")
+        }
+        
     }
 
-    console.clear()
+    // console.clear()
 
     return (
         <Container >
@@ -71,9 +88,9 @@ const UserRegistration = () => {
                     <Form.Label>Address</Form.Label>
                     <Form.Control type="text" placeholder="Address" />
                 </Form.Group> */}
-                <Button variant="primary" type="submit">
+                {loader ? <Loader /> : <Button variant="primary" type="submit">
                     Submit
-                </Button>
+                </Button>}
             </Form>
                 </Col>
             </Row>

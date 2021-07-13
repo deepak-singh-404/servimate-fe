@@ -1,33 +1,33 @@
 const initialState = {
-    user: {},
+    admin: {},
     isAuthenticated: false,
-    registerLoaderFlag: false,
+    loader: false
 }
 
 
 
-const userReducer = (state = initialState, action) => {
+const adminReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "SET_USERS_DATA":
+        case "SET_ADMIN_DATA":
             return {
                 ...state,
-                user: action.payload,
+                admin: action.payload,
                 isAuthenticated: true
             }
-        case "DELETE_USERS_DATA":
+        case "DELETE_ADMIN_DATA":
             return {
                 ...state,
-                user: action.payload,
+                admin: action.payload,
                 isAuthenticated: false
             }
-        case "SET_REGISTER_LOADER":
+        case "SET_LOADER":
             return {
                 ...state,
-                registerLoaderFlag: action.payload
+                loader: action.payload
             }
         default:
           return state
     }
 }
 
-export default userReducer
+export default adminReducer
