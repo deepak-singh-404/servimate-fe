@@ -8,30 +8,25 @@ import Loader from '../Loader'
 
 const AssignServiceProviderModal = ({currentBooking,assignServiceProviderModal, setAssignServiceProviderModal }) => {
     const {serviceProviders} = useSelector((store)=>store.serviceProviderRoot)
+    const {loader} = useSelector(store=>store.serviceProviderRoot)
     const [serviceProvider, setServiceProvider] = useState([]);
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getServiceProviders());
-
-        return (()=>{
-            setServiceProvider([])
-        })
-      }, [])
+    // useEffect(() => {
+    //     dispatch(getServiceProviders());
+    //     return (()=>{
+    //         setServiceProvider([])
+    //     })
+    //   }, [])
 
 
       const clickHandler = ()=>{
           if(serviceProvider.length === 1){
-              const {_id, timeSlot, serviceDate, customerId, serviceId} = currentBooking
               let data = {
                 serviceProviderId: serviceProvider[0]._id,
                 serviceProviderName: serviceProvider[0].name,
-                bookingId: _id,
-                timeSlot,
-                date: serviceDate,
-                serviceId,
-                customerId
+                bookingId: currentBooking._id,
               } 
               dispatch(assignServiceProvider(data,()=>{
                 setAssignServiceProviderModal(false)
@@ -56,7 +51,8 @@ const AssignServiceProviderModal = ({currentBooking,assignServiceProviderModal, 
                           selected={serviceProvider}
                         />
             <div>
-            <Button onClick={clickHandler}>ASSIGN</Button> 
+            {loader ? <Loader /> :  <Button onClick={clickHandler}>ASSIGN</Button>}
+            
                 </div>            
         </Modal.Body>
       </Modal>

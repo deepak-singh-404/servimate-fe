@@ -23,6 +23,7 @@ import AbandonedCart from './Pages/AbandonedCart/AbandonedCart'
 import Customer from './Pages/Customer/Customer'
 import Footer from './Components/Footer/Footer'
 import CurrentBooking from './Pages/Booking/CurrentBooking';
+import BookingHistory from './Pages/Booking/BookingHistory'
 
 
 
@@ -58,7 +59,7 @@ function App() {
           <Route exact path='/serviceSubCategory/:serviceSubCategoryName/:serviceSubCategoryId' component={Service} />
           <Route exact path='/booking/new' component={NewBooking} />
           <Route exact path='/booking/current' component={CurrentBooking} />
-          <Route exact path='/booking/history' component={NewBooking} />
+          <Route exact path='/booking/history' component={BookingHistory} />
           <Route exact path='/cancellationRequests' component={CancellationRequest} />
           <Route exact path="/abandonedCart" component={AbandonedCart} />
           <Route exact path="/customer" component={Customer} />

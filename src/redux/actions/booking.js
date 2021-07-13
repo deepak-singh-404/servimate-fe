@@ -63,6 +63,31 @@ export const getCurrentBookings = () => {
     }
 }
 
+export const getBookingHistory = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + "/api/v1/bookingHistory",
+            })
+            console.log("bookingHistory", data)
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_BOOKING_HISTORY",
+                    payload: data.response
+                })
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a getBookingHistory", err.message)
+        }
+    }
+}
+
 export const assignServiceProvider = (cred, cb) => {
     return async (dispatch) => {
         try {
@@ -74,6 +99,7 @@ export const assignServiceProvider = (cred, cb) => {
             })
             dispatch(loader(false))
             if (data.success) {
+                dispatch(loader(false))
                 //update the reducer
                 cb()
              

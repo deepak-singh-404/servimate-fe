@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table, Button} from "react-bootstrap";
-import { getCurrentBookings } from "../../redux/actions/booking";
+import { Container, Row, Col, Table} from "react-bootstrap";
+import { getBookingHistory } from "../../redux/actions/booking";
 import Moment from 'react-moment';
 
-const CurrentBooking = () => {
-  const { currentBookings } = useSelector((store) => store.bookingRoot);
+
+const BookingHistory = () => {
+  const { bookingHistory } = useSelector((store) => store.bookingRoot);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentBookings());
-    
+    dispatch(getBookingHistory());
   }, []);
 
   return (
@@ -34,8 +34,8 @@ const CurrentBooking = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentBookings.length !== 0
-                  ? currentBookings.map((b, index) => (
+                {bookingHistory.length !== 0
+                  ? bookingHistory.map((b, index) => (
                       <tr>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.serviceName}</td>
@@ -68,4 +68,4 @@ const CurrentBooking = () => {
   );
 };
 
-export default CurrentBooking;
+export default BookingHistory;

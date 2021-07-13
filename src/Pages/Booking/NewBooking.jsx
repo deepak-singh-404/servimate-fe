@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table, Button} from "react-bootstrap";
 import { getNewBookings } from "../../redux/actions/booking";
+import {getServiceProviders} from '../../redux/actions/serviceProvider'
 import AssignServiceProviderModal from '../../Components/Booking/AssignServiceProviderModal'
+import Moment from 'react-moment';
 
 const NewBooking = () => {
   const { newBookings } = useSelector((store) => store.bookingRoot);
@@ -12,6 +14,8 @@ const NewBooking = () => {
 
   useEffect(() => {
     dispatch(getNewBookings());
+    dispatch(getServiceProviders());
+
   }, []);
 
   const clickHandler = (data)=>{
@@ -46,7 +50,7 @@ const NewBooking = () => {
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.serviceName}</td>
                         <td className="text-center">{b.price}</td>
-                        <td className="text-center">{b.timeOfBooking}</td>
+                        <td className="text-center"><Moment>{b.timeOfBooking}</Moment></td>
                         <td className="text-center">{b.serviceDate}</td>
                         <td className="text-center">{b.timeSlot}</td>
                         <td className="text-center">{b.modeOfPayment}</td>
