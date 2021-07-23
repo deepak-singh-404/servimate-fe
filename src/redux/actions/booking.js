@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url =  'https://servimate-admin.herokuapp.com/dev'
+const url = 'https://servimate-admin.herokuapp.com/dev'
 //const url = 'http://localhost:4000/'
 
 
@@ -8,6 +8,13 @@ const aws_url = "https://servimate-admin.herokuapp.com/dev"
 const loader = (data) => {
     return {
         type: "SET_LOADER",
+        payload: data
+    }
+}
+
+export const setCancellationRequest = (data) => {
+    return {
+        type: "SET_CANCELLATION_REQUEST",
         payload: data
     }
 }
@@ -71,7 +78,6 @@ export const getBookingHistory = () => {
                 method: "Get",
                 url: url + "/api/v1/bookingHistory",
             })
-            console.log("bookingHistory", data)
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
@@ -88,13 +94,41 @@ export const getBookingHistory = () => {
     }
 }
 
+export const getCancellationRequest = (_data) => {
+    return async (dispatch) => {
+        if(_data['isServiceProviderAssigned'] === true || _data['isServiceProviderAssigned'] === 'true' ){
+            _data['isServiceProviderAssigned'] = true
+        }
+        else{
+            _data['isServiceProviderAssigned'] = false
+        }
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: url + "/api/v1/cancellationRequest",
+                data:_data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch(setCancellationRequest(data.response))
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured in getCancellationRequest")
+            console.log("Error in a getCancellationRequest", err)
+        }
+    }
+}
+
 export const assignServiceProvider = (cred, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: aws_url + "/api/v1/assignServiceProvider",
+                url: url + "/api/v1/assignServiceProvider",
                 data: cred
             })
             dispatch(loader(false))
@@ -102,7 +136,7 @@ export const assignServiceProvider = (cred, cb) => {
                 dispatch(loader(false))
                 //update the reducer
                 cb()
-             
+
                 //updated 
                 // dispatch({
                 //     type: "SET_NEW_BOOKINGS",

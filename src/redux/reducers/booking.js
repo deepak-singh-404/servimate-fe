@@ -2,7 +2,7 @@ const initialState = {
     newBookings: [],
     currentBookings: [],
     bookingHistory: [],
-    requestedForCancellation: [],
+    cancellationRequests: [],
     loader: false
 }
 
@@ -24,10 +24,10 @@ const booking = (state = initialState, action) => {
                 ...state,
                 bookingHistory: action.payload,
             }
-        case "SET_REQUESTED_FOR_CANCELLATION":
+        case "SET_CANCELLATION_REQUEST":
             return {
                 ...state,
-                requestedForCancellation: action.payload,
+                cancellationRequests: action.payload,
             }
         case "SET_LOADER":
             return {
