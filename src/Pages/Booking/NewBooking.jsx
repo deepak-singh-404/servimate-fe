@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table, Button} from "react-bootstrap";
-import { getNewBookings } from "../../redux/actions/booking";
+import { getNewBookings, adminCancelBooking } from "../../redux/actions/booking";
 import {getServiceProviders} from '../../redux/actions/serviceProvider'
 import AssignServiceProviderModal from '../../Components/Booking/AssignServiceProviderModal'
 import Moment from 'react-moment';
+import Loader from '../../Components/Loader'
 
 const NewBooking = () => {
-  const { newBookings } = useSelector((store) => store.bookingRoot);
+  const { newBookings, loader } = useSelector((store) => store.bookingRoot);
   const [currentBooking, setCurrentBooking] = useState({})
   const [assignServiceProviderModal, setAssignServiceProviderModal] = useState(false)
   const dispatch = useDispatch();
@@ -22,13 +23,20 @@ const NewBooking = () => {
     setCurrentBooking({...data})
     setAssignServiceProviderModal(true)
   }
+
+  const cancelHandler = (id)=>{
+    if(!id) return
+    dispatch(adminCancelBooking(id,()=>{
+      window.location.reload()
+    }))
+  }
   return (
     <>
       {assignServiceProviderModal && <AssignServiceProviderModal currentBooking={currentBooking} assignServiceProviderModal={assignServiceProviderModal} setAssignServiceProviderModal={setAssignServiceProviderModal} />}
       <Container>
         <Row className="mt-5">
           <Col>
-            <Table striped bordered hover>
+          {loader ? <Loader /> : <Table striped bordered hover>
               <thead>
                 <tr>
                   <th className="text-center">S.No</th>
@@ -41,6 +49,7 @@ const NewBooking = () => {
                   <th className="text-center">Pay</th>
                   <th className="text-center">Customer Name</th>
                   <th className="text-center">Assign Customer</th>
+                  <th className="text-center">Cancel Service</th>
                 </tr>
               </thead>
               <tbody>
@@ -65,12 +74,12 @@ const NewBooking = () => {
                         <td> 
                         {b.isServiceProviderAssigned ? <Button disabled={true}>Assigned</Button> : <Button onClick={()=>clickHandler(b)}>Choose ..</Button>}
                         </td>
-                        
+                        <td><Button onClick={()=>cancelHandler(b._id)} variant="primary">Cancel Service</Button></td>
                       </tr>
                     ))
                   : <h5 className="text-center">Oops No new bookings found</h5>}
               </tbody>
-            </Table>
+            </Table> }
           </Col>
         </Row>
       </Container>

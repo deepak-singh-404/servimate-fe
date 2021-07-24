@@ -29,6 +29,11 @@ const booking = (state = initialState, action) => {
                 ...state,
                 cancellationRequests: action.payload,
             }
+        // case "SET_APPROVED_CANCELLATION_REQUEST":
+        //     return {
+        //         ...state,
+        //         cancellationRequests: state.cancellationRequests.map(d => d._id.toString() === action.payload._id.toString() ? action.payload : d)
+        //     }
         case "SET_LOADER":
             return {
                 ...state,

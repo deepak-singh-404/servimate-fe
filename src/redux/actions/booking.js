@@ -19,6 +19,20 @@ export const setCancellationRequest = (data) => {
     }
 }
 
+export const healthCheck = ()=>{
+    return async () => {
+        try {
+            const { data } = await axios({
+                method: "Get",
+                url: "https://servimate-admin.herokuapp.com"
+            })
+        }
+        catch (err) {
+            alert("Server is not healthy")
+        }
+    }
+}
+
 
 export const getNewBookings = () => {
     return async (dispatch) => {
@@ -28,7 +42,6 @@ export const getNewBookings = () => {
                 method: "Get",
                 url: url + "/api/v1/newBookings",
             })
-            console.log("newBookings", data)
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
@@ -41,6 +54,29 @@ export const getNewBookings = () => {
             dispatch(loader(false))
             alert("Some error  occured")
             console.log("Error in a getNewBookings", err.message)
+        }
+    }
+}
+
+export const adminCancelBooking = (id, cb) => {
+    return async (dispatch) => {
+        try {
+            console.log("id-------------------------------------", id)
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + `/api/v1/adminCancelService/${id}`,
+            })
+            console.log("data", data)
+            dispatch(loader(false))
+            if (data.success) {
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in adminCancelBooking", err.message)
         }
     }
 }
@@ -118,6 +154,31 @@ export const getCancellationRequest = (_data) => {
             dispatch(loader(false))
             alert("Some error  occured in getCancellationRequest")
             console.log("Error in a getCancellationRequest", err)
+        }
+    }
+}
+
+export const approveCancellationRequest = (id,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + `/api/v1/approveCancellationRequest/${id}`,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                cb()
+                // dispatch({
+                //     type:"SET_APPROVED_CANCELLATION_REQUEST",
+                //     payload: data.response
+                // })
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured in approveCancellationRequest")
+            console.log("Error in a approveCancellationRequest", err)
         }
     }
 }

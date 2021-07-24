@@ -9,7 +9,7 @@ import {
   Button,
   FormControl,
 } from "react-bootstrap";
-import { getCancellationRequest } from "../../redux/actions/booking";
+import { getCancellationRequest, approveCancellationRequest } from "../../redux/actions/booking";
 import Moment from "react-moment";
 import Loader from '../../Components/Loader'
 
@@ -17,8 +17,7 @@ const CancellationRequest = () => {
   const { cancellationRequests, loader } = useSelector((store) => store.bookingRoot);
   const dispatch = useDispatch();
 
-
-  const [isServiceProviderAssigned, setIsServiceProviderAssigned] = useState(true)
+  const [isServiceProviderAssigned, setIsServiceProviderAssigned] = useState(false)
 
   useEffect(() => {
     dispatch(
@@ -35,6 +34,13 @@ const CancellationRequest = () => {
         isServiceProviderAssigned
       })
     );
+  }
+
+  const clickHandler = (id) =>{
+    if (! id) return
+    dispatch(approveCancellationRequest(id,()=>{
+      window.location.reload()
+    }))
   }
   return (
     <>
@@ -90,7 +96,8 @@ const CancellationRequest = () => {
                     </td>
                     <td className="text-center">{b.customerName}</td>
                     <td>{b.serviceProviderName}</td>
-                    <td><Button>Approve</Button></td>
+                    
+                    <td><Button onClick={()=>clickHandler(b._id)}>Approve</Button></td>
                   </tr>
                 ))
               : null}

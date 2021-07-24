@@ -10,7 +10,6 @@ const CurrentBooking = () => {
 
   useEffect(() => {
     dispatch(getCurrentBookings());
-    
   }, []);
 
   return (
