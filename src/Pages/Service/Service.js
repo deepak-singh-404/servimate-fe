@@ -69,11 +69,13 @@ const Service = (props) => {
                                         {console.log("seedswedsxaefcdsefcd cds", service.price)}
                                         <td>
                                             <tr>
+                                                <td>City</td>
                                                 <td>Actual Price</td>
                                                 <td>Discounted Price</td>
                                             </tr>
                                             {service.price.map(d=>
                                             <tr>
+                                                <td>{d.cityName}</td>
                                                 <td>{d.actualPrice}</td>
                                                 <td>{d.discountedPrice}</td>
                                             </tr>
