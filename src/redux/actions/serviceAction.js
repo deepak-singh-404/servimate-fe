@@ -26,7 +26,7 @@ export const addServiceCategory = (serviceCategoryCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: local_url + "api/v1/serviceCategory",
+                url: url + "api/v1/serviceCategory",
                 data: serviceCategoryCredentials
             })
             dispatch(loader(false))
@@ -116,7 +116,7 @@ export const addServiceSubCategory = (serviceSubCategoryCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: local_url + "api/v1/serviceSubCategory",
+                url: url + "api/v1/serviceSubCategory",
                 data: serviceSubCategoryCredentials
             })
             dispatch(loader(false))
@@ -254,10 +254,9 @@ export const addService = (serviceCredentials) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
-            console.log("serviceCredential-----------------------------------", serviceCredentials)
             const { data } = await axios({
                 method: "Post",
-                url: local_url + "api/v1/service",
+                url: url + "api/v1/service",
                 data: serviceCredentials
             })
             dispatch(loader(false))
