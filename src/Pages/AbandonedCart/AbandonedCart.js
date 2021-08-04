@@ -23,7 +23,7 @@ const Abandoned = () => {
                   <th className="text-center">Customer Name</th>
                   <th className="text-center">Phone Number</th>
                   <th className="text-center">Items In Cart</th>
-                  <th className="text-center">Address</th>
+                  {/* <th className="text-center">Address</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -34,7 +34,7 @@ const Abandoned = () => {
                       <td className="text-center">{a.name}</td>
                       <td className="text-center">{a.phoneNumber}</td>
                       <td className="text-center">{a.cart.length}</td>
-                      <td>
+                      {/* <td>
                         <Table striped bordered hover>
                           <thead>
                             <tr>
@@ -47,15 +47,15 @@ const Abandoned = () => {
                           </thead>
                           <tbody>
                             <tr>
-                              <td className="text-center">{a.defaultAddress.name}</td>
-                              <td className="text-center">{a.defaultAddress.phoneNumber}</td>
-                              <td className="text-center">{a.defaultAddress.address}</td>
-                              <td className="text-center">{a.defaultAddress.zipcode}</td>
-                              <td className="text-center">{a.defaultAddress.city}</td>
+                              <td className="text-center">{a.defaultAddress?.name}</td>
+                              <td className="text-center">{a.defaultAddress?.phoneNumber}</td>
+                              <td className="text-center">{a.defaultAddress?.address}</td>
+                              <td className="text-center">{a.defaultAddress?.zipcode}</td>
+                              <td className="text-center">{a.defaultAddress?.city}</td>
                             </tr>
                           </tbody>
                         </Table>
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                   : null}

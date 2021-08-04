@@ -53,11 +53,9 @@ const Service = (props) => {
                                 <tr>
                                     <th className="text-center">S.No</th>
                                     <th className="text-center">Service</th>
-                                    <th className="text-center">Actual Price</th>
-                                    <th className="text-center">Discounted Price</th>
-                                    {/* <th className="text-center">Price</th> */}
-                                    <th className="text-center">IconUrl</th>
-                                    <th className="text-center">ImgUrl</th>
+                                    <th className="text-center">Price</th>
+                                    <th className="text-center">Icon Url</th>
+                                    <th className="text-center">Image Url</th>
                                     <th className="text-center">Includes</th>
                                     <th className="text-center">Update</th>
                                     <th className="text-center">Delete</th>
@@ -68,12 +66,21 @@ const Service = (props) => {
                                     <tr>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-center">{service.serviceName}</td>
-                                        <td className="text-center">{service.price[0].actualPrice}</td>
-                                        <td className="text-center">{service.price[0].discountedPrice}</td>
-
-                                        {/* <td className="text-center">{service.price}</td> */}
-                                        <td className="text-center">{service.iconUrl}</td>
-                                        <td className="text-center">{service.imgUrl}</td>
+                                        {console.log("seedswedsxaefcdsefcd cds", service.price)}
+                                        <td>
+                                            <tr>
+                                                <td>Actual Price</td>
+                                                <td>Discounted Price</td>
+                                            </tr>
+                                            {service.price.map(d=>
+                                            <tr>
+                                                <td>{d.actualPrice}</td>
+                                                <td>{d.discountedPrice}</td>
+                                            </tr>
+                                                )}
+                                        </td>
+                                        <td className="text-center"><a href={service.iconUrl} target="_blank">{service.iconUrl && "url"} </a></td>
+                                        <td className="text-center"><a href={service.imgUrl} target="_blank">{service.imgUrl && "url"} </a></td>
                                         <td className="text-center">{service.includes.join(', ')}</td>
                                         <td className="text-center"><Button variant="outline-info">Update</Button></td>
                                         <td className="text-center"><Button onClick={()=>deleteHandler(service)} variant="outline-info">Delete</Button></td>

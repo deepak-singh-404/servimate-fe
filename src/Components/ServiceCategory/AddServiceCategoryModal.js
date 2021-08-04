@@ -63,13 +63,11 @@ const AddServiceCategoryModal = ({
     }
     formData.append("cities", checkedCity)
     formData.append("minAmountForCheckout", minAmountForCheckout)
-    dispatch(addServiceCategory({ name, cities: checkedCity, minAmountForCheckout }));
+    dispatch(addServiceCategory(formData));
     setName("")
     setMinAmountForCheckout(0)
     setCheckedCity([])
-  };
-
-
+  }
 
   return (
     <>

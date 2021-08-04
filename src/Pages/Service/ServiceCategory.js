@@ -55,6 +55,7 @@ const ServiceCategory = () => {
                                     <th className="text-center">S.No</th>
                                     <th className="text-center">Service-Category</th>
                                     <th className="text-center">M.C.P</th>
+                                    <th className="text-center">Icon Url</th>
                                     <th className="text-center">City</th>
                                     <th className="text-center">Update</th>
                                     <th className="text-center">Delete</th>
@@ -66,6 +67,7 @@ const ServiceCategory = () => {
                                         <td className="text-center">{index +  1}</td>
                                         <td className="text-center"><Link to={`/serviceCategory/${serviceCategory.name}/${serviceCategory._id}`}>{serviceCategory.name}</Link></td>
                                         <td className="text-center">{serviceCategory.minAmountForCheckout}</td>
+                                        <td className="text-center"><a href={serviceCategory.iconUrl} target="_blank">{serviceCategory.iconUrl && "url"} </a></td>
                                         <td className="text-center">{serviceCategory.cities.map(e => e.name).join(", ")}</td>
                                         <td className="text-center"><Button variant="outline-info">Update </Button></td>
                                         <td className="text-center"><Button onClick={()=>deleteHandler(serviceCategory)} variant="outline-info">Delete</Button></td>

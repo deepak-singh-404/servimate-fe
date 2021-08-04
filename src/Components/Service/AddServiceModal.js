@@ -6,10 +6,6 @@ import Loader from "../Loader";
 
 
 
-
-//Fields Required
-// [serviceName, price, includes, serviceSubCategory,imgUrl,iconUrl]
-
 const AddServiceModal = ({
   addServiceModal,
   setAddServiceModal,
@@ -39,15 +35,15 @@ const AddServiceModal = ({
     }
   }
 
-  const handleInputChange = (city, type, value) => {
+  const handleInputChange = (city,name, type, value) => {
     const newPrice = [...price]
     const index = newPrice.findIndex(o => o.city === city)
     if (index === -1) {
       if (type === "actualPrice") {
-        newPrice.push({ city, "actualPrice": value, "discountedPrice": 0 })
+        newPrice.push({ city, cityName: name, "actualPrice": value, "discountedPrice": 0 })
       }
       if (type === "discountedPrice") {
-        newPrice.push({ city, "discountedPrice": value, "actualPrice": 0 })
+        newPrice.push({ city, cityName: name, "discountedPrice": value, "actualPrice": 0 })
       }
     }
     else {
@@ -72,15 +68,14 @@ useEffect(() => {
 
 const formHandler = (e) => {
   e.preventDefault();
-  const data = {
-    serviceSubCategory,
-    serviceName,
-    price,
-    includes: includes.split(", "),
-    iconUrl,
-    imgUrl,
-  }
-  dispatch(addService(data));
+  const formData = new FormData();
+  formData.append("serviceSubCategory",serviceSubCategory)
+  formData.append("serviceName",serviceName)
+  formData.append("price", JSON.stringify(price))
+  formData.append("includes",  JSON.stringify(includes.split(", ")))
+  formData.append("iconUrl", iconUrl)
+  formData.append("imgUrl", imgUrl)
+  dispatch(addService(formData));
   setServiceName("")
   setPrice([])
   setIncludes("")
@@ -122,10 +117,10 @@ return (
                   <tr key={o._id}>
                     <td>{o.name}</td>
                     <td><div className="form-check">
-                      <input className="form-control" required type="number" onChange={(e) => handleInputChange(o._id, "actualPrice", e.target.value)} id="defaultCheck1" />
+                      <input className="form-control" required type="number" onChange={(e) => handleInputChange(o._id, o.name, "actualPrice", e.target.value)} id="defaultCheck1" />
                     </div></td>
                     <td><div className="form-check">
-                      <input className="form-control" required type="number" onChange={(e) => handleInputChange(o._id, "discountedPrice", e.target.value)} id="defaultCheck1" />
+                      <input className="form-control" required type="number" onChange={(e) => handleInputChange(o._id, o.name, "discountedPrice", e.target.value)} id="defaultCheck1" />
                     </div></td>
                   </tr>
                 )}

@@ -1,7 +1,7 @@
 import axios from 'axios'
 const url = 'https://servimate-admin.herokuapp.com/'
 const dev_url = "https://servimate-server-admin-dev.herokuapp.com/"
-//const url = 'http://localhost:4000/'
+const local_url = 'http://localhost:4000/'
 
 
 const loader = (data) => {
@@ -23,15 +23,13 @@ export const setServiceSubCategories = (data) => {
 export const addServiceCategory = (serviceCategoryCredentials) => {
     return async (dispatch) => {
         try {
-            console.log("servic",serviceCategoryCredentials)
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/serviceCategory",
+                url: local_url + "api/v1/serviceCategory",
                 data: serviceCategoryCredentials
             })
             dispatch(loader(false))
-            console.log("abhi ka hai", data)
             if (data.success) {
                 dispatch({
                     type: "SET_SERVICE_CATEGORY",
@@ -118,7 +116,7 @@ export const addServiceSubCategory = (serviceSubCategoryCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/serviceSubCategory",
+                url: local_url + "api/v1/serviceSubCategory",
                 data: serviceSubCategoryCredentials
             })
             dispatch(loader(false))
@@ -256,9 +254,10 @@ export const addService = (serviceCredentials) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
+            console.log("serviceCredential-----------------------------------", serviceCredentials)
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/service",
+                url: local_url + "api/v1/service",
                 data: serviceCredentials
             })
             dispatch(loader(false))
@@ -288,6 +287,7 @@ export const addService = (serviceCredentials) => {
 export const getServices = (id) => {
     return async (dispatch) => {
         try {
+            console.log("id--------------------------------", id)
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
@@ -312,7 +312,7 @@ export const getServices = (id) => {
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
+            alert("Some error  occured in getServices")
             console.log("Error in a getServices", err.message)
         }
     }
@@ -324,7 +324,7 @@ export const getAllServiceSubCategory = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: dev_url + "dev/api/v1/serviceSubCategory"
+                url: url + "dev/api/v1/serviceSubCategory"
             })
             dispatch(loader(false))
             if (data.success) {
@@ -336,7 +336,7 @@ export const getAllServiceSubCategory = () => {
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
+            alert("Some error  occured in getAllServiceSubCategory")
             console.log("Error in a getAllServiceSubCategory", err.message)
         }
     }

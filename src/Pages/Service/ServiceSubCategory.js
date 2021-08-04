@@ -68,7 +68,7 @@ const ServiceSubCategory = (props) => {
                                     <tr>
                                         <td className="text-center">{index +  1}</td>
                                         <td className="text-center"><Link to={`/serviceSubCategory/${serviceSubCategory.name}/${serviceSubCategory._id}`}>{serviceSubCategory.name}</Link></td>
-                                        <td className="text-center">{serviceSubCategory.iconUrl}</td>
+                                        <td className="text-center"><a href={serviceSubCategory.iconUrl} target="_blank">{serviceSubCategory.iconUrl && "url"} </a></td>
                                         <td className="text-center"><Button variant="outline-info">Update </Button></td>
                                         <td className="text-center"><Button onClick={()=>deleteHandler(serviceSubCategory)} variant="outline-info">Delete</Button></td>
                                     </tr>
