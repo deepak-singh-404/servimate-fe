@@ -2,17 +2,19 @@ import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom'
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import {useSelector, useDispatch} from 'react-redux'
-import { getServiceSubCategories, setServiceSubCategories } from "../../redux/actions/serviceAction";
+import { getServiceSubCategories, setServiceSubCategories} from "../../redux/actions/serviceAction";
 import ServiceSubCategoryModal from "../../Components/ServiceSubCategory/AddServiceSubCategoryModal";
+import UpdateServiceSubCategoryModal from "../../Components/ServiceSubCategory/UpdateServiceSubCategoryModal"
 import DeleteModal from '../../Components/DeleteModal'
 
 const ServiceSubCategory = (props) => {
-  const serviceRoot = useSelector((store) => store.serviceRoot);
-  const { loader, serviceSubCategories } = serviceRoot;
+  const {loader, serviceSubCategories} = useSelector((store) => store.serviceRoot);
   const dispatch = useDispatch();
-  const [addServiceSubCategoryModal, setAddServiceSubCategoryModal] = useState(false);
+  const [addServiceSubCategoryModal, setAddServiceSubCategoryModal] = useState(false)
+  const [updateServiceSubCategoryModal, setUpdateServiceSubCategoryModal] = useState(false)
   const [data, setData] = useState("")
   const [deleteModal, setDeleteModal] = useState(false)
+  const [previousData, setPreviousData] = useState({})
 
   useEffect(()=>{
     dispatch(getServiceSubCategories(props.match.params.serviceCategoryId))
@@ -44,6 +46,12 @@ const ServiceSubCategory = (props) => {
         setAddServiceSubCategoryModal={setAddServiceSubCategoryModal}
         serviceCategory={props.match.params.serviceCategoryId}
       />}
+       {updateServiceSubCategoryModal && <UpdateServiceSubCategoryModal
+        updateServiceSubCategoryModal={updateServiceSubCategoryModal}
+        setUpdateServiceSubCategoryModal={setUpdateServiceSubCategoryModal}
+        serviceCategory={props.match.params.serviceCategoryId}
+        previousData = {previousData}
+      />}
       <Container>
         <Row className="mt-5">
           <Col md={2} className="mt-5">
@@ -69,7 +77,11 @@ const ServiceSubCategory = (props) => {
                                         <td className="text-center">{index +  1}</td>
                                         <td className="text-center"><Link to={`/serviceSubCategory/${serviceSubCategory.name}/${serviceSubCategory._id}`}>{serviceSubCategory.name}</Link></td>
                                         <td className="text-center"><a href={serviceSubCategory.iconUrl} target="_blank">{serviceSubCategory.iconUrl && "url"} </a></td>
-                                        <td className="text-center"><Button variant="outline-info">Update </Button></td>
+                                        <td className="text-center"><Button onClick={
+                                          ()=>{
+                                            setUpdateServiceSubCategoryModal(true)
+                                            setPreviousData(serviceSubCategory)
+                                        }} variant="outline-info">Update </Button></td>
                                         <td className="text-center"><Button onClick={()=>deleteHandler(serviceSubCategory)} variant="outline-info">Delete</Button></td>
                                     </tr>
                                 ): null}

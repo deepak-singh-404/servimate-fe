@@ -24,6 +24,7 @@ import Customer from './Pages/Customer/Customer'
 import Footer from './Components/Footer/Footer'
 import CurrentBooking from './Pages/Booking/CurrentBooking';
 import BookingHistory from './Pages/Booking/BookingHistory'
+import Banner from './Pages/HomeScreen/Banner'
 
 
 
@@ -63,6 +64,8 @@ function App() {
           <Route exact path='/cancellationRequests' component={CancellationRequest} />
           <Route exact path="/abandonedCart" component={AbandonedCart} />
           <Route exact path="/customer" component={Customer} />
+          <Route exact path="/homeScreen/banner" component={Banner} />
+
         </Switch>
       </Router>
     </div>

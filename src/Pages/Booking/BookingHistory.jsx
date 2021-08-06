@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table} from "react-bootstrap";
-import { getBookingHistory } from "../../redux/actions/booking";
+import { getBookingHistory, setServices } from "../../redux/actions/booking";
 import Moment from 'react-moment';
 
 
@@ -10,7 +10,7 @@ const BookingHistory = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBookingHistory());
+    dispatch(getBookingHistory())
   }, []);
 
   return (

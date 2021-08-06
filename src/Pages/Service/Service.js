@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Table, Container, Row, Col, Button } from 'react-bootstrap'
 import AddServiceModal from '../../Components/Service/AddServiceModal'
 import { getCities } from '../../redux/actions/cityAction'
-import { getServices } from '../../redux/actions/serviceAction'
+import { getServices, setServices } from '../../redux/actions/serviceAction'
 import DeleteModal from '../../Components/DeleteModal'
+import UpdateServiceModal from '../../Components/Service/UpdateServiceModal'
 
 
 
@@ -14,13 +15,17 @@ const Service = (props) => {
     const { loader, services } = serviceRoot
     const dispatch = useDispatch()
     const [addServiceModal, setAddServiceModal] = useState(false)
-    // const [editCityModal, setEditCityModal] = useState(false)
     const [data, setData] = useState("")
     const [deleteModal, setDeleteModal] = useState(false)
+    const [updateModal, setUpdateModal] = useState(false)
+    const [previousData, setPreviousData] = useState({})
 
     useEffect(() => {
         // dispatch(getCities())
         dispatch(getServices(props.match.params.serviceSubCategoryId))
+        return ()=>{
+            dispatch(setServices([]))
+        }
     }, [props.match.params.serviceSubCategoryId])
 
     const deleteHandler = (service) => {
@@ -38,9 +43,19 @@ const Service = (props) => {
             {deleteModal && <DeleteModal
                 data={data}
                 deleteModal={deleteModal}
-                setDeleteModal={setDeleteModal}
-            />}
-            {addServiceModal && <AddServiceModal serviceSubCategory={props.match.params.serviceSubCategoryId} addServiceModal={addServiceModal} setAddServiceModal={setAddServiceModal} />}
+                setDeleteModal={setDeleteModal} />}
+
+            {addServiceModal && <AddServiceModal
+             serviceSubCategory={props.match.params.serviceSubCategoryId}
+             addServiceModal={addServiceModal} setAddServiceModal={setAddServiceModal} />}
+
+            {updateModal && <UpdateServiceModal  
+            updateServiceModal={updateModal}
+            setUpdateServiceModal={setUpdateModal}
+            serviceSubCategory={props.match.params.serviceSubCategoryId}
+            previousData={previousData}
+          />} 
+
             <Container >
                 <Row className="mt-5">
                     <Col md={2} >
@@ -66,7 +81,6 @@ const Service = (props) => {
                                     <tr>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-center">{service.serviceName}</td>
-                                        {console.log("seedswedsxaefcdsefcd cds", service.price)}
                                         <td>
                                             <tr>
                                                 <td>City</td>
@@ -84,7 +98,10 @@ const Service = (props) => {
                                         <td className="text-center"><a href={service.iconUrl} target="_blank">{service.iconUrl && "url"} </a></td>
                                         <td className="text-center"><a href={service.imgUrl} target="_blank">{service.imgUrl && "url"} </a></td>
                                         <td className="text-center">{service.includes.join(', ')}</td>
-                                        <td className="text-center"><Button variant="outline-info">Update</Button></td>
+                                        <td className="text-center"><Button onClick = {()=>{
+                                            setUpdateModal(true)
+                                            setPreviousData(service)
+                                        }} variant="outline-info">Update</Button></td>
                                         <td className="text-center"><Button onClick={()=>deleteHandler(service)} variant="outline-info">Delete</Button></td>
                                     </tr>
                                 ) : null}

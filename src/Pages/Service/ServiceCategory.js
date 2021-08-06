@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom'
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import {useSelector, useDispatch} from 'react-redux'
-import { getServiceCategories } from "../../redux/actions/serviceAction";
+import { getServiceCategories, setServiceSubCategories } from "../../redux/actions/serviceAction";
 import ServiceCategoryModal from "../../Components/ServiceCategory/AddServiceCategoryModal";
+import UpdateServiceCategoryModal from '../../Components/ServiceCategory/UpdateServiceCategoryModal'
 import DeleteModal from '../../Components/DeleteModal'
 import { getCities } from "../../redux/actions/cityAction";
 
@@ -12,11 +13,16 @@ const ServiceCategory = () => {
   const { loader, serviceCategories } = serviceRoot;
   const dispatch = useDispatch();
   const [addServiceCategoryModal, setAddServiceCategoryModal] = useState(false);
+  const [updateServiceCategoryModal, setUpdateServiceCategoryModal] = useState(false)
+  const [updateData, setUpdateData] = useState({})
   const [data, setData] = useState("")
   const [deleteModal, setDeleteModal] = useState(false)
 
   useEffect(()=>{
     dispatch(getServiceCategories())
+    return ()=>{
+      setServiceSubCategories([])
+    }
   },[])
 
   const deleteHandler = (serviceCategory)=>{
@@ -31,11 +37,20 @@ const ServiceCategory = () => {
 
   return (
     <>
+
       {addServiceCategoryModal && <ServiceCategoryModal
         addServiceCategoryModal={addServiceCategoryModal}
         setAddServiceCategoryModal={setAddServiceCategoryModal}
       
       />}
+
+      {updateServiceCategoryModal && <UpdateServiceCategoryModal
+        updateServiceCategoryModal={updateServiceCategoryModal}
+        setUpdateServiceCategoryModal={setUpdateServiceCategoryModal}
+        data = {updateData}
+      />}
+
+
       {deleteModal && <DeleteModal
         data = {data}
         deleteModal={deleteModal}
@@ -69,7 +84,10 @@ const ServiceCategory = () => {
                                         <td className="text-center">{serviceCategory.minAmountForCheckout}</td>
                                         <td className="text-center"><a href={serviceCategory.iconUrl} target="_blank">{serviceCategory.iconUrl && "url"} </a></td>
                                         <td className="text-center">{serviceCategory.cities.map(e => e.name).join(", ")}</td>
-                                        <td className="text-center"><Button variant="outline-info">Update </Button></td>
+                                        <td className="text-center"><Button onClick={() => {
+                                          setUpdateServiceCategoryModal(true)
+                                          setUpdateData(serviceCategory)
+                                          }} variant="outline-info">Update </Button></td>
                                         <td className="text-center"><Button onClick={()=>deleteHandler(serviceCategory)} variant="outline-info">Delete</Button></td>
                                     </tr>
                                 ): null}

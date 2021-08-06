@@ -24,6 +24,11 @@ const serviceReducer = (state = initialState, action) => {
         ...state,
         services: action.payload,
       };
+    case "UPDATE_SERVICE":
+      return {
+        ...state,
+        services: state.services.map(d => d._id == action.payload._id ? action.payload : d),
+      };
     case "DELETE_SERVICE_CATEGORY":
       return {
         ...state,
@@ -56,10 +61,10 @@ const serviceReducer = (state = initialState, action) => {
         serviceCategory: action.payload,
         serviceCategories: [...state.serviceCategories, action.payload],
       };
-    case "SET_SERVICE_CATEGORIES":
+    case "UPDATE_SERVICE_CATEGORY":
       return {
         ...state,
-        serviceCategories: action.payload,
+        serviceCategories: state.serviceCategories.map(d => d._id == action.payload._id ? action.payload : d),
       };
     case "SET_SERVICE_SUB_CATEGORY":
       return {
@@ -67,6 +72,16 @@ const serviceReducer = (state = initialState, action) => {
         serviceSubCategory: action.payload,
         serviceSubCategories: [...state.serviceSubCategories, action.payload],
       };
+    case "UPDATE_SERVICE_SUB_CATEGORY":
+      return {
+        ...state,
+        serviceSubCategories: state.serviceSubCategories.map(d => d._id == action.payload._id ? action.payload : d),
+      };
+    case "SET_SERVICE_CATEGORIES":
+      return {
+        ...state,
+        serviceCategories: action.payload
+      }
     case "SET_SERVICE_SUB_CATEGORIES":
       return {
         ...state,

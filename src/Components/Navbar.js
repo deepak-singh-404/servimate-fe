@@ -41,6 +41,9 @@ const AdminNavbar = () => {
                             <NavDropdown.Divider/>
                             <NavDropdown.Item><Link to="/cancellationRequests">Cancellation Requests</Link></NavDropdown.Item>
                         </NavDropdown>
+                        <NavDropdown title="HOME SCREEN" id="basic-nav-dropdown">
+                            <NavDropdown.Item><Link to="/homeScreen/banner">BANNER</Link></NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link as={Button} onClick={logoutHandler} variant="outline-danger">Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

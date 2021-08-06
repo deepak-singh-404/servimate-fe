@@ -18,6 +18,20 @@ export const setServiceSubCategories = (data) => {
     }
 }
 
+export const setServiceCategories = (data) => {
+    return {
+        type: "SET_SERVICE_CATEGORIES",
+        payload: data
+    }
+}
+
+export const setServices = (data) => {
+    return {
+        type: "SET_SERVICES",
+        payload: data
+    }
+}
+
 
 
 export const addServiceCategory = (serviceCategoryCredentials) => {
@@ -53,6 +67,35 @@ export const addServiceCategory = (serviceCategoryCredentials) => {
     }
 }
 
+export const updateServiceCategory = (id, _data, cb) => {
+    console.log("sdeewdsaxefdcsx", _data)
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: url + `api/v1/serviceCategory/${id}`,
+                data: _data
+            })
+            console.log("data, --------------", data)
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_SERVICE_CATEGORY",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a addServiceCategoryAction", err.message)
+        }
+    }
+}
+
+
 export const getServiceCategories = () => {
     return async (dispatch) => {
         try {
@@ -63,10 +106,7 @@ export const getServiceCategories = () => {
             })
             dispatch(loader(false))
             if (data.success) {
-                dispatch({
-                    type: "SET_SERVICE_CATEGORIES",
-                    payload: data.response
-                })
+                dispatch(setServiceCategories(data.response))
                 dispatch({
                     type: "SET_SUCCESS",
                     payload: true
@@ -143,6 +183,33 @@ export const addServiceSubCategory = (serviceSubCategoryCredentials) => {
     }
 }
 
+
+export const updateServiceSubCategory = (id, _data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: url + `api/v1/serviceSubCategory/${id}`,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type:"UPDATE_SERVICE_SUB_CATEGORY",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a updateServiceSubCategoryAction", err.message)
+        }
+    }
+}
+
 export const getServiceSubCategories = (serviceCategoryId) => {
     return async (dispatch) => {
         try {
@@ -156,14 +223,6 @@ export const getServiceSubCategories = (serviceCategoryId) => {
                 dispatch({
                     type: "SET_SERVICE_SUB_CATEGORIES",
                     payload: data.response
-                })
-                dispatch({
-                    type: "SET_SUCCESS",
-                    payload: true
-                })
-                dispatch({
-                    type: "SET_SUCCESS",
-                    payload: false
                 })
             }
         }
@@ -225,7 +284,6 @@ export const deleteService = (id, cb) => {
     }
 }
 
-
 export const getServiceCategory = (id) => {
     return async (dispatch) => {
         try {
@@ -283,10 +341,36 @@ export const addService = (serviceCredentials) => {
     }
 }
 
+
+export const updateService = (id, _data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: url + `api/v1/service/${id}`,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_SERVICE",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a AddServiceAction", err.message)
+        }
+    }
+}
+
 export const getServices = (id) => {
     return async (dispatch) => {
         try {
-            console.log("id--------------------------------", id)
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
@@ -294,11 +378,7 @@ export const getServices = (id) => {
             })
             dispatch(loader(false))
             if (data.success) {
-                console.log("Services", data)
-                dispatch({
-                    type: "SET_SERVICES",
-                    payload: data.response
-                })
+                dispatch(setServices(data.response))
                 dispatch({
                     type: "SET_SUCCESS",
                     payload: true

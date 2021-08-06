@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {deleteServiceCategory, deleteServiceSubCategory, deleteService} from '../redux/actions/serviceAction'
 import {deleteVoucher} from '../redux/actions/voucher'
 import {deleteCity} from '../redux/actions/cityAction'
+import {deleteBanner} from '../redux/actions/homeScreen'
 import {deleteServiceProvider} from '../redux/actions/serviceProvider'
 import Loader from './Loader'
 
@@ -45,6 +46,10 @@ const DeleteModal = ({data, deleteModal, setDeleteModal}) => {
         }
         if(data.actionType === "delete_service_provider"){
             dispatch(deleteServiceProvider(data._id,()=>setDeleteModal(false)))
+            return
+        }
+        if(data.actionType === "delete_banner"){
+            dispatch(deleteBanner(data._id,()=>setDeleteModal(false)))
             return
         }
     }

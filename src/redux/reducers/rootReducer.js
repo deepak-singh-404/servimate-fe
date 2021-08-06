@@ -6,6 +6,7 @@ import serviceProvider from './serviceProvider'
 import voucher from './voucher'
 import booking from './booking'
 import commonReducer from './commonReducer';
+import homeScreen from './homeScreen'
 
 
 
@@ -16,5 +17,6 @@ export default combineReducers({
     serviceProviderRoot: serviceProvider,
     voucherRoot: voucher,
     bookingRoot: booking,
+    homeScreenRoot: homeScreen,
     root: commonReducer
 });
