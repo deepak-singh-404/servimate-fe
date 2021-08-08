@@ -17,6 +17,14 @@ export const setBanners = (data) => {
     }
 }
 
+export const setBottomSliders = (data) => {
+    return {
+        type: "SET_BOTTOM_SLIDERS",
+        payload: data
+    }
+}
+
+
 
 export const addBanners = (_data,cb) => {
     return async (dispatch) => {
@@ -92,3 +100,74 @@ export const deleteBanner = (id,cb) => {
     }
 }
 
+export const addBottomSlider = (_data,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: url + "api/v1/homeScreen/bottomSlider",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_BOTTOM_SLIDER",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a addBottomSlider", err.message)
+        }
+    }
+}
+
+export const getBottomSliders = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + "api/v1/homeScreen/bottomSlider",
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch(setBottomSliders(data.response))
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a getBottomSliders", err.message)
+        }
+    }
+}
+
+export const deleteBottomSlider = (id,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Delete",
+                url: url + `api/v1/homeScreen/bottomSlider/${id}`,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type:"DELETE_BOTTOM_SLIDER",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a deleteBottomSlider", err.message)
+        }
+    }
+}

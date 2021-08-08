@@ -43,6 +43,8 @@ const AdminNavbar = () => {
                         </NavDropdown>
                         <NavDropdown title="HOME SCREEN" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/homeScreen/banner">BANNER</Link></NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item><Link to="/homeScreen/bottomSlider">BOTTOM SLIDER</Link></NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Button} onClick={logoutHandler} variant="outline-danger">Logout</Nav.Link>
                     </Nav>
