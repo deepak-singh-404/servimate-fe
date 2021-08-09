@@ -1,7 +1,8 @@
 const initialState = {
     banners: [],
     loader: false,
-    bottomSliders: []
+    bottomSliders: [],
+    topPicks: []
 }
 
 
@@ -43,6 +44,23 @@ const homeScreen = (state = initialState, action) => {
             return {
                 ...state,
                 bottomSliders: state.bottomSliders.filter(obj => {
+                    return obj._id !== action.payload._id
+                }),
+            }
+        case "SET_TOP_PICK":
+            return {
+                ...state,
+                topPicks: [...state.topPicks, action.payload],
+            }
+        case "SET_TOP_PICKS":
+            return {
+                ...state,
+                topPicks: action.payload,
+            }
+        case "DELETE_TOP_PICK":
+            return {
+                ...state,
+                topPicks: state.topPicks.filter(obj => {
                     return obj._id !== action.payload._id
                 }),
             }

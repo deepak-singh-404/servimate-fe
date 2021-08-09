@@ -26,6 +26,7 @@ import CurrentBooking from './Pages/Booking/CurrentBooking';
 import BookingHistory from './Pages/Booking/BookingHistory'
 import Banner from './Pages/HomeScreen/Banner'
 import BottomSlider from './Pages/HomeScreen/BottomSlider';
+import TopPick from './Pages/HomeScreen/TopPick';
 
 
 
@@ -67,6 +68,7 @@ function App() {
           <Route exact path="/customer" component={Customer} />
           <Route exact path="/homeScreen/banner" component={Banner} />
           <Route exact path="/homeScreen/bottomSlider" component={BottomSlider} />
+          <Route exact path="/homeScreen/topPick" component={TopPick} />
         </Switch>
       </Router>
     </div>

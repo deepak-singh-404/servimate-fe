@@ -24,6 +24,12 @@ export const setBottomSliders = (data) => {
     }
 }
 
+export const setTopPicks = (data) =>{
+    return {
+        type: "SET_TOP_PICKS",
+        payload: data
+    }
+}
 
 
 export const addBanners = (_data,cb) => {
@@ -168,6 +174,81 @@ export const deleteBottomSlider = (id,cb) => {
             dispatch(loader(false))
             alert("Some error  occured")
             console.log("Error in a deleteBottomSlider", err.message)
+        }
+    }
+}
+
+export const addTopPick = (_data,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: url + "api/v1/homeScreen/topPick",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_TOP_PICK",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a addTopPicks", err.message)
+        }
+    }
+}
+
+
+export const getTopPicks = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + "api/v1/homeScreen/topPick",
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch(setTopPicks(data.response))
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a getTopPicks", err.message)
+        }
+    }
+}
+
+
+
+export const deleteTopPick = (id,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Delete",
+                url: url + `api/v1/homeScreen/topPick/${id}`,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type:"DELETE_TOP_PICK",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a deleteTopPick", err.message)
         }
     }
 }

@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {deleteServiceCategory, deleteServiceSubCategory, deleteService} from '../redux/actions/serviceAction'
 import {deleteVoucher} from '../redux/actions/voucher'
 import {deleteCity} from '../redux/actions/cityAction'
-import {deleteBanner, deleteBottomSlider} from '../redux/actions/homeScreen'
+import {deleteBanner, deleteBottomSlider, deleteTopPick} from '../redux/actions/homeScreen'
 import {deleteServiceProvider} from '../redux/actions/serviceProvider'
 import Loader from './Loader'
 
@@ -54,6 +54,10 @@ const DeleteModal = ({data, deleteModal, setDeleteModal}) => {
         }
         if(data.actionType === "delete_bottom_slider"){
             dispatch(deleteBottomSlider(data._id,()=>setDeleteModal(false)))
+            return
+        }
+        if(data.actionType === "delete_top_pick"){
+            dispatch(deleteTopPick(data._id,()=>setDeleteModal(false)))
             return
         }
     }
