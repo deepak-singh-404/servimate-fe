@@ -21,7 +21,7 @@ const BookingHistory = () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th className="text-center">S.No</th>
+                  <th className="text-center">S.No ({bookingHistory.length})</th>
                   <th className="text-center">Service</th>
                   <th className="text-center">Price</th>
                   <th className="text-center">Booking time</th>

@@ -21,7 +21,6 @@ const DeleteModal = ({data, deleteModal, setDeleteModal}) => {
         }
     }, [])
 
-
     const dispatch = useDispatch()
     const clickHandler = ()=>{
         if(data.actionType === "delete_service_category"){
@@ -74,7 +73,6 @@ const DeleteModal = ({data, deleteModal, setDeleteModal}) => {
             { !metaData && <div>{loader ? <Loader/> : <Button variant="primary" onClick={clickHandler}>
                 Yes
             </Button>}</div> }
-            
              {metaData && !metaData.isActive && <div>
             {loader ? <Loader/> : <Button variant="primary" onClick={clickHandler}>
                 Yes

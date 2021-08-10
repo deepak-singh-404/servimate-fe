@@ -47,7 +47,7 @@ const ServiceProvider = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No</th>
+                                    <th className="text-center">S.No ({serviceProviders.length})</th>
                                     <th className="text-center">Name</th>
                                     <th className="text-center">Phone Number</th>
                                     <th className="text-center">Service Category</th>

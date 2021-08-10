@@ -19,7 +19,7 @@ const Abandoned = () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th className="text-center">S.No</th>
+                  <th className="text-center">S.No ({abandonedCart.length})</th>
                   <th className="text-center">Customer Name</th>
                   <th className="text-center">Phone Number</th>
                   <th className="text-center">Items In Cart</th>

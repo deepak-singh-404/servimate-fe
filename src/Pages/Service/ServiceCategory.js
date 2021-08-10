@@ -67,7 +67,7 @@ const ServiceCategory = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No</th>
+                                    <th className="text-center">S.No ({serviceCategories.length})</th>
                                     <th className="text-center">Service-Category</th>
                                     <th className="text-center">M.C.P</th>
                                     <th className="text-center">Icon Url</th>

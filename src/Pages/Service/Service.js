@@ -66,7 +66,7 @@ const Service = (props) => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No</th>
+                                    <th className="text-center">S.No ({services.length})</th>
                                     <th className="text-center">Service</th>
                                     <th className="text-center">Price</th>
                                     <th className="text-center">Icon Url</th>

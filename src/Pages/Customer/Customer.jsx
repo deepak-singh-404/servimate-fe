@@ -18,7 +18,7 @@ const Customer = () => {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th className="text-center">S.No</th>
+                    <th className="text-center">S.No ({customers.length})</th>
                     <th className="text-center">Customer Name</th>
                     <th className="text-center">Phone Number</th>
                     <th className="text-center">Service Booked</th>

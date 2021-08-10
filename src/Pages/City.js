@@ -47,7 +47,7 @@ const City = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No</th>
+                                    <th className="text-center">S.No ({cities.length})</th>
                                     <th className="text-center">City</th>
                                     <th className="text-center">State</th>
                                     <th className="text-center">PinCodes</th>

@@ -64,7 +64,7 @@ const ServiceSubCategory = (props) => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No</th>
+                                    <th className="text-center">S.No ({serviceSubCategories.length})</th>
                                     <th className="text-center">Service-Sub-Category</th>
                                     <th className="text-center">IconUrl</th>
                                     <th className="text-center">Update</th>

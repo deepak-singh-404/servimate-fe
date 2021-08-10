@@ -70,7 +70,7 @@ const Voucher = () => {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No</th>
+                                    <th className="text-center">S.No ({vouchers.length})</th>
                                     <th className="text-center">Coupon Code</th>
                                     <th className="text-center">Voucher Type</th>
                                     <th className="text-center">Discount Type</th>
