@@ -5,14 +5,16 @@ import {getCities} from '../redux/actions/cityAction'
 
 import AddCityModal from '../Components/City/AddCityModal'
 import DeleteModal from '../Components/DeleteModal'
+import UpdateCityModal from '../Components/City/UpdateCityModal'
 
 const City = () => {
     const cityData = useSelector(store => store.cityRoot)
     const { loader, cities } = cityData
     const dispatch =  useDispatch()
     const [addCityModal, setAddCityModal] = useState(false)
-    const [editCityModal, setEditCityModal] = useState(false)
+    const [updateCityModal, setUpdateCityModal] = useState(false)
     const [data, setData] = useState("")
+    const [previousData, setPreviousData] = useState({})
     const [deleteModal, setDeleteModal] = useState(false)
 
     const deleteHandler = (c)=>{
@@ -24,8 +26,6 @@ const City = () => {
         setData(temp_data)
         setDeleteModal(true)
       }
-
-
     useEffect(()=>{
         dispatch(getCities())
     },[])
@@ -37,6 +37,11 @@ const City = () => {
                 deleteModal={deleteModal}
                 setDeleteModal={setDeleteModal}
             />}
+         {updateCityModal && <UpdateCityModal
+                previousData={previousData}
+                updateCityModal={updateCityModal}
+                setUpdateCityModal={setUpdateCityModal}
+            />}   
            {addCityModal && <AddCityModal addCityModal={addCityModal} setAddCityModal={setAddCityModal} />}
             <Container >
                 <Row className="mt-5">
@@ -61,7 +66,10 @@ const City = () => {
                                         <td className="text-center">{city.name}</td>
                                         <td className="text-center">{city.state}</td>
                                         <td className="text-center">{city.zipcodes.join(', ')}</td>
-                                        <td className="text-center"><Button variant="outline-info">UPDATE </Button> {" "} <Button onClick={()=>deleteHandler(city)} variant="outline-info">DELETE</Button></td>
+                                        <td className="text-center"><Button onClick={()=>{
+                                            setPreviousData(city)
+                                            setUpdateCityModal(true)
+                                        }} variant="outline-info">UPDATE </Button> {" "} <Button onClick={()=>deleteHandler(city)} variant="outline-info">DELETE</Button></td>
                                     </tr>
                                 ): null}
                             </tbody>

@@ -44,6 +44,31 @@ export const addCity = (cityCredentials) => {
     }
 }
 
+export const updateCity = (id, _data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: local_url + `api/v1/city/${id}`,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_CITY",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a updateCityaction", err.message)
+        }
+    }
+}
 
 export const getCities = () => {
     return async (dispatch) => {

@@ -8,8 +8,6 @@ import DeleteModal from '../../Components/DeleteModal'
 import UpdateServiceModal from '../../Components/Service/UpdateServiceModal'
 
 
-
-
 const Service = (props) => {
     const serviceRoot = useSelector(store => store.serviceRoot)
     const { loader, services } = serviceRoot

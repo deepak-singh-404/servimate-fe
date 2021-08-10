@@ -26,6 +26,11 @@ const cityReducer = (state = initialState, action) => {
                     return obj._id !== action.payload
                 }),
             }
+        case "UPDATE_CITY":
+            return {
+                ...state,
+                cities: state.cities.map(d => d._id == action.payload._id ? action.payload : d),
+            };
         case "SET_LOADER":
             return {
                 ...state,
