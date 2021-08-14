@@ -22,8 +22,7 @@ const BookingHistory = () => {
               <thead>
                 <tr>
                   <th className="text-center">S.No ({bookingHistory.length})</th>
-                  <th className="text-center">Service</th>
-                  <th className="text-center">Price</th>
+                  <th className="text-center">Services</th>
                   <th className="text-center">Booking time</th>
                   <th className="text-center">Service Date (yyyy/mm/dd)</th>
                   <th className="text-center">Time Slot</th>
@@ -39,7 +38,6 @@ const BookingHistory = () => {
                       <tr>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.serviceName}</td>
-                        <td className="text-center">{b.price}</td>
                         <td className="text-center"><Moment>{b.timeOfBooking}</Moment></td>
                         <td className="text-center">{b.serviceDate}</td>
                         <td className="text-center">{b.timeSlot}</td>

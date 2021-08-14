@@ -18,6 +18,8 @@ const NewBooking = () => {
     useState(false);
   const [bookings, setBookings] = useState([])  
   const [date, setDate] = useState("")
+  const [bookingId, setBookingId] = useState("")
+  const [customerName, setCustomerName] = useState("")
 
   const dispatch = useDispatch();
 
@@ -31,7 +33,15 @@ const NewBooking = () => {
       let tempData = newBookings.filter(o=>o.serviceDate == date)
       setBookings(tempData)
     }
-  },[date])
+    if(bookingId){
+      let tempData = newBookings.filter(o=>o.bookingId == bookingId)
+      setBookings(tempData)
+    }
+    if(customerName){
+      let tempData = newBookings.filter(o=>o.customerName == customerName)
+      setBookings(tempData)
+    }
+  },[date, bookingId, customerName])
   
  
   useEffect(() => {
@@ -55,6 +65,9 @@ const NewBooking = () => {
 
   const refreshHandler = ()=>{
     setBookings(newBookings)
+    setBookingId("")
+    setDate("")
+    setCustomerName("")
   }
   return (
     <>
@@ -75,7 +88,7 @@ const NewBooking = () => {
         </Row>
         
         <Row className="mt-2">
-          <Col md={2} className="m-auto">
+          <Col md={2} >
             <Form className="d-flex">
               <Form.Group>
                 <Form.Label> Service Date</Form.Label>
@@ -83,6 +96,30 @@ const NewBooking = () => {
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   type="date"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+          <Col md={2} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>BookingId</Form.Label>
+                <Form.Control
+                  value={bookingId}
+                  onChange={(e) => setBookingId(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+          <Col md={2} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>Customer Name</Form.Label>
+                <Form.Control
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  type="text"
                 />
               </Form.Group>
             </Form>
@@ -97,8 +134,8 @@ const NewBooking = () => {
                 <thead>
                   <tr>
                     <th className="text-center">S.No ({bookings.length})</th>
-                    <th className="text-center">Service</th>
-                    <th className="text-center">Price</th>
+                    <th className="text-center">Booking Id</th>
+                    <th className="text-center">Services</th>
                     <th className="text-center">Booking time</th>
                     <th className="text-center">Service Date (yyyy/mm/dd)</th>
                     <th className="text-center">Time Slot</th>
@@ -114,8 +151,21 @@ const NewBooking = () => {
                     bookings.map((b, index) => (
                       <tr>
                         <td className="text-center">{index + 1}</td>
-                        <td className="text-center">{b.serviceName}</td>
-                        <td className="text-center">{b.price}</td>
+                        <td className="text-center">{b.bookingId}</td>
+                        <td>
+                                            <tr>
+                                                <td>Service</td>
+                                                <td>Actual Price</td>
+                                                <td>Discounted Price</td>
+                                            </tr>
+                                            {b.services.map(d=>
+                                            <tr>
+                                                <td>{d.serviceName}</td>
+                                                <td>{d.actualPrice}</td>
+                                                <td>{d.discountedPrice}</td>
+                                            </tr>
+                                                )}
+                                        </td>
                         <td className="text-center">
                           <Moment>{b.timeOfBooking}</Moment>
                         </td>
