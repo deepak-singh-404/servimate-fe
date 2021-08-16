@@ -50,6 +50,7 @@ const ServiceProvider = () => {
                                     <th className="text-center">S.No ({serviceProviders.length})</th>
                                     <th className="text-center">Name</th>
                                     <th className="text-center">Phone Number</th>
+                                    <th className="text-center">Profile Picture</th>
                                     <th className="text-center">Service Category</th>
                                     <th className="text-center">City</th>
                                     <th className="text-center">Remark</th>
@@ -63,6 +64,7 @@ const ServiceProvider = () => {
                                         <td className="text-center">{index +  1}</td>
                                         <td className="text-center">{s.name}</td>
                                         <td className="text-center">{s.phoneNumber}</td>
+                                        <td className="text-center"><a href={s.imgUrl} target="_blank">{s.imgUrl && "url"} </a></td>
                                         <td className="text-center">{s.serviceCategoryName}</td>
                                         {/* <td className="text-center">{s.verifed ? "Verified" : "Not Verified"}</td> */}
                                         <td className="text-center">{s.cityName}</td>
@@ -76,7 +78,6 @@ const ServiceProvider = () => {
                     </Col>
                 </Row>
             </Container>
-
         </>
     )
 }

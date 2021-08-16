@@ -1,6 +1,6 @@
 import axios from 'axios'
 const url =  'https://servimate-admin.herokuapp.com/'
-// const url = 'http://localhost:4000/'
+const local_url = 'http://localhost:4000/'
 
 
 

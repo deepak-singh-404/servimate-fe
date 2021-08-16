@@ -16,20 +16,32 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
     const [serviceCategory, setServiceCategory] = useState("")
     const [city, setCity] = useState("")
     const [remark, setRemark] = useState("")
+    const [imgUrl, setImgUrl] = useState("");
+
+    const imagehandler = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            let img = e.target.files[0];
+            setImgUrl(img);
+        }
+    };
 
 
     const formHandler = (e) => {
         e.preventDefault()
-        if (name && phoneNumber  && serviceCategory && city) {
+        if (name && phoneNumber && serviceCategory && city) {
             const tempCity = cityRoot.cities.find(c => c._id == city)
             const tempServiceCategory = serviceRoot.serviceCategories.find(s => s._id == serviceCategory)
-            const data = {
-                name, email, phoneNumber, remark,
-                serviceCategory: { _id: tempServiceCategory._id, name: tempServiceCategory.name },
-                city: { _id: tempCity._id, name: tempCity.name },
-
+            const formData = new FormData();
+            formData.append("name",name)
+            formData.append("email", email)
+            formData.append("phoneNumber", phoneNumber)
+            formData.append("remark", remark)
+            formData.append("serviceCategory", JSON.stringify({ _id: tempServiceCategory._id, name: tempServiceCategory.name }))
+            formData.append("city", JSON.stringify({ _id: tempCity._id, name: tempCity.name }))
+            if (imgUrl !== ""){
+                formData.append("imgUrl", imgUrl)
             }
-            dispatch(addServiceProvider(data, () => {
+            dispatch(addServiceProvider(formData, () => {
                 setAddServiceProviderModal(false)
             }))
             setName("")
@@ -66,6 +78,14 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
                             <Form.Label>Phone Number *</Form.Label>
                             <Form.Control required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="number" />
                         </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Profile Picture</Form.Label>
+                            <Form.Control
+                                accept=".jpg,.png,.jpeg"
+                                onChange={imagehandler}
+                                type="file"
+                            />
+                        </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label>Service Category *</Form.Label>
                             <Form.Control required onChange={(e) => setServiceCategory(e.target.value)} as="select">
@@ -97,13 +117,13 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
                             <Form.Control value={remark} onChange={(e) => setRemark(e.target.value)} as="textarea" rows={3} />
                             <Form.Text className="text-muted">
                                 Enter Remarks in below format
-      <br />
-      Proficient, ..., ...,
-    </Form.Text>
+                                <br />
+                                Proficient, ..., ...,
+                            </Form.Text>
                         </Form.Group>
                         {serviceProviderRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
-                </Button>}
+                        </Button>}
                     </Form>
                 </Modal.Body>
             </Modal>
