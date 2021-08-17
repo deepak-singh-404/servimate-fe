@@ -9,7 +9,9 @@ import { getServiceProviders } from "../../redux/actions/serviceProvider";
 
 const CurrentBooking = () => {
   const { currentBookings } = useSelector((store) => store.bookingRoot);
-  const {serviceProviders} = useSelector(store => store.serviceProviderRoot)
+  const { serviceProviders } = useSelector(
+    (store) => store.serviceProviderRoot
+  );
   const dispatch = useDispatch();
   const [bookings, setBookings] = useState([]);
   const [date, setDate] = useState("");
@@ -17,8 +19,8 @@ const CurrentBooking = () => {
 
   useEffect(() => {
     dispatch(getCurrentBookings());
-    if(serviceProviders.length === 0){
-      dispatch(getServiceProviders())
+    if (serviceProviders.length === 0) {
+      dispatch(getServiceProviders());
     }
   }, []);
 
@@ -26,23 +28,23 @@ const CurrentBooking = () => {
     setBookings(currentBookings);
   }, [currentBookings]);
 
-
   //Filter as per service date
   useEffect(() => {
     if (date) {
       let tempData = currentBookings.filter((o) => o.serviceDate == date);
       setBookings(tempData);
     }
-  }, [date])
+  }, [date]);
 
   //Filter as per service provider
-  useEffect(()=>{
-    if(serviceProvider.length > 0){
-      let tempData = currentBookings.filter((o) => o.serviceProviderId == serviceProvider[0]._id);
+  useEffect(() => {
+    if (serviceProvider.length > 0) {
+      let tempData = currentBookings.filter(
+        (o) => o.serviceProviderId == serviceProvider[0]._id
+      );
       setBookings(tempData);
     }
-
-  },[serviceProvider])
+  }, [serviceProvider]);
 
   const refreshHandler = () => {
     setBookings(currentBookings);
@@ -71,19 +73,19 @@ const CurrentBooking = () => {
               </Form.Group>
             </Form>
           </Col>
-          <Col md={3} >
-          <Form className="d-flex">
+          <Col md={3}>
+            <Form className="d-flex">
               <Form.Group>
                 <Form.Label> Service Date</Form.Label>
                 <Typeahead
-              id="basic-typeahead-single"
-              labelKey="name"
-              onChange={setServiceProvider}
-              options={serviceProviders}
-              placeholder="Choose ServiceProvider ..."
-              selected={serviceProvider}
-            />
-                </Form.Group>
+                  id="basic-typeahead-single"
+                  labelKey="name"
+                  onChange={setServiceProvider}
+                  options={serviceProviders}
+                  placeholder="Choose ServiceProvider ..."
+                  selected={serviceProvider}
+                />
+              </Form.Group>
             </Form>
           </Col>
         </Row>
@@ -93,8 +95,8 @@ const CurrentBooking = () => {
               <thead>
                 <tr>
                   <th className="text-center">S.No ({bookings.length})</th>
-                  <th className="text-center">Service</th>
-                  <th className="text-center">Price</th>
+                  <th className="text-center">Booking Id</th>
+                  <th className="text-center">Services</th>
                   <th className="text-center">Booking time</th>
                   <th className="text-center">Service Date (yyyy/mm/dd)</th>
                   <th className="text-center">Time Slot</th>
@@ -109,7 +111,22 @@ const CurrentBooking = () => {
                   bookings.map((b, index) => (
                     <tr>
                       <td className="text-center">{index + 1}</td>
-                      <td className="text-center">{b.serviceName}</td>
+                      <td className="text-center">{b.bookingId}</td>
+                      <td>
+                        <tr>
+                          <td>Service</td>
+                          <td>Actual Price</td>
+                          <td>Discounted Price</td>
+                        </tr>
+                        {b.services.map((d) => (
+                          <tr>
+                            <td>{d.serviceName}</td>
+                            <td>{d.actualPrice}</td>
+                            <td>{d.discountedPrice}</td>
+                          </tr>
+                        ))}
+                      </td>
+
                       <td className="text-center">{b.price}</td>
                       <td className="text-center">
                         <Moment>{b.timeOfBooking}</Moment>
