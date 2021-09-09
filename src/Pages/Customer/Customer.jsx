@@ -12,9 +12,9 @@ const Customer = () => {
   
     return (
         <>
-        <Container>
+        <Container fluid>
           <Row className="mt-5">
-            <Col md={10} className='m-auto'>
+            <Col>
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -23,8 +23,10 @@ const Customer = () => {
                     <th className="text-center">Phone Number</th>
                     <th className="text-center">Service Booked</th>
                     <th className="text-center">Items In Cart</th>
+                    <th className="text-center">City</th>
                     <th className="text-center">Email</th>
-                    {/* <th className="text-center">Address</th> */}
+                    <th className="text-center">Default Address</th>
+                    <th className="text-center">Last Service Booked Address</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -36,7 +38,10 @@ const Customer = () => {
                         <td className="text-center">{a.phoneNumber}</td>
                         <td className="text-center">{a.serviceBooked.length}</td>
                         <td className="text-center">{a.cart.length}</td>
+                        <td className="text-center">{a.cityName}</td>
                         <td className="text-center">{a.email}</td>
+                        <td className="text-center">{JSON.stringify(a.defaultAddress)}</td>
+                        <td className="text-center">{JSON.stringify(a.lastServiceAddress)}</td>
                         {/* <td>
                           <Table striped bordered hover>
                             <thead>

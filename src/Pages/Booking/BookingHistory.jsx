@@ -14,7 +14,7 @@ const BookingHistory = () => {
 
   return (
     <>
-      <Container>
+      <Container fluid>
         <Row className="mt-5">
           <Col>
             <Table striped bordered hover>

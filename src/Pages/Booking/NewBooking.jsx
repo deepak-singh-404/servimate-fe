@@ -16,7 +16,7 @@ const NewBooking = () => {
   const [currentBooking, setCurrentBooking] = useState({});
   const [assignServiceProviderModal, setAssignServiceProviderModal] =
     useState(false);
-  const [bookings, setBookings] = useState([])  
+  const [bookings, setBookings] = useState([])
   const [date, setDate] = useState("")
   const [bookingId, setBookingId] = useState("")
   const [customerName, setCustomerName] = useState("")
@@ -24,26 +24,26 @@ const NewBooking = () => {
   const dispatch = useDispatch();
 
 
-  useEffect(()=>{
+  useEffect(() => {
     setBookings(newBookings)
-  },[newBookings])  
+  }, [newBookings])
 
-  useEffect(()=>{
-    if(date){
-      let tempData = newBookings.filter(o=>o.serviceDate == date)
+  useEffect(() => {
+    if (date) {
+      let tempData = newBookings.filter(o => o.serviceDate == date)
       setBookings(tempData)
     }
-    if(bookingId){
-      let tempData = newBookings.filter(o=>o.bookingId == bookingId)
+    if (bookingId) {
+      let tempData = newBookings.filter(o => o.bookingId == bookingId)
       setBookings(tempData)
     }
-    if(customerName){
-      let tempData = newBookings.filter(o=>o.customerName == customerName)
+    if (customerName) {
+      let tempData = newBookings.filter(o => o.customerName == customerName)
       setBookings(tempData)
     }
-  },[date, bookingId, customerName])
-  
- 
+  }, [date, bookingId, customerName])
+
+
   useEffect(() => {
     dispatch(getNewBookings());
     dispatch(getServiceProviders());
@@ -63,7 +63,7 @@ const NewBooking = () => {
     );
   };
 
-  const refreshHandler = ()=>{
+  const refreshHandler = () => {
     setBookings(newBookings)
     setBookingId("")
     setDate("")
@@ -78,7 +78,7 @@ const NewBooking = () => {
           setAssignServiceProviderModal={setAssignServiceProviderModal}
         />
       )}
-      <Container>
+      <Container fluid>
         <Row className="mt-3">
           <Col md={10}>
           </Col>
@@ -86,7 +86,7 @@ const NewBooking = () => {
             <Button onClick={refreshHandler}>Refresh</Button>
           </Col>
         </Row>
-        
+
         <Row className="mt-2">
           <Col md={2} >
             <Form className="d-flex">
@@ -135,7 +135,14 @@ const NewBooking = () => {
                   <tr>
                     <th className="text-center">S.No ({bookings.length})</th>
                     <th className="text-center">Booking Id</th>
-                    <th className="text-center">Services</th>
+                    <th className="text-center">Services
+                      <tr>
+                        <td>Service</td>
+                        <td>Actual Price</td>
+                        <td>Discounted Price</td>
+                      </tr>
+                    </th>
+                    <th className="text-center">Address</th>
                     <th className="text-center">Booking time</th>
                     <th className="text-center">Service Date (yyyy/mm/dd)</th>
                     <th className="text-center">Time Slot</th>
@@ -153,19 +160,23 @@ const NewBooking = () => {
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.bookingId}</td>
                         <td>
-                                            <tr>
-                                                <td>Service</td>
-                                                <td>Actual Price</td>
-                                                <td>Discounted Price</td>
-                                            </tr>
-                                            {b.services.map(d=>
-                                            <tr>
-                                                <td>{d.serviceName}</td>
-                                                <td>{d.actualPrice}</td>
-                                                <td>{d.discountedPrice}</td>
-                                            </tr>
-                                                )}
-                                        </td>
+                          {b.services.map(d =>
+                            <tr>
+                              <td>{d.serviceName}</td>
+                              <td>{d.actualPrice}</td>
+                              <td>{d.discountedPrice}</td>
+                            </tr>
+                          )}
+                        </td>
+                        <td>
+                          <tr>
+                            <td>{b.address.name}</td>
+                            <td>{b.address.address}</td>
+                            <td>{b.address.phoneNumber}</td>
+                            <td>{b.address.zipcode}</td>
+                            <td>{b.address.city}</td>
+                          </tr>
+                        </td>
                         <td className="text-center">
                           <Moment>{b.timeOfBooking}</Moment>
                         </td>

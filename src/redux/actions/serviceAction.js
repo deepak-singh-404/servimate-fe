@@ -397,13 +397,14 @@ export const getServices = (id) => {
     }
 }
 
+
 export const getAllServiceSubCategory = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "dev/api/v1/serviceSubCategory"
+                url: url + "api/v1/serviceSubCategory"
             })
             dispatch(loader(false))
             if (data.success) {
@@ -415,7 +416,6 @@ export const getAllServiceSubCategory = () => {
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured in getAllServiceSubCategory")
             console.log("Error in a getAllServiceSubCategory", err.message)
         }
     }

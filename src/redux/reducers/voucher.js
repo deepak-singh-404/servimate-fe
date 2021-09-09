@@ -26,6 +26,11 @@ const voucher = (state = initialState, action) => {
                     return obj._id !== action.payload
                 }),
             };
+        case "UPDATE_VOUCHER":
+            return {
+                ...state,
+                vouchers: state.vouchers.map(d => d._id == action.payload._id ? action.payload : d),
+            };
         case "SET_LOADER":
             return {
                 ...state,

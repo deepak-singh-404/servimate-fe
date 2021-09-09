@@ -52,7 +52,7 @@ const CurrentBooking = () => {
 
   return (
     <>
-      <Container>
+      <Container fluid>
         <Row className="mt-3">
           <Col md={10}></Col>
           <Col md={2}>

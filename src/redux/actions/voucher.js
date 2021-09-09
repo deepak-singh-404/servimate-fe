@@ -1,7 +1,7 @@
 import axios from 'axios'
 const url =  'https://servimate-admin.herokuapp.com/'
 //const dev_url = "https://servimate-server-admin-dev.herokuapp.com/"
-// const url = 'http://localhost:4000/'
+const local_url = 'http://localhost:4000/'
 
 
 
@@ -88,6 +88,31 @@ export const deleteVoucher = (id,cb) => {
         catch (err) {
             dispatch(loader(false))
             console.log("Error in a addVoucher", err.message)
+        }
+    }
+}
+
+export const redeemVoucher = (id,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + `dev/api/v1/voucher/redeem/${id}`,
+            })
+            dispatch(loader(false))
+            console.log("data", data)
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_VOUCHER",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("Error in a redeemVoucher", err.message)
         }
     }
 }

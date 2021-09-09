@@ -52,7 +52,7 @@ const CancellationRequest = () => {
   };
   return (
     <>
-      <Container className="mt-3">
+      <Container fluid className="mt-3">
         <Col md={2} className="m-auto">
           <Row>
             <Form className="d-flex" onSubmit={formHandler}>
