@@ -44,6 +44,9 @@ const Voucher = () => {
         if (e == 2) {
             return "Referal"
         }
+        if(e == 4){
+            return "Promotional Code"
+        }
     }
     const discountTypeHelper = (e) => {
         if (e == 0) {
