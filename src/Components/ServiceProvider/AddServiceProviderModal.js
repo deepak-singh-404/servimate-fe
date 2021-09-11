@@ -13,6 +13,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [password, setPassword] = useState("")
     const [serviceCategory, setServiceCategory] = useState("")
     const [city, setCity] = useState("")
     const [remark, setRemark] = useState("")
@@ -34,6 +35,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
             const formData = new FormData();
             formData.append("name",name)
             formData.append("email", email)
+            formData.append("password", password)
             formData.append("phoneNumber", phoneNumber)
             formData.append("remark", remark)
             formData.append("serviceCategory", JSON.stringify({ _id: tempServiceCategory._id, name: tempServiceCategory.name }))
@@ -77,6 +79,10 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
                         <Form.Group >
                             <Form.Label>Phone Number *</Form.Label>
                             <Form.Control required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="number" />
+                        </Form.Group>
+                        <Form.Group >
+                            <Form.Label>Password *</Form.Label>
+                            <Form.Control required value={password} onChange={(e) => setPassword(e.target.value)} type="text" />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Profile Picture</Form.Label>

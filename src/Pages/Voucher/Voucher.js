@@ -79,6 +79,7 @@ const Voucher = () => {
                                 <tr>
                                     <th className="text-center">S.No ({vouchers.length})</th>
                                     <th className="text-center">Coupon Code</th>
+                                    <th className="text-center">Min Price</th>
                                     <th className="text-center">Voucher Type</th>
                                     <th className="text-center">Discount Type</th>
                                     <th className="text-center">Discount</th>
@@ -94,6 +95,7 @@ const Voucher = () => {
                                     <tr>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-center">{v.couponCode}</td>
+                                        <td className="text-center">{v.minPrice}</td>
                                         <td className="text-center">{voucherTypeHelper(v.voucherType)}</td>
                                         <td className="text-center">{discountTypeHelper(v.discountType)}</td>
                                         <td className="text-center">{v.discount}</td>

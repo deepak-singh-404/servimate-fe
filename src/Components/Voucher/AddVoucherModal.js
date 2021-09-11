@@ -17,6 +17,7 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
     const [validUpto, setValidUpto] = useState("")
     const [totalNoUses, setTotalNoUses] = useState("")
     const [limitToOneUser, setLimitToOneUser] = useState("")
+    const [minPrice, setMinPrice] = useState("")
     const [serviceSubCategory, setServiceSubCategory] = useState([]);
 
     const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
             validUpto,
             totalNoUses,
             limitToOneUser,
+            minPrice
         }
         dispatch(addVoucher(data,()=>{
             setAddVoucherModal(false)
@@ -112,6 +114,11 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
                         <Form.Group>
                             <Form.Label>Limit To One Use Per Customer</Form.Label>
                             <Form.Control value={limitToOneUser} onChange={(e) => setLimitToOneUser(e.target.value)} type="number" />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Min Price</Form.Label>
+                            <Form.Control value={minPrice} onChange={(e) => setMinPrice(e.target.value)} type="number" />
                         </Form.Group>
 
                         {voucherRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
