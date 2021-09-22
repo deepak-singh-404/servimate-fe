@@ -80,6 +80,8 @@ const CancellationRequest = () => {
                 <tr>
                   <th className="text-center">S.No</th>
                   <th className="text-center">Booking Id</th>
+                  <th className="text-center">Final Price</th>
+                  <th className="text-center">Cart Price</th>
                   <th className="text-center">Services</th>
                   <th className="text-center">Price</th>
                   <th className="text-center">Booking time</th>
@@ -94,47 +96,49 @@ const CancellationRequest = () => {
               <tbody>
                 {cancellationRequests.length !== 0
                   ? cancellationRequests.map((b, index) => (
-                      <tr>
-                        <td className="text-center">{index + 1}</td>
-                        <td className="text-center">{b.bookingId}</td>
-                        <td>
+                    <tr>
+                      <td className="text-center">{index + 1}</td>
+                      <td className="text-center">{b.bookingId}</td>
+                      <td className="text-center">{b.finalPrice}</td>
+                      <td className="text-center">{b.cartAmount}</td>
+                      <td>
+                        <tr>
+                          <td>Service</td>
+                          <td>Actual Price</td>
+                          <td>Discounted Price</td>
+                        </tr>
+                        {b.services.map((d) => (
                           <tr>
-                            <td>Service</td>
-                            <td>Actual Price</td>
-                            <td>Discounted Price</td>
+                            <td>{d.serviceName}</td>
+                            <td>{d.actualPrice}</td>
+                            <td>{d.discountedPrice}</td>
                           </tr>
-                          {b.services.map((d) => (
-                            <tr>
-                              <td>{d.serviceName}</td>
-                              <td>{d.actualPrice}</td>
-                              <td>{d.discountedPrice}</td>
-                            </tr>
-                          ))}
-                        </td>
-                        <td className="text-center">{b.price}</td>
-                        <td className="text-center">
-                          <Moment>{b.timeOfBooking}</Moment>
-                        </td>
-                        <td className="text-center">{b.serviceDate}</td>
-                        <td className="text-center">{b.timeSlot}</td>
-                        <td className="text-center">{b.modeOfPayment}</td>
-                        <td className="text-center">
-                          {b.isPaid ? (
-                            <strong>Paid</strong>
-                          ) : (
-                            <string>Pending</string>
-                          )}
-                        </td>
-                        <td className="text-center">{b.customerName}</td>
-                        <td>{b.serviceProviderName}</td>
+                        ))}
+                      </td>
+                      <td className="text-center">{b.price}</td>
+                      <td className="text-center">
+                        <Moment>{b.timeOfBooking}</Moment>
+                      </td>
+                      <td className="text-center">{b.serviceDate}</td>
+                      <td className="text-center">{b.timeSlot}</td>
+                      <td className="text-center">{b.modeOfPayment}</td>
+                      <td className="text-center">
+                        {b.isPaid ? (
+                          <strong>Paid</strong>
+                        ) : (
+                          <string>Pending</string>
+                        )}
+                      </td>
+                      <td className="text-center">{b.customerName}</td>
+                      <td>{b.serviceProviderName}</td>
 
-                        <td>
-                          <Button onClick={() => clickHandler(b._id)}>
-                            Approve
-                          </Button>
-                        </td>
-                      </tr>
-                    ))
+                      <td>
+                        <Button onClick={() => clickHandler(b._id)}>
+                          Approve
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
                   : null}
               </tbody>
             </Table>

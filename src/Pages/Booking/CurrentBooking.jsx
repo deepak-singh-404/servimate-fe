@@ -96,6 +96,8 @@ const CurrentBooking = () => {
                 <tr>
                   <th className="text-center">S.No ({bookings.length})</th>
                   <th className="text-center">Booking Id</th>
+                  <th className="text-center">Final Price</th>
+                  <th className="text-center">Cart Price</th>
                   <th className="text-center">Services</th>
                   <th className="text-center">Booking time</th>
                   <th className="text-center">Service Date (yyyy/mm/dd)</th>
@@ -112,6 +114,8 @@ const CurrentBooking = () => {
                     <tr>
                       <td className="text-center">{index + 1}</td>
                       <td className="text-center">{b.bookingId}</td>
+                      <td className="text-center">{b.finalPrice}</td>
+                      <td className="text-center">{b.cartAmount}</td>
                       <td>
                         <tr>
                           <td>Service</td>
