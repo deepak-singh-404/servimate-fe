@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal, Button, Form } from 'react-bootstrap'
-import { addTopPick } from '../../redux/actions/homeScreen'
+import { addHomeScreenReview } from '../../redux/actions/homeScreen'
 import Loader from "../Loader";
 
 
-const TopPickModal = ({topPickModal,setTopPickModal}) => {
+const HomePageReviewModal = ({homePageReviewModal,setHomePageReviewModal}) => {
     const [title, setTitle] = useState("")
     const [picture, setPicture] = useState("")
     const dispatch = useDispatch();
@@ -24,19 +24,19 @@ const TopPickModal = ({topPickModal,setTopPickModal}) => {
         if (picture !== "") {
             formData.append("picture", picture);
         }
-        dispatch(addTopPick(formData, () => {
+        dispatch(addHomeScreenReview(formData, () => {
             setTitle("")
-            setTopPickModal(false)
+            setHomePageReviewModal(false)
         }));
     }
     return (
         <div>
         <Modal
-        show={topPickModal}
-        onHide={() => setTopPickModal(false)}
+        show={homePageReviewModal}
+        onHide={() => setHomePageReviewModal(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>TOP PICK</Modal.Title>
+          <Modal.Title>HOME SCREEN REVIEW</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formHandler}>
@@ -70,4 +70,4 @@ const TopPickModal = ({topPickModal,setTopPickModal}) => {
     )
 }
 
-export default TopPickModal
+export default HomePageReviewModal

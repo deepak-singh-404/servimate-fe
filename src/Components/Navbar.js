@@ -47,6 +47,8 @@ const AdminNavbar = () => {
                             <NavDropdown.Item><Link to="/homeScreen/bottomSlider">BOTTOM SLIDER</Link></NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item><Link to="/homeScreen/topPick">TOP PICK</Link></NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item><Link to="/homeScreen/homeScreenReview">HOME SCREEN REVIEW</Link></NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Button} onClick={logoutHandler} variant="outline-danger">Logout</Nav.Link>
                     </Nav>

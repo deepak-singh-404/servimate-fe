@@ -2,7 +2,8 @@ const initialState = {
     banners: [],
     loader: false,
     bottomSliders: [],
-    topPicks: []
+    topPicks: [],
+    homePageReviews: []
 }
 
 
@@ -61,6 +62,23 @@ const homeScreen = (state = initialState, action) => {
             return {
                 ...state,
                 topPicks: state.topPicks.filter(obj => {
+                    return obj._id !== action.payload._id
+                }),
+            }
+        case "SET_HOME_PAGE_REVIEW":
+            return {
+                ...state,
+                homePageReviews: [...state.homePageReviews, action.payload],
+            }
+        case "SET_HOME_PAGE_REVIEWS":
+            return {
+                ...state,
+                homePageReviews: action.payload,
+            }
+        case "DELETE_HOME_PAGE_REVIEW":
+            return {
+                ...state,
+                homePageReviews: state.homePageReviews.filter(obj => {
                     return obj._id !== action.payload._id
                 }),
             }

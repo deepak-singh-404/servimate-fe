@@ -31,6 +31,14 @@ export const setTopPicks = (data) =>{
     }
 }
 
+export const setHomePageReviews = (data) =>{
+    return {
+        type: "SET_HOME_PAGE_REVIEWS",
+        payload: data
+    }
+}
+
+
 
 export const addBanners = (_data,cb) => {
     return async (dispatch) => {
@@ -249,6 +257,81 @@ export const deleteTopPick = (id,cb) => {
             dispatch(loader(false))
             alert("Some error  occured")
             console.log("Error in a deleteTopPick", err.message)
+        }
+    }
+}
+
+export const addHomeScreenReview = (_data,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: url + "api/v1/homeScreen/homePageReview",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_HOME_PAGE_REVIEW",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a addHomePageReview", err.message)
+        }
+    }
+}
+
+
+export const getHomePageReviews = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + "api/v1/homeScreen/homePageReview",
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch(setHomePageReviews(data.response))
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a getHomePageReviews", err.message)
+        }
+    }
+}
+
+
+
+export const deleteHomePageReview = (id,cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Delete",
+                url: url + `api/v1/homeScreen/homePageReview/${id}`,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type:"DELETE_HOME_PAGE_REVIEW",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Some error  occured")
+            console.log("Error in a deleteHomePageReview", err.message)
         }
     }
 }
