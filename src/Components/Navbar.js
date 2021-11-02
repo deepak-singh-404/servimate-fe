@@ -24,7 +24,6 @@ const AdminNavbar = () => {
                     <Nav className="mr-auto">
                         <Nav.Link><Link to={`/profile`}>{name.toUpperCase()}</Link></Nav.Link>
                         <Nav.Link><Link to="/serviceCategory">SERVICE CATEGORY</Link></Nav.Link>
-                        <Nav.Link><Link to="/serviceProvider">SERVICE PROVIDER</Link></Nav.Link>
                         <NavDropdown title="PARTNER" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/partner">SERVICE PROVIDER</Link></NavDropdown.Item>
                             <NavDropdown.Divider/>

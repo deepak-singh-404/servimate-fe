@@ -42,6 +42,11 @@ const serviceProvider = (state = initialState, action) => {
                 ...state,
                 registrationRequest: action.payload
             }
+        case "REVIEW_REGISTRATION_REQUEST":
+            return {
+                ...state,
+                registrationRequest: state.registrationRequest.map(d => d._id == action.payload._id ? action.payload : d),
+            };
         default:
             return state
     }

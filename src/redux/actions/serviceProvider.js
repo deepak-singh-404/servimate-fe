@@ -120,3 +120,29 @@ export const getRegistrationRequest = () => {
         }
     }
 }
+
+//REVIEW PARTNER REGISTRATION REQUEST
+export const reviewRegistrationRequest = (id) => {
+    return async (dispatch) => {
+        try {
+            console.log("id_recent", id)
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: url + `api/v1/serviceProvider/registrationRequest/${id}`,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "REVIEW_REGISTRATION_REQUEST",
+                    payload: data.response
+                })
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("Error in a reviewRegistrationRequest", err)
+        }
+    }
+}
+

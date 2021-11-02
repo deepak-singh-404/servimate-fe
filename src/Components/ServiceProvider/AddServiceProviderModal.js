@@ -18,6 +18,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
     const [city, setCity] = useState("")
     const [remark, setRemark] = useState("")
     const [imgUrl, setImgUrl] = useState("");
+    const [pinCodes, setPincodes] = useState("")
 
     const imagehandler = (e) => {
         if (e.target.files && e.target.files[0]) {
@@ -32,15 +33,19 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
         if (name && phoneNumber && serviceCategory && city) {
             const tempCity = cityRoot.cities.find(c => c._id == city)
             const tempServiceCategory = serviceRoot.serviceCategories.find(s => s._id == serviceCategory)
+            const zipcodes = pinCodes.split(',').map(function (item) {
+                return parseInt(item, 10);
+            });
             const formData = new FormData();
-            formData.append("name",name)
+            formData.append("name", name)
             formData.append("email", email)
             formData.append("password", password)
             formData.append("phoneNumber", phoneNumber)
             formData.append("remark", remark)
+            formData.append("zipcodes", zipcodes)
             formData.append("serviceCategory", JSON.stringify({ _id: tempServiceCategory._id, name: tempServiceCategory.name }))
             formData.append("city", JSON.stringify({ _id: tempCity._id, name: tempCity.name }))
-            if (imgUrl !== ""){
+            if (imgUrl !== "") {
                 formData.append("imgUrl", imgUrl)
             }
             dispatch(addServiceProvider(formData, () => {
@@ -109,6 +114,15 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
                                     <option value={c._id}>{c.name}</option>
                                 ) : null}
                             </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Pincodes</Form.Label>
+                            <Form.Control onChange={(e) => setPincodes(e.target.value)} value={pinCodes} as="textarea" rows={3} />
+                            <Form.Text className="text-muted">
+                                Enter Pincodes in below format
+                                <br />
+                                201301, 201305, 201306
+                            </Form.Text>
                         </Form.Group>
                         <Form.Group >
                             <Form.Label>Email Address</Form.Label>

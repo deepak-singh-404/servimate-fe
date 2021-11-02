@@ -56,6 +56,7 @@ const ServiceProvider = () => {
                                     <th className="text-center">Profile Picture</th>
                                     <th className="text-center">Service Category</th>
                                     <th className="text-center">City</th>
+                                    <th className="text-center">Zipcodes</th>
                                     <th className="text-center">Remark</th>
                                     <th className="text-center">Email</th>
                                     <th className="text-center">Action</th>
@@ -72,6 +73,7 @@ const ServiceProvider = () => {
                                         <td className="text-center">{s.serviceCategoryName}</td>
                                         {/* <td className="text-center">{s.verifed ? "Verified" : "Not Verified"}</td> */}
                                         <td className="text-center">{s.cityName}</td>
+                                        <td className="text-center">{s.zipcodes && s.zipcodes.join(', ')}</td>
                                         <td className="text-center">{s.remark}</td>
                                         <td className="text-center">{s.email}</td>
                                         <td className="text-center"><Button variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(s)} variant="outline-info">DELETE</Button></td>

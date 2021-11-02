@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table, Container, Row, Col, Button } from 'react-bootstrap'
-import {getRegistrationRequest} from '../../redux/actions/serviceProvider'
+import {getRegistrationRequest, reviewRegistrationRequest} from '../../redux/actions/serviceProvider'
 
 const RegistrationRequest = () => {
     const serviceProviderRoot = useSelector(store => store.serviceProviderRoot)
@@ -26,6 +26,7 @@ const RegistrationRequest = () => {
                                     <th className="text-center">City</th>
                                     <th className="text-center">Experience</th>
                                     <th className="text-center">Services</th>
+                                    <th className="text-center">Review</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,6 +38,11 @@ const RegistrationRequest = () => {
                                         <td className="text-center">{s.city.name}</td>
                                         <td className="text-center">{s.experience}</td>
                                         <td className="text-center">{s.services.map(e => e).join(", ")}</td>
+                                        <td className="text-center"><Button disabled={s.isReviewed} onClick={() => {
+                                        <td className="text-center"></td>
+                                            dispatch(reviewRegistrationRequest(s._id))
+                                            // setButtonDisable(true)
+                                        }}>Redeem</Button></td>
                                     </tr>
                                 ) : null}
                             </tbody>
