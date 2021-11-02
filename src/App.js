@@ -28,7 +28,7 @@ import Banner from './Pages/HomeScreen/Banner'
 import BottomSlider from './Pages/HomeScreen/BottomSlider';
 import TopPick from './Pages/HomeScreen/TopPick';
 import HomeScreenReview from './Pages/HomeScreen/HomePageReview'
-
+import RegistrationRequest from './Pages/ServiceProvider/RegistrationRequest'
 
 
 if (window.localStorage.servimateToken) {
@@ -56,7 +56,8 @@ function App() {
           <Route exact path='/register' component={AdminRegistration} />
           <Route exact path='/home' component={Home} />
           <Route exact path='/city' component={City} />
-          <Route exact path='/serviceProvider' component={ServiceProvider} />
+          <Route exact path='/partner' component={ServiceProvider} />
+          <Route exact path='/partner/registrationRequest' component={RegistrationRequest} />
           <Route exact path='/voucher' component={Voucher} />
           <Route exact path='/serviceCategory' component={ServiceCategory} />
           <Route exact path="/serviceCategory/:serviceCategoryName/:serviceCategoryId" component={ServiceSubCategory}/>

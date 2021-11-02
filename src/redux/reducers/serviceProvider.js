@@ -2,7 +2,8 @@ const initialState = {
     serviceProvider: {},
     serviceProviders: [],
     loader: false,
-    success: false
+    success: false,
+    registrationRequest:[]
 }
 
 
@@ -35,6 +36,11 @@ const serviceProvider = (state = initialState, action) => {
             return {
                 ...state,
                 success: action.payload
+            }
+        case "SET_REGISTRATION_REQUEST":
+            return {
+                ...state,
+                registrationRequest: action.payload
             }
         default:
             return state

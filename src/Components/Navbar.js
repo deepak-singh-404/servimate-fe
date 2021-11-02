@@ -25,6 +25,11 @@ const AdminNavbar = () => {
                         <Nav.Link><Link to={`/profile`}>{name.toUpperCase()}</Link></Nav.Link>
                         <Nav.Link><Link to="/serviceCategory">SERVICE CATEGORY</Link></Nav.Link>
                         <Nav.Link><Link to="/serviceProvider">SERVICE PROVIDER</Link></Nav.Link>
+                        <NavDropdown title="PARTNER" id="basic-nav-dropdown">
+                            <NavDropdown.Item><Link to="/partner">SERVICE PROVIDER</Link></NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item><Link to="/partner/registrationRequest">REGISTRATION REQUEST</Link></NavDropdown.Item>
+                        </NavDropdown>
                         <Nav.Link><Link to="/city">CITY</Link></Nav.Link>
                         <Nav.Link><Link to="/voucher">VOUCHER</Link></Nav.Link>
                         <NavDropdown title="CUSTOMER" id="basic-nav-dropdown">

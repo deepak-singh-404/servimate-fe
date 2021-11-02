@@ -1,6 +1,7 @@
 import axios from 'axios'
 const url =  'https://servimate-admin.herokuapp.com/'
 const local_url = 'http://localhost:4000/'
+const partner_url = "https://servimate-partner.herokuapp.com/"
 
 
 
@@ -96,3 +97,26 @@ export const deleteServiceProvider = (id, cb) => {
     }
 }
 
+//GET ALL PARTNER REGISTRATION REQUEST
+export const getRegistrationRequest = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: url + "api/v1/serviceProvider/registrationRequest",
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_REGISTRATION_REQUEST",
+                    payload: data.response
+                })
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("Error in a getRegistrationRequest", err)
+        }
+    }
+}

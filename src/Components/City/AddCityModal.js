@@ -23,7 +23,6 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
                     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(' ');
             };
-
             const name = toTitleCase(city);
             const stateName  =  toTitleCase(state)
             //FORMAT PINCODE,     STRINGS => ARRAY OF NUMBERS
@@ -31,10 +30,6 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
                 return parseInt(item, 10);
             });
             dispatch(addCity({name, zipcodes, state:stateName}))
-            
-            
-            
-
         }
         else{
             alert("Fields  should not be empty")
