@@ -45,13 +45,15 @@ const BottomSlider = () => {
                 setDeleteModal={setDeleteModal}
             />}
             <Container>
-                <Row className="mt-5">
-                    <Col md={2} >
+                <Row className="my-2">
+                    <Col >
                         <Button onClick={() => setAddBottomSliderModal(true)}>
                             ADD BOTTOM SLIDER
                         </Button>
                     </Col>
-                    <Col md={10} >
+                </Row>
+                <Row>
+                    <Col >
                         <Table striped bordered hover>
                             <thead>
                                 <tr>

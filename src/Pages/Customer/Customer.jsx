@@ -13,7 +13,7 @@ const Customer = () => {
     return (
         <>
         <Container fluid>
-          <Row className="mt-5">
+          <Row className="mt-2">
             <Col>
               <Table striped bordered hover>
                 <thead>

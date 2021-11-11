@@ -15,7 +15,7 @@ const RegistrationRequest = () => {
     return (
         <>
             <Container fluid>
-                <Row >
+                <Row className="my-2">
                     <Col>
                         <Table striped bordered hover>
                             <thead>

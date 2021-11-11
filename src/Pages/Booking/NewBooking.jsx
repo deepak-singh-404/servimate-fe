@@ -79,14 +79,6 @@ const NewBooking = () => {
         />
       )}
       <Container fluid>
-        <Row className="mt-3">
-          <Col md={10}>
-          </Col>
-          <Col md={2}>
-            <Button onClick={refreshHandler}>Refresh</Button>
-          </Col>
-        </Row>
-
         <Row className="mt-2">
           <Col md={2} >
             <Form className="d-flex">
@@ -123,6 +115,9 @@ const NewBooking = () => {
                 />
               </Form.Group>
             </Form>
+          </Col>
+          <Col md={2} >
+            <Button onClick={refreshHandler}>Refresh</Button>
           </Col>
         </Row>
         <Row className="mt-2">

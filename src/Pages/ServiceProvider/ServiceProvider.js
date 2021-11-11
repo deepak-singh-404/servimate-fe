@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table, Container, Row, Col, Button } from 'react-bootstrap'
 import AddServiceProviderModal from '../../Components/ServiceProvider/AddServiceProviderModal'
-import { getServiceProviders } from '../../redux/actions/serviceProvider'
+import { getServiceProviders,updateServiceProvider } from '../../redux/actions/serviceProvider'
 import DeleteModal from '../../Components/DeleteModal'
+import Loader from '../../Components/Loader'
 
 
 
@@ -39,9 +40,10 @@ const ServiceProvider = () => {
             />}
             {addServiceProviderModal && <AddServiceProviderModal addServiceProviderModal={addServiceProviderModal} setAddServiceProviderModal={setAddServiceProviderModal} />}
             <Container fluid>
-                <Row className="mt-5">
-                    <Col md={2} >
+                <Row className="my-2">
+                    <Col >
                         <Button variant="primary" type="button" onClick={() => setAddServiceProviderModal(true)}>ADD SERVICE PROVIDER</Button>
+                        {loader ? <Loader  />: null}
                     </Col>
                 </Row>
                 <Row >
@@ -59,6 +61,7 @@ const ServiceProvider = () => {
                                     <th className="text-center">Zipcodes</th>
                                     <th className="text-center">Remark</th>
                                     <th className="text-center">Email</th>
+                                    <th className="text-center">Hold/Unhold</th>
                                     <th className="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -70,12 +73,18 @@ const ServiceProvider = () => {
                                         <td className="text-center">{s.phoneNumber}</td>
                                         <td className="text-center">{s.initialPassword}</td>
                                         <td className="text-center"><a href={s.imgUrl} target="_blank">{s.imgUrl && "url"} </a></td>
-                                        <td className="text-center">{s.serviceCategoryName}</td>
-                                        {/* <td className="text-center">{s.verifed ? "Verified" : "Not Verified"}</td> */}
+                                        <td className="text-center">{s.serviceCategoryId.length > 0 && s.serviceCategoryId.map(s => s.name).join(", ")}</td>
                                         <td className="text-center">{s.cityName}</td>
                                         <td className="text-center">{s.zipcodes && s.zipcodes.join(', ')}</td>
                                         <td className="text-center">{s.remark}</td>
                                         <td className="text-center">{s.email}</td>
+                                        <td className="text-center">{s.isAccountOnHold ? 
+                                        <Button variant="outline-info" onClick={()=>{
+                                            dispatch(updateServiceProvider(s._id, {isAccountOnHold:false}))
+                                        }}>UNHOLD</Button>: 
+                                        <Button variant="outline-info" onClick={()=>{
+                                            dispatch(updateServiceProvider(s._id, {isAccountOnHold:true}))
+                                        }}>HOLD</Button>}</td>
                                         <td className="text-center"><Button variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(s)} variant="outline-info">DELETE</Button></td>
                                     </tr>
                                 ) : null}

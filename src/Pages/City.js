@@ -44,11 +44,14 @@ const City = () => {
             />}   
            {addCityModal && <AddCityModal addCityModal={addCityModal} setAddCityModal={setAddCityModal} />}
             <Container >
-                <Row className="mt-5">
-                    <Col md={2}>
+                <Row className="my-2">
+                    <Col>
                         <Button variant="primary" type="button" onClick={() => setAddCityModal(true)}>ADD CITY</Button>
                     </Col>
-                    <Col md={10}>
+                    
+                </Row>
+                <Row>
+                    <Col >
                         <Table striped bordered hover>
                             <thead>
                                 <tr>

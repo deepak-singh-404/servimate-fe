@@ -6,6 +6,10 @@ const initialState = {
 }
 
 
+
+
+
+
 const cityReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_CITY":

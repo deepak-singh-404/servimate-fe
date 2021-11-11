@@ -30,7 +30,7 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
     const formHandler = (e) => {
         e.preventDefault()
         if(serviceSubCategory.length === 0){
-            alert("Servic Sub Category field is empty, Kindly add")
+            alert("Service Sub Category field is empty, Kindly add")
             return 
         }
         let applyTo = serviceSubCategory.map(o=> o._id)

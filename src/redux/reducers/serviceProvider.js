@@ -47,6 +47,11 @@ const serviceProvider = (state = initialState, action) => {
                 ...state,
                 registrationRequest: state.registrationRequest.map(d => d._id == action.payload._id ? action.payload : d),
             };
+        case "UPDATE_SERVICE_PROVIDER":
+            return {
+                ...state,
+                serviceProviders: state.serviceProviders.map(d => d._id == action.payload._id ? action.payload : d),
+            };
         default:
             return state
     }

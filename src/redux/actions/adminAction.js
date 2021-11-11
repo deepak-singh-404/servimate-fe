@@ -5,7 +5,6 @@ const url =  'https://servimate-admin.herokuapp.com/'
 //const url = 'http://localhost:4000/'
 
 
-
 export const adminLoginHelper = (data) => {
     return {
         type: "SET_ADMIN_DATA",
@@ -75,7 +74,7 @@ export const adminLogin = (adminLoginCredentials, history) => {
                 setAuthToken(token);
                 const decoded = jwt_decode(token);
                 dispatch(adminLoginHelper(decoded.admin))
-                history.push('/home')
+                history.push('/booking/new')
             }
         }
         catch (err) {

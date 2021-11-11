@@ -3,8 +3,7 @@ const url =  'https://servimate-admin.herokuapp.com/'
 const local_url = 'http://localhost:4000/'
 const partner_url = "https://servimate-partner.herokuapp.com/"
 
-
-
+// COMMON LOADER
 const loader = (data) => {
     return {
         type: "SET_LOADER",
@@ -12,7 +11,7 @@ const loader = (data) => {
     }
 }
 
-
+// ADD SERVICE PROVIDER
 export const addServiceProvider = (serviceProviderCredentials,cb) => {
     return async (dispatch) => {
         try {
@@ -23,6 +22,7 @@ export const addServiceProvider = (serviceProviderCredentials,cb) => {
                 data: serviceProviderCredentials
             })
             dispatch(loader(false))
+            console.log("JUST WORKING", data)
             if (data.success) {
                 dispatch({
                     type: "SET_SERVICEPROVIDER",
@@ -33,12 +33,13 @@ export const addServiceProvider = (serviceProviderCredentials,cb) => {
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
+            alert("ERROR: ",err.message)
             console.log("Error in a AddServiceProvider", err.message)
         }
     }
 }
 
+//GET ALL SERVICE PROVIDERS
 export const getServiceProviders = () => {
     return async (dispatch) => {
         try {
@@ -71,6 +72,7 @@ export const getServiceProviders = () => {
     }
 }
 
+//DELETE SERVICE PROVIDER
 export const deleteServiceProvider = (id, cb) => {
     return async (dispatch) => {
         try {
@@ -125,7 +127,6 @@ export const getRegistrationRequest = () => {
 export const reviewRegistrationRequest = (id) => {
     return async (dispatch) => {
         try {
-            console.log("id_recent", id)
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
@@ -145,4 +146,32 @@ export const reviewRegistrationRequest = (id) => {
         }
     }
 }
+
+//UPDATE SERVICE PROVIDER
+export const updateServiceProvider = (id,_data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: url + `api/v1/serviceProvider/single/${id}`,
+                data:_data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_SERVICE_PROVIDER",
+                    payload: data.response
+                })
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("Error: ",err.message)
+            console.log("Error in a updateServiceProvider", err)
+        }
+    }
+}
+
+
 

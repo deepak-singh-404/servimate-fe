@@ -51,7 +51,7 @@ const AssignServiceProviderModal = ({currentBooking,assignServiceProviderModal, 
                           selected={serviceProvider}
                         />
             <div>
-            {loader ? <Loader /> :  <Button onClick={clickHandler}>ASSIGN</Button>}
+            {loader ? <Loader /> :  <Button className="mt-2" onClick={clickHandler}>ASSIGN</Button>}
             
                 </div>            
         </Modal.Body>

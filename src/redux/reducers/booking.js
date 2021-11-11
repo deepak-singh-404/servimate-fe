@@ -1,4 +1,5 @@
 const initialState = {
+    allBookings:[],
     newBookings: [],
     currentBookings: [],
     bookingHistory: [],
