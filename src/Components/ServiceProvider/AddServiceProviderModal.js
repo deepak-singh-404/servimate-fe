@@ -44,7 +44,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
             formData.append("password", password)
             formData.append("phoneNumber", phoneNumber)
             formData.append("remark", remark)
-            formData.append("zipcodes", zipcodes)
+            formData.append("zipcodes", JSON.stringify(zipcodes))
             formData.append("serviceCategory", JSON.stringify(tempServiceCategory))
             formData.append("city", JSON.stringify({ _id: tempCity._id, name: tempCity.name }))
             if (imgUrl !== "") {
