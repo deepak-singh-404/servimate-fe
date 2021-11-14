@@ -18,7 +18,7 @@ export const addServiceProvider = (serviceProviderCredentials,cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: local_url + "api/v1/serviceProvider",
+                url: url + "api/v1/serviceProvider",
                 data: serviceProviderCredentials
             })
             dispatch(loader(false))
