@@ -28,6 +28,8 @@ const AdminNavbar = () => {
                             <NavDropdown.Item><Link to="/partner">SERVICE PROVIDER</Link></NavDropdown.Item>
                             <NavDropdown.Divider/>
                             <NavDropdown.Item><Link to="/partner/registrationRequest">REGISTRATION REQUEST</Link></NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item><Link to="/partner/homeScreen/banner">HOME SCREEN BANNER</Link></NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link><Link to="/city">CITY</Link></Nav.Link>
                         <Nav.Link><Link to="/voucher">VOUCHER</Link></Nav.Link>

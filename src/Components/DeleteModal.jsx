@@ -7,6 +7,7 @@ import { deleteCity } from '../redux/actions/cityAction'
 import { deleteBanner,
      deleteBottomSlider, deleteTopPick, deleteHomePageReview } from '../redux/actions/homeScreen'
 import { deleteServiceProvider } from '../redux/actions/serviceProvider'
+import {partnerDeleteBanner} from '../redux/actions/partnerHomeScreen'
 import Loader from './Loader'
 
 const DeleteModal = ({ data, deleteModal, setDeleteModal }) => {
@@ -62,6 +63,10 @@ const DeleteModal = ({ data, deleteModal, setDeleteModal }) => {
         }
         if (data.actionType === "delete_home_page_review") {
             dispatch(deleteHomePageReview(data._id, () => setDeleteModal(false)))
+            return
+        }
+        if (data.actionType === "partner_delete_banner") {
+            dispatch(partnerDeleteBanner(data._id, () => setDeleteModal(false)))
             return
         }
     }

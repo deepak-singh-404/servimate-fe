@@ -30,6 +30,9 @@ import TopPick from './Pages/HomeScreen/TopPick';
 import HomeScreenReview from './Pages/HomeScreen/HomePageReview'
 import RegistrationRequest from './Pages/ServiceProvider/RegistrationRequest'
 
+//PARTNER
+import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
+
 
 if (window.localStorage.servimateToken) {
   setAuthToken(localStorage.servimateToken);
@@ -72,6 +75,7 @@ function App() {
           <Route exact path="/homeScreen/bottomSlider" component={BottomSlider} />
           <Route exact path="/homeScreen/topPick" component={TopPick} />
           <Route exact path="/homeScreen/homeScreenReview" component={HomeScreenReview} />
+          <Route exact path="/partner/homeScreen/banner" component={PartnerHomeScreen} />
         </Switch>
       </Router>
     </div>
