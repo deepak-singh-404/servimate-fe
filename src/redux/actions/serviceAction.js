@@ -40,7 +40,7 @@ export const addServiceCategory = (serviceCategoryCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/serviceCategory",
+                url: local_url + "api/v1/serviceCategory",
                 data: serviceCategoryCredentials
             })
             dispatch(loader(false))

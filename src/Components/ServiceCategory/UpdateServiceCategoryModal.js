@@ -15,6 +15,7 @@ const UpdateServiceCategoryModal = ({
   const [name, setName] = useState(data.name);
   const [iconUrl, setIconUrl] = useState("");
   const [minAmountForCheckout, setMinAmountForCheckout] = useState(data.minAmountForCheckout)
+  const [partnerShare, setPartnerShare] = useState(data.partnerShare ? data.partnerShare : "")
   const dispatch = useDispatch();
 
   const { cities } = useSelector((store) => store.cityRoot)
@@ -56,6 +57,7 @@ const UpdateServiceCategoryModal = ({
     }
     formData.append("cities",JSON.stringify(checkedCity))
     formData.append("minAmountForCheckout", minAmountForCheckout)
+    formData.append("partnerShare", String(partnerShare))
     dispatch(updateServiceCategory(data._id, formData,()=>{
         setUpdateServiceCategoryModal(false)
         setName("")
@@ -88,6 +90,14 @@ const UpdateServiceCategoryModal = ({
               <Form.Control
                 value={minAmountForCheckout}
                 onChange={(e) => setMinAmountForCheckout(e.target.value)}
+                type="number"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>PARTNER SHARE (%)</Form.Label>
+              <Form.Control
+                value={partnerShare}
+                onChange={(e) => setPartnerShare(e.target.value)}
                 type="number"
               />
             </Form.Group>

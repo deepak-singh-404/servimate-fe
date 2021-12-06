@@ -12,15 +12,15 @@ const AddServiceCategoryModal = ({
 }) => {
   const [name, setName] = useState("");
   const [iconUrl, setIconUrl] = useState("");
-  const [minAmountForCheckout, setMinAmountForCheckout] = useState(0)
+  const [minAmountForCheckout, setMinAmountForCheckout] = useState("")
+  const [checkedCity, setCheckedCity] = useState([])
+  const [partnerShare, setPartnerShare] = useState("")
+
   const dispatch = useDispatch();
 
   const { cities } = useSelector((store) => store.cityRoot)
   const serviceRoot = useSelector((store) => store.serviceRoot);
   const { loader, success } = serviceRoot;
-  const [checkedCity, setCheckedCity] = useState([])
-
-
   const handleInputChange = (e) => {
     const tempCheck = checkedCity
     let index
@@ -62,7 +62,8 @@ const AddServiceCategoryModal = ({
       formData.append("iconUrl", iconUrl);
     }
     formData.append("cities", checkedCity)
-    formData.append("minAmountForCheckout", minAmountForCheckout)
+    formData.append("minAmountForCheckout", Number(minAmountForCheckout))
+    formData.append("partnerShare", partnerShare)
     dispatch(addServiceCategory(formData));
     setName("")
     setMinAmountForCheckout(0)
@@ -96,6 +97,16 @@ const AddServiceCategoryModal = ({
                 type="number"
               />
             </Form.Group>
+            <Form.Group>
+              <Form.Label>PARTNER SHARE (%)</Form.Label>
+              <Form.Control
+                required
+                value={partnerShare}
+                onChange={(e) => setPartnerShare(e.target.value)}
+                type="number"
+              />
+            </Form.Group>
+
             <Table striped bordered hover>
               <thead>
                 <tr>
