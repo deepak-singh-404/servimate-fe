@@ -173,5 +173,32 @@ export const updateServiceProvider = (id,_data) => {
     }
 }
 
-
+//UPDATE SERVICEPROVIDER WALLET
+export const updatePartnerWallet = (id, _data,cb) => {
+    console.log("id", id)
+    console.log("data",_data)
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: url + `api/v1/serviceProvider/wallet/${id}`,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_SERVICE_PROVIDER",
+                    payload: data.response
+                })
+                cb()
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            alert("ERROR: ",err.message)
+            console.log("Error in a updatePartnerWallet", err.message)
+        }
+    }
+}
 

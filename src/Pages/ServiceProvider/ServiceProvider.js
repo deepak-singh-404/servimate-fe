@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table, Container, Row, Col, Button } from 'react-bootstrap'
 import AddServiceProviderModal from '../../Components/ServiceProvider/AddServiceProviderModal'
-import { getServiceProviders,updateServiceProvider } from '../../redux/actions/serviceProvider'
+import { getServiceProviders, updatePartnerWallet, updateServiceProvider } from '../../redux/actions/serviceProvider'
 import DeleteModal from '../../Components/DeleteModal'
 import Loader from '../../Components/Loader'
-
+import UpdateWalletModal from '../../Components/ServiceProvider/UpdateWalletModal'
 
 
 const ServiceProvider = () => {
@@ -16,6 +16,8 @@ const ServiceProvider = () => {
     // const [editCityModal, setEditCityModal] = useState(false)
     const [data, setData] = useState("")
     const [deleteModal, setDeleteModal] = useState(false)
+    const [updateWalletModal, setUpdateWalletModal] = useState(false)
+    const [partnerId, setPartnerId] = useState("")
 
     const deleteHandler = (s) => {
         const temp_data = {
@@ -38,12 +40,18 @@ const ServiceProvider = () => {
                 deleteModal={deleteModal}
                 setDeleteModal={setDeleteModal}
             />}
+            {
+                updateWalletModal && <UpdateWalletModal
+                    partnerId = {partnerId}
+                    updateWalletModal={updatePartnerWallet}
+                    setUpdateWalletModal={setUpdateWalletModal} />
+            }
             {addServiceProviderModal && <AddServiceProviderModal addServiceProviderModal={addServiceProviderModal} setAddServiceProviderModal={setAddServiceProviderModal} />}
             <Container fluid>
                 <Row className="my-2">
                     <Col >
                         <Button variant="primary" type="button" onClick={() => setAddServiceProviderModal(true)}>ADD SERVICE PROVIDER</Button>
-                        {loader ? <Loader  />: null}
+                        {loader ? <Loader /> : null}
                     </Col>
                 </Row>
                 <Row >
@@ -54,6 +62,7 @@ const ServiceProvider = () => {
                                     <th className="text-center">S.No ({serviceProviders.length})</th>
                                     <th className="text-center">Name</th>
                                     <th className="text-center">Phone Number</th>
+                                    <th className="text-center">Wallet Money</th>
                                     <th className="text-center">Initial Password</th>
                                     <th className="text-center">Profile Picture</th>
                                     <th className="text-center">Service Category</th>
@@ -62,6 +71,7 @@ const ServiceProvider = () => {
                                     <th className="text-center">Remark</th>
                                     <th className="text-center">Email</th>
                                     <th className="text-center">Hold/Unhold</th>
+                                    <th className="text-center">Wallet</th>
                                     <th className="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -71,6 +81,7 @@ const ServiceProvider = () => {
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-center">{s.name}</td>
                                         <td className="text-center">{s.phoneNumber}</td>
+                                        <td className="text-center">{s.wallet ? s.wallet : null}</td>
                                         <td className="text-center">{s.initialPassword}</td>
                                         <td className="text-center"><a href={s.imgUrl} target="_blank">{s.imgUrl && "url"} </a></td>
                                         <td className="text-center">{s.serviceCategoryId.length > 0 && s.serviceCategoryId.map(s => s.name).join(", ")}</td>
@@ -78,13 +89,17 @@ const ServiceProvider = () => {
                                         <td className="text-center">{s.zipcodes && s.zipcodes.join(', ')}</td>
                                         <td className="text-center">{s.remark}</td>
                                         <td className="text-center">{s.email}</td>
-                                        <td className="text-center">{s.isAccountOnHold ? 
-                                        <Button variant="outline-info" onClick={()=>{
-                                            dispatch(updateServiceProvider(s._id, {isAccountOnHold:false}))
-                                        }}>UNHOLD</Button>: 
-                                        <Button variant="outline-info" onClick={()=>{
-                                            dispatch(updateServiceProvider(s._id, {isAccountOnHold:true}))
-                                        }}>HOLD</Button>}</td>
+                                        <td className="text-center">{s.isAccountOnHold ?
+                                            <Button variant="outline-info" onClick={() => {
+                                                dispatch(updateServiceProvider(s._id, { isAccountOnHold: false }))
+                                            }}>UNHOLD</Button> :
+                                            <Button variant="outline-info" onClick={() => {
+                                                dispatch(updateServiceProvider(s._id, { isAccountOnHold: true }))
+                                            }}>HOLD</Button>}</td>
+                                        <td className="text-center"><Button variant="outline-info" onClick={() => {
+                                            setPartnerId(s._id)
+                                            setUpdateWalletModal(true)
+                                            }}>Add Amount</Button></td>
                                         <td className="text-center"><Button variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(s)} variant="outline-info">DELETE</Button></td>
                                     </tr>
                                 ) : null}
