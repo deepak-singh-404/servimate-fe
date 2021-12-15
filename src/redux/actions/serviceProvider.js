@@ -22,13 +22,16 @@ export const addServiceProvider = (serviceProviderCredentials,cb) => {
                 data: serviceProviderCredentials
             })
             dispatch(loader(false))
-            console.log("JUST WORKING", data)
+            
             if (data.success) {
                 dispatch({
                     type: "SET_SERVICEPROVIDER",
                     payload: data.response
                 })
                 cb()
+            }
+            else{
+                alert(data.message)
             }
         }
         catch (err) {

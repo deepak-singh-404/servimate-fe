@@ -14,6 +14,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [wallet, setWallet] = useState("")
     const [password, setPassword] = useState("")
     const [serviceCategory, setServiceCategory] = useState([])
     const [city, setCity] = useState("")
@@ -32,7 +33,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
         e.preventDefault()
 
         //MAKE SURE REQUIRED FIEDS ARE NOT EMPTY
-        if (name && phoneNumber && password && serviceCategory.length > 0 && city && pinCodes) {
+        if (name && phoneNumber && password && serviceCategory.length > 0 && city && pinCodes && wallet) {
             const tempCity = cityRoot.cities.find(c => c._id == city)
             let tempServiceCategory = serviceCategory.map(o => o._id)
             const zipcodes = pinCodes.split(',').map(function (item) {
@@ -43,6 +44,7 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
             formData.append("email", email)
             formData.append("password", password)
             formData.append("phoneNumber", phoneNumber)
+            formData.append("wallet", Number(wallet))
             formData.append("remark", remark)
             formData.append("zipcodes", JSON.stringify(zipcodes))
             formData.append("serviceCategory", JSON.stringify(tempServiceCategory))
@@ -97,6 +99,11 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
                         <Form.Group >
                             <Form.Label>Phone Number *</Form.Label>
                             <Form.Control required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="number" />
+                        </Form.Group>
+
+                        <Form.Group >
+                            <Form.Label>Wallet Money *</Form.Label>
+                            <Form.Control required value={wallet} onChange={(e) => setWallet(e.target.value)} type="number" />
                         </Form.Group>
 
                         <Form.Group >
