@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url =  'https://servimate-admin.herokuapp.com/'
+const url = 'https://servimate-admin.herokuapp.com/'
 const local_url = 'http://localhost:4000/'
 const partner_url = "https://servimate-partner.herokuapp.com/"
 
@@ -12,7 +12,7 @@ const loader = (data) => {
 }
 
 // ADD SERVICE PROVIDER
-export const addServiceProvider = (serviceProviderCredentials,cb) => {
+export const addServiceProvider = (serviceProviderCredentials, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
@@ -22,7 +22,7 @@ export const addServiceProvider = (serviceProviderCredentials,cb) => {
                 data: serviceProviderCredentials
             })
             dispatch(loader(false))
-            
+
             if (data.success) {
                 dispatch({
                     type: "SET_SERVICEPROVIDER",
@@ -30,13 +30,13 @@ export const addServiceProvider = (serviceProviderCredentials,cb) => {
                 })
                 cb()
             }
-            else{
+            else {
                 alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("ERROR: ",err.message)
+            alert("ERROR: ", err.message)
             console.log("Error in a AddServiceProvider", err.message)
         }
     }
@@ -86,7 +86,7 @@ export const deleteServiceProvider = (id, cb) => {
             })
             dispatch(loader(false))
             if (data.success) {
-                console.log("insode",data)
+                console.log("insode", data)
                 dispatch({
                     type: "DELETE_SERVICE_PROVIDER",
                     payload: data.response._id
@@ -151,14 +151,14 @@ export const reviewRegistrationRequest = (id) => {
 }
 
 //UPDATE SERVICE PROVIDER
-export const updateServiceProvider = (id,_data) => {
+export const updateServiceProvider = (_data, id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
                 url: url + `api/v1/serviceProvider/single/${id}`,
-                data:_data
+                data: _data
             })
             dispatch(loader(false))
             if (data.success) {
@@ -166,20 +166,21 @@ export const updateServiceProvider = (id,_data) => {
                     type: "UPDATE_SERVICE_PROVIDER",
                     payload: data.response
                 })
+                cb()
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Error: ",err.message)
+            alert("Error: ", err.message)
             console.log("Error in a updateServiceProvider", err)
         }
     }
 }
 
 //UPDATE SERVICEPROVIDER WALLET
-export const updatePartnerWallet = (id, _data,cb) => {
+export const updatePartnerWallet = (id, _data, cb) => {
     console.log("id", id)
-    console.log("data",_data)
+    console.log("data", _data)
     return async (dispatch) => {
         try {
             dispatch(loader(true))
@@ -199,7 +200,7 @@ export const updatePartnerWallet = (id, _data,cb) => {
         }
         catch (err) {
             dispatch(loader(false))
-            alert("ERROR: ",err.message)
+            alert("ERROR: ", err.message)
             console.log("Error in a updatePartnerWallet", err.message)
         }
     }

@@ -6,6 +6,7 @@ import { getServiceProviders, updatePartnerWallet, updateServiceProvider } from 
 import DeleteModal from '../../Components/DeleteModal'
 import Loader from '../../Components/Loader'
 import UpdateWalletModal from '../../Components/ServiceProvider/UpdateWalletModal'
+import UpdateServiceProviderModal from '../../Components/ServiceProvider/UpdateServiceproviderModal'
 
 
 const ServiceProvider = () => {
@@ -18,6 +19,8 @@ const ServiceProvider = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [updateWalletModal, setUpdateWalletModal] = useState(false)
     const [partnerId, setPartnerId] = useState("")
+    const [updateServiceProviderModal, setUpdateServiceProviderModal] = useState(false)
+    const [previousData, setPreviousData] = useState({})
 
     const deleteHandler = (s) => {
         const temp_data = {
@@ -38,14 +41,21 @@ const ServiceProvider = () => {
             {deleteModal && <DeleteModal
                 data={data}
                 deleteModal={deleteModal}
-                setDeleteModal={setDeleteModal}
-            />}
+                setDeleteModal={setDeleteModal} />
+            }
             {
                 updateWalletModal && <UpdateWalletModal
-                    partnerId = {partnerId}
+                    partnerId={partnerId}
                     updateWalletModal={updatePartnerWallet}
                     setUpdateWalletModal={setUpdateWalletModal} />
             }
+            {
+                updateServiceProviderModal && <UpdateServiceProviderModal
+                    previousData={previousData}
+                    updateServiceProviderModal={updateServiceProviderModal}
+                    setUpdateServiceProviderModal={setUpdateServiceProviderModal} />
+            }
+
             {addServiceProviderModal && <AddServiceProviderModal addServiceProviderModal={addServiceProviderModal} setAddServiceProviderModal={setAddServiceProviderModal} />}
             <Container fluid>
                 <Row className="my-2">
@@ -91,16 +101,27 @@ const ServiceProvider = () => {
                                         <td className="text-center">{s.email}</td>
                                         <td className="text-center">{s.isAccountOnHold ?
                                             <Button variant="outline-info" onClick={() => {
-                                                dispatch(updateServiceProvider(s._id, { isAccountOnHold: false }))
+                                                dispatch(updateServiceProvider({ isAccountOnHold: false },s._id,()=>{
+                                                    console.log("Success")
+                                                }))
                                             }}>UNHOLD</Button> :
                                             <Button variant="outline-info" onClick={() => {
-                                                dispatch(updateServiceProvider(s._id, { isAccountOnHold: true }))
+                                                dispatch(updateServiceProvider({ isAccountOnHold: true }, s._id, ()=>{
+                                                    console.log("Success")
+                                                }))
                                             }}>HOLD</Button>}</td>
                                         <td className="text-center"><Button variant="outline-info" onClick={() => {
                                             setPartnerId(s._id)
                                             setUpdateWalletModal(true)
-                                            }}>Add Amount</Button></td>
-                                        <td className="text-center"><Button variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(s)} variant="outline-info">DELETE</Button></td>
+                                        }}>Add Amount</Button></td>
+                                        <td className="text-center">
+                                            <Button variant="outline-info" onClick={() => {
+                                                setPreviousData(s)
+                                                setUpdateServiceProviderModal(true)
+                                            }}>UPDATE </Button> {" "}
+                                            <Button
+                                                onClick={() => deleteHandler(s)} variant="outline-info">DELETE</Button>
+                                        </td>
                                     </tr>
                                 ) : null}
                             </tbody>

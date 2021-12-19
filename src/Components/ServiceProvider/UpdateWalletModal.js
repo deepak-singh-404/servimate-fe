@@ -46,7 +46,7 @@ const UpdateWalletModal = ({ updateWalletModal, setUpdateWalletModal, partnerId 
 
                         <Form.Group>
                             <Form.Label>Amount</Form.Label>
-                            <Form.Control required value={amount} onChange={(e) => setAmount(e.target.value)} type="number" />
+                            <Form.Control required value={amount} onChange={(e) => setAmount(e.target.value)} type="text" />
                         </Form.Group>
 
                         {loader ? <Loader /> : <Button variant="primary" type="submit">
