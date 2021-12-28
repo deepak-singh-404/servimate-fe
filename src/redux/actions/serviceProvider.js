@@ -22,7 +22,6 @@ export const addServiceProvider = (serviceProviderCredentials, cb) => {
                 data: serviceProviderCredentials
             })
             dispatch(loader(false))
-
             if (data.success) {
                 dispatch({
                     type: "SET_SERVICEPROVIDER",
@@ -154,10 +153,11 @@ export const reviewRegistrationRequest = (id) => {
 export const updateServiceProvider = (_data, id, cb) => {
     return async (dispatch) => {
         try {
+            console.log(_data, id)
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: url + `api/v1/serviceProvider/single/${id}`,
+                url: local_url + `api/v1/serviceProvider/single/${id}`,
                 data: _data
             })
             dispatch(loader(false))
@@ -168,6 +168,7 @@ export const updateServiceProvider = (_data, id, cb) => {
                 })
                 cb()
             }
+            alert(data.message)
         }
         catch (err) {
             dispatch(loader(false))
@@ -179,8 +180,6 @@ export const updateServiceProvider = (_data, id, cb) => {
 
 //UPDATE SERVICEPROVIDER WALLET
 export const updatePartnerWallet = (id, _data, cb) => {
-    console.log("id", id)
-    console.log("data", _data)
     return async (dispatch) => {
         try {
             dispatch(loader(true))

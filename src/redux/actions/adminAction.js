@@ -47,6 +47,7 @@ export const adminRegister = (adminRegisterCredentials, history) => {
                 dispatch(adminLoginHelper(decoded.admin))
                 history.push('/home')
             }
+            alert(data.message)
         }
         catch (err) {
             dispatch(loader(false))
@@ -73,9 +74,10 @@ export const adminLogin = (adminLoginCredentials, history) => {
                 localStorage.setItem('servimateToken', token);
                 setAuthToken(token);
                 const decoded = jwt_decode(token);
-                dispatch(adminLoginHelper(decoded.admin))
+                dispatch(adminLoginHelper(decoded))
                 history.push('/booking/new')
             }
+            alert(data.message)
         }
         catch (err) {
             dispatch(loader(true))
