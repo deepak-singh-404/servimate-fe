@@ -9,6 +9,7 @@ const initialState = {
 const adminReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_ADMIN_DATA":
+            console.log("action.payload", action.payload)
             return {
                 ...state,
                 admin: action.payload,

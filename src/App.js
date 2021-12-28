@@ -37,7 +37,7 @@ import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
 if (window.localStorage.servimateToken) {
   setAuthToken(localStorage.servimateToken);
   const decoded = jwt_decode(localStorage.servimateToken);
-  store.dispatch(adminLoginHelper(decoded.admin))
+  store.dispatch(adminLoginHelper(decoded))
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(adminLogout());

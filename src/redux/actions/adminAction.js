@@ -74,10 +74,13 @@ export const adminLogin = (adminLoginCredentials, history) => {
                 localStorage.setItem('servimateToken', token);
                 setAuthToken(token);
                 const decoded = jwt_decode(token);
+                console.log("decoded", decoded)
                 dispatch(adminLoginHelper(decoded))
                 history.push('/booking/new')
             }
-            alert(data.message)
+            else{
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(true))
