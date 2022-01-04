@@ -4,8 +4,7 @@ import { Table, Container, Row, Col, Button } from 'react-bootstrap'
 import AddVoucherModal from '../../Components/Voucher/AddVoucherModal'
 import { getVouchers, redeemVoucher } from '../../redux/actions/voucher'
 import DeleteModal from '../../Components/DeleteModal'
-
-
+import UpdateVoucherModal from '../../Components/Voucher/UpdateVoucherModal'
 
 
 const Voucher = () => {
@@ -15,7 +14,10 @@ const Voucher = () => {
     const [addVoucherModal, setAddVoucherModal] = useState(false)
     const [data, setData] = useState("")
     const [deleteModal, setDeleteModal] = useState(false)
+    const [updateVoucherModal, setUpdateVoucherModal] = useState(false)
+    const [previousData, setPreviousData] = useState({})
     const [buttonDisable, setButtonDisable] = useState(false)
+
 
     useEffect(() => {
         dispatch(getVouchers())
@@ -59,6 +61,9 @@ const Voucher = () => {
 
     return (
         <>
+            {updateVoucherModal && <UpdateVoucherModal updateVoucherModal={updateVoucherModal}
+                setUpdateVoucherModal={setUpdateVoucherModal} previousData={previousData} />}
+
             {deleteModal && <DeleteModal
                 data={data}
                 deleteModal={deleteModal}
@@ -72,7 +77,6 @@ const Voucher = () => {
                     </Col>
                 </Row>
                 <Row>
-
                     <Col md={12} className="mt-5">
                         <Table striped bordered hover>
                             <thead>
@@ -116,7 +120,10 @@ const Voucher = () => {
                                             }))
                                             setButtonDisable(true)
                                         }}>Redeem</Button></td>
-                                        <td className="text-center"><Button variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(v)} variant="outline-info">DELETE</Button></td>
+                                        <td className="text-center"><Button onClick= {()=>{
+                                            setPreviousData(v)
+                                            setUpdateVoucherModal(true)
+                                        }} variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(v)} variant="outline-info">DELETE</Button></td>
                                     </tr>
                                 ) : null}
                             </tbody>
@@ -124,7 +131,6 @@ const Voucher = () => {
                     </Col>
                 </Row>
             </Container>
-
         </>
     )
 }

@@ -123,3 +123,33 @@ export const redeemVoucher = (id, cb) => {
         }
     }
 }
+
+//UPDATE VOUCHER
+export const updateVoucher = (id, _data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: prod_url + `dev/api/v1/voucher/${id}`,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_VOUCHER",
+                    payload: data.response
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("UPDATE VOUCHER ", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
