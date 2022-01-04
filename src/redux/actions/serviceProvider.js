@@ -1,7 +1,5 @@
 import axios from 'axios'
-const url = 'https://servimate-admin.herokuapp.com/'
-const local_url = 'http://localhost:4000/'
-const partner_url = "https://servimate-partner.herokuapp.com/"
+import {local_url, prod_url} from '../../config/constant'
 
 // COMMON LOADER
 const loader = (data) => {
@@ -18,7 +16,7 @@ export const addServiceProvider = (serviceProviderCredentials, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/serviceProvider",
+                url: prod_url + "api/v1/serviceProvider",
                 data: serviceProviderCredentials
             })
             dispatch(loader(false))
@@ -35,8 +33,8 @@ export const addServiceProvider = (serviceProviderCredentials, cb) => {
         }
         catch (err) {
             dispatch(loader(false))
-            alert("ERROR: ", err.message)
-            console.log("Error in a AddServiceProvider", err.message)
+            console.log("ADD SERVICE PROVIDER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -48,7 +46,7 @@ export const getServiceProviders = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/serviceProvider",
+                url: prod_url + "api/v1/serviceProvider",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -65,11 +63,14 @@ export const getServiceProviders = () => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getServiceProviders", err.message)
+            console.log("GET SERVICE PROVIDERS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -81,7 +82,7 @@ export const deleteServiceProvider = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/serviceProvider/${id}`,
+                url: prod_url + `api/v1/serviceProvider/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -92,11 +93,14 @@ export const deleteServiceProvider = (id, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteServiceProvider", err.message)
+            console.log("DELETE SERVICE PROVIDER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -108,7 +112,7 @@ export const getRegistrationRequest = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/serviceProvider/registrationRequest",
+                url: prod_url + "api/v1/serviceProvider/registrationRequest",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -117,10 +121,14 @@ export const getRegistrationRequest = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a getRegistrationRequest", err)
+            console.log("GET REGISTRATION REQUEST ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -132,7 +140,7 @@ export const reviewRegistrationRequest = (id) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: url + `api/v1/serviceProvider/registrationRequest/${id}`,
+                url: prod_url + `api/v1/serviceProvider/registrationRequest/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -141,10 +149,14 @@ export const reviewRegistrationRequest = (id) => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a reviewRegistrationRequest", err)
+            console.log("REVIEW REGISTRATION REQUEST ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -157,7 +169,7 @@ export const updateServiceProvider = (_data, id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: local_url + `api/v1/serviceProvider/single/${id}`,
+                url: prod_url + `api/v1/serviceProvider/single/${id}`,
                 data: _data
             })
             dispatch(loader(false))
@@ -168,12 +180,14 @@ export const updateServiceProvider = (_data, id, cb) => {
                 })
                 cb()
             }
-            alert(data.message)
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Error: ", err.message)
-            console.log("Error in a updateServiceProvider", err)
+            console.log("UPDATE SERVICE PROVIDER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -185,7 +199,7 @@ export const updatePartnerWallet = (id, _data, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: url + `api/v1/serviceProvider/wallet/${id}`,
+                url: prod_url + `api/v1/serviceProvider/wallet/${id}`,
                 data: _data
             })
             dispatch(loader(false))
@@ -196,11 +210,14 @@ export const updatePartnerWallet = (id, _data, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("ERROR: ", err.message)
-            console.log("Error in a updatePartnerWallet", err.message)
+            console.log("UPDATE PARTNER WALLET ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

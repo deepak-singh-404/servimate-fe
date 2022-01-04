@@ -1,7 +1,5 @@
 import axios from 'axios'
-const url = 'https://servimate-admin.herokuapp.com/'
-const dev_url = "https://servimate-server-admin-dev.herokuapp.com/"
-const local_url = 'http://localhost:4000/'
+import { local_url, prod_url } from '../../config/constant'
 
 
 const loader = (data) => {
@@ -32,15 +30,13 @@ export const setServices = (data) => {
     }
 }
 
-
-
 export const addServiceCategory = (serviceCategoryCredentials) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: local_url + "api/v1/serviceCategory",
+                url: prod_url + "api/v1/serviceCategory",
                 data: serviceCategoryCredentials
             })
             dispatch(loader(false))
@@ -58,26 +54,27 @@ export const addServiceCategory = (serviceCategoryCredentials) => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addServiceCategoryAction", err.message)
+            console.log("ADD SERVICE CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
 export const updateServiceCategory = (id, _data, cb) => {
-    console.log("sdeewdsaxefdcsx", _data)
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: url + `api/v1/serviceCategory/${id}`,
+                url: prod_url + `api/v1/serviceCategory/${id}`,
                 data: _data
             })
-            console.log("data, --------------", data)
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
@@ -86,11 +83,14 @@ export const updateServiceCategory = (id, _data, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addServiceCategoryAction", err.message)
+            console.log("UPDATE SERVICE CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -102,7 +102,7 @@ export const getServiceCategories = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/serviceCategory/",
+                url: prod_url + "api/v1/serviceCategory/",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -116,11 +116,14 @@ export const getServiceCategories = () => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getServiceCategories", err.message)
+            console.log("GET SERVICE CATEGORIES ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -131,7 +134,7 @@ export const deleteServiceCategory = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/serviceCategory/${id}`,
+                url: prod_url + `api/v1/serviceCategory/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -141,11 +144,14 @@ export const deleteServiceCategory = (id, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteServiceCategory", err.message)
+            console.log("DELETE SERVICE CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -156,13 +162,13 @@ export const addServiceSubCategory = (serviceSubCategoryCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/serviceSubCategory",
+                url: prod_url + "api/v1/serviceSubCategory",
                 data: serviceSubCategoryCredentials
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"SET_SERVICE_SUB_CATEGORY",
+                    type: "SET_SERVICE_SUB_CATEGORY",
                     payload: data.response
                 })
                 dispatch({
@@ -174,11 +180,14 @@ export const addServiceSubCategory = (serviceSubCategoryCredentials) => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addServiceSubCategoryAction", err.message)
+            console.log("ADD SERVICE SUB CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -190,22 +199,25 @@ export const updateServiceSubCategory = (id, _data, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: url + `api/v1/serviceSubCategory/${id}`,
+                url: prod_url + `api/v1/serviceSubCategory/${id}`,
                 data: _data
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"UPDATE_SERVICE_SUB_CATEGORY",
+                    type: "UPDATE_SERVICE_SUB_CATEGORY",
                     payload: data.response
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a updateServiceSubCategoryAction", err.message)
+            console.log("UPDATE SERVICE SUB CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -216,7 +228,7 @@ export const getServiceSubCategories = (serviceCategoryId) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + `api/v1/serviceSubCategory/serviceCategory/${serviceCategoryId}`,
+                url: prod_url + `api/v1/serviceSubCategory/serviceCategory/${serviceCategoryId}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -225,11 +237,14 @@ export const getServiceSubCategories = (serviceCategoryId) => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getServiceCategories", err.message)
+            console.log("GET SERVICE SUB CATEGORIES ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -240,7 +255,7 @@ export const deleteServiceSubCategory = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/serviceSubCategory/${id}`,
+                url: prod_url + `api/v1/serviceSubCategory/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -250,11 +265,14 @@ export const deleteServiceSubCategory = (id, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteServiceSubCategory", err.message)
+            console.log("DELETE SERVICE SUB CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -265,7 +283,7 @@ export const deleteService = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/service/${id}`,
+                url: prod_url + `api/v1/service/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -275,11 +293,14 @@ export const deleteService = (id, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteService", err.message)
+            console.log("DELETE SERVICE ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -290,7 +311,7 @@ export const getServiceCategory = (id) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + `api/v1/serviceCategory/${id}`,
+                url: prod_url + `api/v1/serviceCategory/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -299,11 +320,14 @@ export const getServiceCategory = (id) => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getServiceCategories", err.message)
+            console.log("GET SERVICE CATEGORY", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -314,7 +338,7 @@ export const addService = (serviceCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/service",
+                url: prod_url + "api/v1/service",
                 data: serviceCredentials
             })
             dispatch(loader(false))
@@ -332,11 +356,14 @@ export const addService = (serviceCredentials) => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a AddServiceAction", err.message)
+            console.log("ADD SERVICE ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -348,7 +375,7 @@ export const updateService = (id, _data, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: url + `api/v1/service/${id}`,
+                url: prod_url + `api/v1/service/${id}`,
                 data: _data
             })
             dispatch(loader(false))
@@ -359,11 +386,14 @@ export const updateService = (id, _data, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a AddServiceAction", err.message)
+            console.log("UPDATE SERVICE ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -374,7 +404,7 @@ export const getServices = (id) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + `api/v1/service/${id}`
+                url: prod_url + `api/v1/service/${id}`
             })
             dispatch(loader(false))
             if (data.success) {
@@ -388,11 +418,14 @@ export const getServices = (id) => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured in getServices")
-            console.log("Error in a getServices", err.message)
+            console.log("GET SERVICE ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
@@ -404,7 +437,7 @@ export const getAllServiceSubCategory = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/serviceSubCategory"
+                url: prod_url + "api/v1/serviceSubCategory"
             })
             dispatch(loader(false))
             if (data.success) {
@@ -413,10 +446,14 @@ export const getAllServiceSubCategory = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a getAllServiceSubCategory", err.message)
+            console.log("GET ALL SERVICE SUB CATEGORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

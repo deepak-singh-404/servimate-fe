@@ -1,6 +1,5 @@
 import axios from 'axios'
-const url = 'https://servimate-admin.herokuapp.com/'
-const local_url = 'http://localhost:4000/'
+import { local_url, prod_url } from '../../config/constant'
 
 
 const loader = (data) => {
@@ -24,29 +23,28 @@ export const setBottomSliders = (data) => {
     }
 }
 
-export const setTopPicks = (data) =>{
+export const setTopPicks = (data) => {
     return {
         type: "SET_TOP_PICKS",
         payload: data
     }
 }
 
-export const setHomePageReviews = (data) =>{
+export const setHomePageReviews = (data) => {
     return {
         type: "SET_HOME_PAGE_REVIEWS",
         payload: data
     }
 }
 
-
-
-export const addBanners = (_data,cb) => {
+//ADD BANNERS
+export const addBanners = (_data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/homeScreen/banner",
+                url: prod_url + "api/v1/homeScreen/banner",
                 data: _data
             })
             dispatch(loader(false))
@@ -57,70 +55,79 @@ export const addBanners = (_data,cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addBanners", err.message)
+            console.log("ADD BANNERS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET BANNERS
 export const getBanners = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/homeScreen/banner",
+                url: prod_url + "api/v1/homeScreen/banner",
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(setBanners(data.response))
+            } else {
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getBanners", err.message)
+            console.log("GET BANNERS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
-
-export const deleteBanner = (id,cb) => {
+//DELETE BANNER
+export const deleteBanner = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/homeScreen/banner/${id}`,
+                url: prod_url + `api/v1/homeScreen/banner/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"DELETE_BANNER",
+                    type: "DELETE_BANNER",
                     payload: data.response
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteBanner", err.message)
+            console.log("DELETE BANNER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const addBottomSlider = (_data,cb) => {
+//ADD BOTTOM SLIDER
+export const addBottomSlider = (_data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/homeScreen/bottomSlider",
+                url: prod_url + "api/v1/homeScreen/bottomSlider",
                 data: _data
             })
             dispatch(loader(false))
@@ -131,68 +138,80 @@ export const addBottomSlider = (_data,cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addBottomSlider", err.message)
+            console.log("ADD BOTTOM SLIDER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET BOTTOM SLIDERS
 export const getBottomSliders = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/homeScreen/bottomSlider",
+                url: prod_url + "api/v1/homeScreen/bottomSlider",
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(setBottomSliders(data.response))
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getBottomSliders", err.message)
+            console.log("GET BOTTOM SLIDERS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const deleteBottomSlider = (id,cb) => {
+//DELETE BOTTOM SLIDER
+export const deleteBottomSlider = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/homeScreen/bottomSlider/${id}`,
+                url: prod_url + `api/v1/homeScreen/bottomSlider/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"DELETE_BOTTOM_SLIDER",
+                    type: "DELETE_BOTTOM_SLIDER",
                     payload: data.response
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteBottomSlider", err.message)
+            console.log("DELETE BOTTOM SLIDER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const addTopPick = (_data,cb) => {
+//ADD TOP PICK
+export const addTopPick = (_data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/homeScreen/topPick",
+                url: prod_url + "api/v1/homeScreen/topPick",
                 data: _data
             })
             dispatch(loader(false))
@@ -203,71 +222,80 @@ export const addTopPick = (_data,cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.messsage)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addTopPicks", err.message)
+            console.log("ADD TOP PICK ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
+//GET TOP PICKS
 export const getTopPicks = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/homeScreen/topPick",
+                url: prod_url + "api/v1/homeScreen/topPick",
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(setTopPicks(data.response))
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getTopPicks", err.message)
+            console.log("GET TOP PICKS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
-
-export const deleteTopPick = (id,cb) => {
+//DELETE TOP PICK
+export const deleteTopPick = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/homeScreen/topPick/${id}`,
+                url: prod_url + `api/v1/homeScreen/topPick/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"DELETE_TOP_PICK",
+                    type: "DELETE_TOP_PICK",
                     payload: data.response
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteTopPick", err.message)
+            console.log("DELETE TOP PICK ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const addHomeScreenReview = (_data,cb) => {
+//ADD HOME SCREEN REVIEW
+export const addHomeScreenReview = (_data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/homeScreen/homePageReview",
+                url: prod_url + "api/v1/homeScreen/homePageReview",
                 data: _data
             })
             dispatch(loader(false))
@@ -278,60 +306,68 @@ export const addHomeScreenReview = (_data,cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addHomePageReview", err.message)
+            console.log("ADD HOME SCREEN REVIEW ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
+//GET HOME PAGE REVIEWS
 export const getHomePageReviews = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/homeScreen/homePageReview",
+                url: prod_url + "api/v1/homeScreen/homePageReview",
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(setHomePageReviews(data.response))
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getHomePageReviews", err.message)
+            console.log("GET HOME PAGE REVIEWS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
-
-export const deleteHomePageReview = (id,cb) => {
+//DELETE HOME PAGE REVIEW
+export const deleteHomePageReview = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/homeScreen/homePageReview/${id}`,
+                url: prod_url + `api/v1/homeScreen/homePageReview/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"DELETE_HOME_PAGE_REVIEW",
+                    type: "DELETE_HOME_PAGE_REVIEW",
                     payload: data.response
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteHomePageReview", err.message)
+            console.log("DELETE HOME PAGE REVIEW ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

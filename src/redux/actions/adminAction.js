@@ -1,9 +1,7 @@
 import axios from 'axios'
+import { local_url, prod_url } from '../../config/constant'
 import setAuthToken from '../helper/setAuthToken'
 import jwt_decode from 'jwt-decode'
-const url =  'https://servimate-admin.herokuapp.com/'
-//const url = 'http://localhost:4000/'
-
 
 export const adminLoginHelper = (data) => {
     return {
@@ -12,14 +10,12 @@ export const adminLoginHelper = (data) => {
     }
 }
 
-
 const adminLogoutHelper = (data) => {
     return {
         type: "DELETE_ADMIN_DATA",
         payload: data
     }
 }
-
 
 const loader = (data) => {
     return {
@@ -28,14 +24,14 @@ const loader = (data) => {
     }
 }
 
-
+//ADMIN REGISTER
 export const adminRegister = (adminRegisterCredentials, history) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/admin/register",
+                url: prod_url + "api/v1/admin/register",
                 data: adminRegisterCredentials
             })
             dispatch(loader(false))
@@ -47,25 +43,27 @@ export const adminRegister = (adminRegisterCredentials, history) => {
                 dispatch(adminLoginHelper(decoded.admin))
                 history.push('/home')
             }
-            alert(data.message)
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in adminRegister Action", err.message)
+            console.log("ADD ADMIN ", err.response.data)
+            alert(err.response.data.message)
         }
 
     }
 }
 
-
+//ADMIN LOGIN
 export const adminLogin = (adminLoginCredentials, history) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/admin/login",
+                url: prod_url + "api/v1/admin/login",
                 data: adminLoginCredentials
             })
             dispatch(loader(false))
@@ -78,19 +76,20 @@ export const adminLogin = (adminLoginCredentials, history) => {
                 dispatch(adminLoginHelper(decoded))
                 history.push('/booking/new')
             }
-            else{
+            else {
                 alert(data.message)
             }
         }
         catch (err) {
-            dispatch(loader(true))
-            console.log("Error in adminLogin Action", err.message)
+            dispatch(loader(false))
+            console.log("ADMIN LOGIN ", err.response.data)
+            alert(err.response.data.message)
         }
 
     }
 }
 
-
+//ADMIN LOGOUT
 export const adminLogout = () => {
     return (dispatch) => {
         localStorage.removeItem('servimateToken');

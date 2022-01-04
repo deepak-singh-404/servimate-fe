@@ -1,8 +1,5 @@
 import axios from 'axios'
-const url =  'https://servimate-admin.herokuapp.com'
-const local_url = 'http://localhost:4000'
-
-
+import { local_url, prod_url } from '../../config/constant'
 
 const loader = (data) => {
     return {
@@ -11,13 +8,14 @@ const loader = (data) => {
     }
 }
 
+//GET ABANDONED CART
 export const getAbandonedCart = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "/dev/api/v1/abandonedCart",
+                url: prod_url + "dev/api/v1/abandonedCart",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -26,21 +24,26 @@ export const getAbandonedCart = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a getAbandonedCart", err.message)
+            console.log("GET ABANDONED CART ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET CUSTOMERS
 export const getCustomers = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "/dev/api/v1/customer",
+                url: prod_url + "dev/api/v1/customer",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -49,10 +52,14 @@ export const getCustomers = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a getCustomers", err.message)
+            console.log("GET CUSTOMERS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

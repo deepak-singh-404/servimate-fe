@@ -14,7 +14,6 @@ const ServiceProvider = () => {
     const { loader, serviceProviders } = serviceProviderRoot
     const dispatch = useDispatch()
     const [addServiceProviderModal, setAddServiceProviderModal] = useState(false)
-    // const [editCityModal, setEditCityModal] = useState(false)
     const [data, setData] = useState("")
     const [deleteModal, setDeleteModal] = useState(false)
     const [updateWalletModal, setUpdateWalletModal] = useState(false)

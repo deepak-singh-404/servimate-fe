@@ -1,9 +1,7 @@
 import axios from 'axios'
-const url = 'https://servimate-admin.herokuapp.com/dev'
-//const url = 'http://localhost:4000/'
+import { local_url, prod_url } from '../../config/constant'
 
-
-const aws_url = "https://servimate-admin.herokuapp.com/dev"
+console.log(prod_url)
 
 const loader = (data) => {
     return {
@@ -19,7 +17,7 @@ export const setCancellationRequest = (data) => {
     }
 }
 
-export const healthCheck = ()=>{
+export const healthCheck = () => {
     return async () => {
         try {
             const { data } = await axios({
@@ -33,14 +31,14 @@ export const healthCheck = ()=>{
     }
 }
 
-
+//GET NEW BOOKINGS
 export const getNewBookings = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "/api/v1/newBookings",
+                url: prod_url + "dev/api/v1/newBookings",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -49,47 +47,52 @@ export const getNewBookings = () => {
                     payload: data.response
                 })
             }
-        }
-        catch (err) {
-            dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getNewBookings", err.message)
-        }
-    }
-}
-
-export const adminCancelBooking = (id, cb) => {
-    return async (dispatch) => {
-        try {
-            console.log("id-------------------------------------", id)
-            dispatch(loader(true))
-            const { data } = await axios({
-                method: "Get",
-                url: url + `/api/v1/adminCancelService/${id}`,
-            })
-            console.log("data", data)
-            dispatch(loader(false))
-            if (data.success) {
-                cb()
+            else {
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in adminCancelBooking", err.message)
+            console.log("GET NEW BOOKINGS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//ADMIN CANCEL BOOKING
+export const adminCancelBooking = (id, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url + `dev/api/v1/adminCancelService/${id}`,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("ADMIN CANCEL BOOKING ", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
+//GET CURRENT BOOKINGS
 export const getCurrentBookings = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "/api/v1/bookings",
+                url: prod_url + "dev/api/v1/bookings",
             })
-            console.log("currentBookings", data)
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
@@ -97,22 +100,26 @@ export const getCurrentBookings = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getCurrentBookings", err.message)
+            console.log("GET CURRENT BOOKINGS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET BOOKING HISTORY
 export const getBookingHistory = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "/api/v1/bookingHistory",
+                url: prod_url + "dev/api/v1/bookingHistory",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -121,94 +128,98 @@ export const getBookingHistory = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getBookingHistory", err.message)
+            console.log("GET BOOKING HISTORY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET CANCELLATION REQUEST
 export const getCancellationRequest = (_data) => {
     return async (dispatch) => {
-        if(_data['isServiceProviderAssigned'] === true || _data['isServiceProviderAssigned'] === 'true' ){
+        if (_data['isServiceProviderAssigned'] === true || _data['isServiceProviderAssigned'] === 'true') {
             _data['isServiceProviderAssigned'] = true
         }
-        else{
+        else {
             _data['isServiceProviderAssigned'] = false
         }
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "/api/v1/cancellationRequest",
-                data:_data
+                url: prod_url + "dev/api/v1/cancellationRequest",
+                data: _data
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(setCancellationRequest(data.response))
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured in getCancellationRequest")
-            console.log("Error in a getCancellationRequest", err)
+            console.log("GET CANCELLATION REQUEST ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const approveCancellationRequest = (id,cb) => {
+//APPROVE CANCELLATION REQUEST
+export const approveCancellationRequest = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + `/api/v1/approveCancellationRequest/${id}`,
+                url: prod_url + `dev/api/v1/approveCancellationRequest/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
                 cb()
-                // dispatch({
-                //     type:"SET_APPROVED_CANCELLATION_REQUEST",
-                //     payload: data.response
-                // })
+            }
+            else {
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured in approveCancellationRequest")
-            console.log("Error in a approveCancellationRequest", err)
+            console.log("APPROVE CANCELLATION REQUEST ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//ASSIGN SERVICE PROVIDER
 export const assignServiceProvider = (cred, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "/api/v1/assignServiceProvider",
+                url: prod_url + "dev/api/v1/assignServiceProvider",
                 data: cred
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(loader(false))
-                //update the reducer
                 cb()
-
-                //updated 
-                // dispatch({
-                //     type: "SET_NEW_BOOKINGS",
-                //     payload: data.response
-                // })
+            }
+            else {
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a assignServiceProvider", err)
+            console.log("ASSIGN SERVICE PROVIDER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

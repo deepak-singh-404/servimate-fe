@@ -1,9 +1,5 @@
 import axios from 'axios'
-const url =  'https://servimate-admin.herokuapp.com/'
-//const dev_url = "https://servimate-server-admin-dev.herokuapp.com/"
-const local_url = 'http://localhost:4000/'
-
-
+import { local_url, prod_url } from '../../config/constant'
 
 const loader = (data) => {
     return {
@@ -12,14 +8,14 @@ const loader = (data) => {
     }
 }
 
-
-export const addVoucher = (voucher,cb) => {
+//ADD VOUCHER
+export const addVoucher = (voucher, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "dev/api/v1/voucher",
+                url: prod_url + "dev/api/v1/voucher",
                 data: voucher
             })
             dispatch(loader(false))
@@ -31,24 +27,25 @@ export const addVoucher = (voucher,cb) => {
                 cb()
             }
             else {
-                alert("Error Occured", data.message)
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a addVoucher", err.message)
+            console.log("ADD VOUCHER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
+//GET VOUCHERS
 export const getVouchers = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "dev/api/v1/vouchers",
+                url: prod_url + "dev/api/v1/vouchers",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -57,21 +54,26 @@ export const getVouchers = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a getVouchers", err)
+            console.log("GET VOUCHERS ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const deleteVoucher = (id,cb) => {
+//DELETE VOUCHER
+export const deleteVoucher = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `dev/api/v1/voucher/${id}`,
+                url: prod_url + `dev/api/v1/voucher/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -82,26 +84,27 @@ export const deleteVoucher = (id,cb) => {
                 cb()
             }
             else {
-                alert("Error Occured", data.message)
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a addVoucher", err.message)
+            console.log("DELETE VOUCHER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-export const redeemVoucher = (id,cb) => {
+//REDEEM VOUCHER
+export const redeemVoucher = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + `dev/api/v1/voucher/redeem/${id}`,
+                url: prod_url + `dev/api/v1/voucher/redeem/${id}`,
             })
             dispatch(loader(false))
-            console.log("data", data)
             if (data.success) {
                 dispatch({
                     type: "UPDATE_VOUCHER",
@@ -109,10 +112,14 @@ export const redeemVoucher = (id,cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("Error in a redeemVoucher", err.message)
+            console.log("REDEEM VOUCHER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

@@ -1,7 +1,5 @@
 import axios from 'axios'
-const url =  'https://servimate-admin.herokuapp.com/'
-const local_url = 'http://localhost:4000/'
-
+import { local_url, prod_url } from '../../config/constant'
 
 const loader = (data) => {
     return {
@@ -10,14 +8,14 @@ const loader = (data) => {
     }
 }
 
-
+//ADD CITY
 export const addCity = (cityCredentials) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "api/v1/city",
+                url: prod_url + "api/v1/city",
                 data: cityCredentials
             })
             dispatch(loader(false))
@@ -35,22 +33,26 @@ export const addCity = (cityCredentials) => {
                     payload: false
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a AddCityaction", err.message)
+            console.log("ADD CITY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//UPDATE CITY
 export const updateCity = (id, _data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: local_url + `api/v1/city/${id}`,
+                url: prod_url + `api/v1/city/${id}`,
                 data: _data
             })
             dispatch(loader(false))
@@ -61,22 +63,26 @@ export const updateCity = (id, _data, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a updateCityaction", err.message)
+            console.log("UPDATE CITY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET CITIES
 export const getCities = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "api/v1/city",
+                url: prod_url + "api/v1/city",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -85,23 +91,26 @@ export const getCities = () => {
                     payload: data.response
                 })
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a getCitiesAction", err.message)
+            console.log("GET CITIES ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
+//DELETE CITY
 export const deleteCity = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `api/v1/city/${id}`,
+                url: prod_url + `api/v1/city/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -111,11 +120,14 @@ export const deleteCity = (id, cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteCity", err.message)
+            console.log("DELETE CITY ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }

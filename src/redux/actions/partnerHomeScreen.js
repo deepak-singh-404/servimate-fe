@@ -1,6 +1,5 @@
 import axios from 'axios'
-const url = 'https://servimate-admin.herokuapp.com/'
-const local_url = 'http://localhost:4000/'
+import { local_url, prod_url } from '../../config/constant'
 
 
 const loader = (data) => {
@@ -17,13 +16,14 @@ export const setBanners = (data) => {
     }
 }
 
-export const addBanners = (_data,cb) => {
+//ADD BANNER
+export const addBanners = (_data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: url + "partner/api/v1/homeScreen/banner",
+                url: prod_url + "partner/api/v1/homeScreen/banner",
                 data: _data
             })
             dispatch(loader(false))
@@ -34,59 +34,67 @@ export const addBanners = (_data,cb) => {
                 })
                 cb()
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a addBanners", err.message)
+            console.log("ADD BANNER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
+//GET BANNERS
 export const getBanners = () => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: url + "partner/api/v1/homeScreen/banner",
+                url: prod_url + "partner/api/v1/homeScreen/banner",
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch(setBanners(data.response))
             }
+            else {
+                alert(data.message)
+            }
         }
         catch (err) {
             dispatch(loader(false))
-            alert(JSON.stringify(err.message))
-            console.log("Error in a getBanners", err.message)
+            console.log("GET ABANDONED CART ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
 
-
-
-export const partnerDeleteBanner = (id,cb) => {
+//PARTNER DELETE BANNER
+export const partnerDeleteBanner = (id, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: url + `partner/api/v1/homeScreen/banner/${id}`,
+                url: prod_url + `partner/api/v1/homeScreen/banner/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
                 dispatch({
-                    type:"PARTNER_DELETE_BANNER",
+                    type: "PARTNER_DELETE_BANNER",
                     payload: data.response
                 })
                 cb()
+            } else {
+                alert(data.message)
             }
         }
         catch (err) {
             dispatch(loader(false))
-            alert("Some error  occured")
-            console.log("Error in a deleteBanner", err.message)
+            console.log("PARTNER DELETE BANNER ", err.response.data)
+            alert(err.response.data.message)
         }
     }
 }
