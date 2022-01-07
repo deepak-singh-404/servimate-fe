@@ -165,7 +165,6 @@ export const reviewRegistrationRequest = (id) => {
 export const updateServiceProvider = (_data, id, cb) => {
     return async (dispatch) => {
         try {
-            console.log(_data, id)
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",

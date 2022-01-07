@@ -42,7 +42,7 @@ const RegistrationRequest = () => {
                                         <td className="text-center"></td>
                                             dispatch(reviewRegistrationRequest(s._id))
                                             // setButtonDisable(true)
-                                        }}>Redeem</Button></td>
+                                        }}>Approve</Button></td>
                                     </tr>
                                 ) : null}
                             </tbody>

@@ -24,16 +24,18 @@ const BookingHistory = () => {
                     S.No ({bookingHistory.length})
                   </th>
                   <th className="text-center">Booking Id</th>
-                  <th className="text-center">Final Price</th>
-                  <th className="text-center">Cart Price</th>
+                  <th className="text-center">Customer Name</th>
+                  <th className="text-center">SericeProvider Assigned</th>
+                  <th className="text-center">Final Amount</th>
+                  <th className="text-center">Cart Amount</th>
+                  <th className="text-center">Amount Received By Partner</th>
                   <th className="text-center">Services</th>
                   <th className="text-center">Booking time</th>
                   <th className="text-center">Service Date (yyyy/mm/dd)</th>
                   <th className="text-center">Time Slot</th>
                   <th className="text-center">Mode Of Payment</th>
                   <th className="text-center">Pay</th>
-                  <th className="text-center">Customer Name</th>
-                  <th className="text-center">SericeProvider Assigned</th>
+                  <th className="text-center">Feedback</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,19 +44,16 @@ const BookingHistory = () => {
                       <tr>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.bookingId}</td>
+                        <td className="text-center">{b.customer.name}</td>
+                        <td className="text-center">{b.serviceProviderName || "CANCELLED"}</td>
                         <td className="text-center">{b.finalPrice}</td>
                         <td className="text-center">{b.cartAmount}</td>
+                        <td className="text-center">{b.bookingJourney.amountPaidByCustomer}</td>
+            
                         <td>
-                          <tr>
-                            <td>Service</td>
-                            <td>Actual Price</td>
-                            <td>Discounted Price</td>
-                          </tr>
                           {b.services.map((d) => (
                             <tr>
-                              <td>{d.serviceName}</td>
-                              <td>{d.actualPrice}</td>
-                              <td>{d.discountedPrice}</td>
+                              <td>{d.serviceName} ({d.discountedPrice})</td>
                             </tr>
                           ))}
                         </td>
@@ -71,8 +70,7 @@ const BookingHistory = () => {
                             <string>Pending</string>
                           )}
                         </td>
-                        <td className="text-center">{b.customerName}</td>
-                        <td>{b.serviceProviderName}</td>
+                        <td className="text-center">{b.isFeedbackGivenByCustomer ? b.feedback : "NA"}</td>
                       </tr>
                     ))
                   : null}

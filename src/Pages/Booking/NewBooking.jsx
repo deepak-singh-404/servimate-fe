@@ -38,7 +38,7 @@ const NewBooking = () => {
       setBookings(tempData)
     }
     if (customerName) {
-      let tempData = newBookings.filter(o => o.customerName == customerName)
+      let tempData = newBookings.filter(o => o.customer.name == customerName)
       setBookings(tempData)
     }
   }, [date, bookingId, customerName])
@@ -130,13 +130,12 @@ const NewBooking = () => {
                   <tr>
                     <th className="text-center">S.No ({bookings.length})</th>
                     <th className="text-center">Booking Id</th>
-                    <th className="text-center">Final Price</th>
-                    <th className="text-center">Cart Price</th>
+                    <th className="text-center">Customer Name</th>
+                    <th className="text-center">Final Amount</th>
+                    <th className="text-center">Cart Amount</th>
                     <th className="text-center">Services
                       <tr>
-                        <td>Service</td>
-                        <td>Actual Price</td>
-                        <td>Discounted Price</td>
+                        <td>Service (Price)</td>
                       </tr>
                     </th>
                     <th className="text-center">Address</th>
@@ -145,7 +144,6 @@ const NewBooking = () => {
                     <th className="text-center">Time Slot</th>
                     <th className="text-center">Mode Of Payment</th>
                     <th className="text-center">Pay</th>
-                    <th className="text-center">Customer Name</th>
                     <th className="text-center">Assign Customer</th>
                     <th className="text-center">Cancel Service</th>
                   </tr>
@@ -156,22 +154,22 @@ const NewBooking = () => {
                       <tr>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.bookingId}</td>
+                        <td className="text-center">{b.customer.name}</td>
                         <td className="text-center">{b.finalPrice}</td>
                         <td className="text-center">{b.cartAmount}</td>
                         <td>
                           {b.services.map(d =>
                             <tr>
-                              <td>{d.serviceName}</td>
-                              <td>{d.actualPrice}</td>
-                              <td>{d.discountedPrice}</td>
+                              <td>{d.serviceName} ({d.discountedPrice})</td>
                             </tr>
                           )}
                         </td>
                         <td>
                           <tr>
                             <td>{b.address.name}</td>
-                            <td>{b.address.address}</td>
                             <td>{b.address.phoneNumber}</td>
+                            <td>{b.address.houseNo}</td>
+                            <td>{b.address.landmark}</td>
                             <td>{b.address.zipcode}</td>
                             <td>{b.address.city}</td>
                           </tr>
@@ -189,7 +187,6 @@ const NewBooking = () => {
                             <string>Pending</string>
                           )}
                         </td>
-                        <td className="text-center">{b.customerName}</td>
                         <td>
                           {b.isServiceProviderAssigned ? (
                             <Button disabled={true}>Assigned</Button>

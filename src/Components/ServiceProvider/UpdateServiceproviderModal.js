@@ -31,7 +31,7 @@ const UpdateServiceProviderModal = ({ updateServiceProviderModal, setUpdateServi
     const formHandler = (e) => {
         e.preventDefault()
         // MAKE SURE REQUIRED FIEDS ARE NOT EMPTY
-        if (name && email && phoneNumber && serviceCategory.length > 0 && pinCodes) {
+        if (name && email && phoneNumber && serviceCategory.length > 0 && pinCodes && city) {
             let tempCity = {}
             if (city) {
                 tempCity = cityRoot.cities.find(c => c._id == city)
@@ -72,7 +72,6 @@ const UpdateServiceProviderModal = ({ updateServiceProviderModal, setUpdateServi
         }
         else {
             alert("Fields are empty")
-            console.log({ name, email, phoneNumber, serviceCategory, city, pinCodes })
             return
         }
     }

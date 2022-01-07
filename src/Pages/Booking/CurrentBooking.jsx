@@ -76,7 +76,7 @@ const CurrentBooking = () => {
           <Col md={3}>
             <Form className="d-flex">
               <Form.Group>
-                <Form.Label> Service Date</Form.Label>
+                <Form.Label> Service Provider</Form.Label>
                 <Typeahead
                   id="basic-typeahead-single"
                   labelKey="name"
@@ -96,16 +96,18 @@ const CurrentBooking = () => {
                 <tr>
                   <th className="text-center">S.No ({bookings.length})</th>
                   <th className="text-center">Booking Id</th>
-                  <th className="text-center">Final Price</th>
-                  <th className="text-center">Cart Price</th>
+                  <th className="text-center">Customer Name</th>
+                  <th className="text-center">SericeProvider Assigned</th>
+                  <th className="text-center">Final Amount</th>
+                  <th className="text-center">Cart Amount</th>
                   <th className="text-center">Services</th>
                   <th className="text-center">Booking time</th>
                   <th className="text-center">Service Date (yyyy/mm/dd)</th>
                   <th className="text-center">Time Slot</th>
                   <th className="text-center">Mode Of Payment</th>
                   <th className="text-center">Pay</th>
-                  <th className="text-center">Customer Name</th>
-                  <th className="text-center">SericeProvider Assigned</th>
+                  
+                  
                 </tr>
               </thead>
               <tbody>
@@ -114,24 +116,18 @@ const CurrentBooking = () => {
                     <tr>
                       <td className="text-center">{index + 1}</td>
                       <td className="text-center">{b.bookingId}</td>
+                      <td className="text-center">{b.customer.name}</td>
+                      <td className="text-center">{b.serviceProviderName}</td>
                       <td className="text-center">{b.finalPrice}</td>
                       <td className="text-center">{b.cartAmount}</td>
                       <td>
-                        <tr>
-                          <td>Service</td>
-                          <td>Actual Price</td>
-                          <td>Discounted Price</td>
-                        </tr>
                         {b.services.map((d) => (
                           <tr>
-                            <td>{d.serviceName}</td>
-                            <td>{d.actualPrice}</td>
-                            <td>{d.discountedPrice}</td>
+                            <td>{d.serviceName} ({d.discountedPrice})</td>
                           </tr>
                         ))}
                       </td>
 
-                      <td className="text-center">{b.price}</td>
                       <td className="text-center">
                         <Moment>{b.timeOfBooking}</Moment>
                       </td>
@@ -145,8 +141,7 @@ const CurrentBooking = () => {
                           <string>Pending</string>
                         )}
                       </td>
-                      <td className="text-center">{b.customerName}</td>
-                      <td>{b.serviceProviderName}</td>
+                    
                     </tr>
                   ))
                 ) : (
