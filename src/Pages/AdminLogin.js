@@ -46,7 +46,7 @@ const AdminLogin = () => {
                 <Form onSubmit={formHandler}>
                     <Form.Group >
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control value={admin.phoneNumber} onChange={(e) => setAdmin({ ...admin, phoneNumber: e.target.value })} type="number" placeholder="Enter Phone Number" />
+                        <Form.Control value={admin.phoneNumber} onChange={(e) => setAdmin({ ...admin, phoneNumber: e.target.value })} type="text" placeholder="Enter Phone Number" />
                     </Form.Group>
                     <Form.Group >
                         <Form.Label>Password</Form.Label>

@@ -74,7 +74,7 @@ const UserRegistration = () => {
                 </Form.Group>
                 <Form.Group >
                     <Form.Label>Phone Number</Form.Label>
-                    <Form.Control value={user.phoneNumber} onChange={(e)=>setUser({...user, phoneNumber:e.target.value})} type="number" placeholder="Enter PhoneNumber"/>
+                    <Form.Control value={user.phoneNumber} onChange={(e)=>setUser({...user, phoneNumber:e.target.value})} type="text" placeholder="Enter PhoneNumber"/>
                 </Form.Group>
                 <Form.Group >
                     <Form.Label>Password</Form.Label>

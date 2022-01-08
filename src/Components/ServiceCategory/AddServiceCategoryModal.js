@@ -25,10 +25,10 @@ const AddServiceCategoryModal = ({
     const tempCheck = checkedCity
     let index
     if (e.target.checked) {
-      tempCheck.push(e.target.value)
+      tempCheck.push(JSON.parse(e.target.value))
     }
     else {
-      index = tempCheck.indexOf(e.target.value)
+      index = tempCheck.indexOf(JSON.parse(e.target.value))
       tempCheck.splice(index, 1)
     }
     setCheckedCity(tempCheck)
@@ -61,9 +61,9 @@ const AddServiceCategoryModal = ({
     if (iconUrl !== "") {
       formData.append("iconUrl", iconUrl);
     }
-    formData.append("cities", checkedCity)
+    formData.append("cities", JSON.stringify(checkedCity))
     formData.append("minAmountForCheckout", Number(minAmountForCheckout))
-    formData.append("partnerShare", partnerShare)
+    formData.append("partnerShare", Number(partnerShare))
     dispatch(addServiceCategory(formData));
     setName("")
     setMinAmountForCheckout(0)
@@ -94,7 +94,7 @@ const AddServiceCategoryModal = ({
               <Form.Control
                 value={minAmountForCheckout}
                 onChange={(e) => setMinAmountForCheckout(e.target.value)}
-                type="number"
+                type="text"
               />
             </Form.Group>
             <Form.Group>
@@ -103,7 +103,7 @@ const AddServiceCategoryModal = ({
                 required
                 value={partnerShare}
                 onChange={(e) => setPartnerShare(e.target.value)}
-                type="number"
+                type="text"
               />
             </Form.Group>
 
@@ -121,7 +121,7 @@ const AddServiceCategoryModal = ({
                   cities.map((obj, index) =>
                     <tr>
                       <td><div className="form-check">
-                        <input className="form-check-input" type="checkbox" value={obj._id} onChange={handleInputChange} id="defaultCheck1" />
+                        <input className="form-check-input" type="checkbox" value={JSON.stringify({ cityId: obj._id, cityName: obj.name })} onChange={handleInputChange} id="defaultCheck1" />
                       </div></td>
                       <td key={index}>{obj.name}</td>
                     </tr>

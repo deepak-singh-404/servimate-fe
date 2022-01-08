@@ -106,10 +106,10 @@ const UpdateServiceModal = ({
                     <tr key={o._id}>
                       <td>{o.cityName}</td>
                       <td><div className="form-check">
-                        <input className="form-control" value={o.actualPrice} required type="number" onChange={(e) => handleInputChange(o._id, o.cityName, "actualPrice", e.target.value)} id="defaultCheck1" />
+                        <input className="form-control" value={o.actualPrice} required type="text" onChange={(e) => handleInputChange(o._id, o.cityName, "actualPrice", e.target.value)} id="defaultCheck1" />
                       </div></td>
                       <td><div className="form-check">
-                        <input className="form-control" value={o.discountedPrice} required type="number" onChange={(e) => handleInputChange(o._id, o.cityName, "discountedPrice", e.target.value)} id="defaultCheck1" />
+                        <input className="form-control" value={o.discountedPrice} required type="text" onChange={(e) => handleInputChange(o._id, o.cityName, "discountedPrice", e.target.value)} id="defaultCheck1" />
                       </div></td>
                     </tr>
                   )}

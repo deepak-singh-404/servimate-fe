@@ -7,7 +7,6 @@ import { NavDropdown, Navbar, Nav, Form, FormControl, Button } from 'react-boots
 
 const AdminNavbar = () => {
     const admin = useSelector(store => store.adminRoot.admin)
-    console.log("admin", admin)
     const { name } = admin
     const history = useHistory()
     const dispatch = useDispatch()

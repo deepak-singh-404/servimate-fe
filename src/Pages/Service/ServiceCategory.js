@@ -6,7 +6,7 @@ import { getServiceCategories, setServiceSubCategories } from "../../redux/actio
 import ServiceCategoryModal from "../../Components/ServiceCategory/AddServiceCategoryModal";
 import UpdateServiceCategoryModal from '../../Components/ServiceCategory/UpdateServiceCategoryModal'
 import DeleteModal from '../../Components/DeleteModal'
-import { getCities } from "../../redux/actions/cityAction";
+import Loader from "../../Components/Loader";
 
 const ServiceCategory = () => {
   const serviceRoot = useSelector((store) => store.serviceRoot);
@@ -62,6 +62,7 @@ const ServiceCategory = () => {
             <Button onClick={() => setAddServiceCategoryModal(true)}>
               ADD SERVICE-CATEGORY
             </Button>
+            {loader ? <Loader /> : null}
           </Col>
         </Row>
         <Row>
@@ -87,7 +88,7 @@ const ServiceCategory = () => {
                                         <td className="text-center">{serviceCategory.minAmountForCheckout}</td>
                                         <td className="text-center">{serviceCategory.partnerShare ? serviceCategory.partnerShare : null}</td>
                                         <td className="text-center"><a href={serviceCategory.iconUrl} target="_blank">{serviceCategory.iconUrl && "url"} </a></td>
-                                        <td className="text-center">{serviceCategory.cities.map(e => e.name).join(", ")}</td>
+                                        <td className="text-center">{serviceCategory.cities.map(e => e.cityName).join(", ")}</td>
                                         <td className="text-center"><Button onClick={() => {
                                           setUpdateServiceCategoryModal(true)
                                           setUpdateData(serviceCategory)

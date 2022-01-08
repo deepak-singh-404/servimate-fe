@@ -98,12 +98,12 @@ const AddServiceProviderModal = ({ addServiceProviderModal, setAddServiceProvide
 
                         <Form.Group >
                             <Form.Label>Phone Number *</Form.Label>
-                            <Form.Control required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="number" />
+                            <Form.Control required value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group >
                             <Form.Label>Wallet Money *</Form.Label>
-                            <Form.Control required value={wallet} onChange={(e) => setWallet(e.target.value)} type="number" />
+                            <Form.Control required value={wallet} onChange={(e) => setWallet(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group >

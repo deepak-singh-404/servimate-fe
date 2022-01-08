@@ -89,6 +89,7 @@ useEffect(() => {
 
 return (
   <>
+  {loader ? <Loader /> : null}
     <Modal show={addServiceModal} onHide={() => setAddServiceModal(false)}>
       <Modal.Header closeButton>
         <Modal.Title>SERVICE</Modal.Title>
@@ -115,12 +116,12 @@ return (
               <tbody>
                 {singleServiceCategory.cities.map(o =>
                   <tr key={o._id}>
-                    <td>{o.name}</td>
+                    <td>{o.cityName}</td>
                     <td><div className="form-check">
-                      <input className="form-control" required type="number" onChange={(e) => handleInputChange(o._id, o.name, "actualPrice", e.target.value)} id="defaultCheck1" />
+                      <input className="form-control" required type="text" onChange={(e) => handleInputChange(o.cityId, o.cityName, "actualPrice", e.target.value)} id="defaultCheck1" />
                     </div></td>
                     <td><div className="form-check">
-                      <input className="form-control" required type="number" onChange={(e) => handleInputChange(o._id, o.name, "discountedPrice", e.target.value)} id="defaultCheck1" />
+                      <input className="form-control" required type="text" onChange={(e) => handleInputChange(o.cityId, o.cityName, "discountedPrice", e.target.value)} id="defaultCheck1" />
                     </div></td>
                   </tr>
                 )}

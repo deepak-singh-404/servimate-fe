@@ -108,7 +108,7 @@ const UpdateVoucherModal = ({ updateVoucherModal, setUpdateVoucherModal, previou
                         </Form.Group>
                         <Form.Group >
                             <Form.Label>Discount</Form.Label>
-                            <Form.Control min="0" required value={discount} onChange={(e) => setDiscount(e.target.value)} type="number" />
+                            <Form.Control min="0" required value={discount} onChange={(e) => setDiscount(e.target.value)} type="text" />
                         </Form.Group>
                         <Form.Group >
                             <Form.Label>Apply To</Form.Label>
@@ -133,17 +133,17 @@ const UpdateVoucherModal = ({ updateVoucherModal, setUpdateVoucherModal, previou
 
                         <Form.Group>
                             <Form.Label>Total No Uses For This Coupon</Form.Label>
-                            <Form.Control required value={totalNoUses} onChange={(e) => setTotalNoUses(e.target.value)} type="number" />
+                            <Form.Control required value={totalNoUses} onChange={(e) => setTotalNoUses(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Limit To One Use Per Customer</Form.Label>
-                            <Form.Control value={limitToOneUser} onChange={(e) => setLimitToOneUser(e.target.value)} type="number" />
+                            <Form.Control value={limitToOneUser} onChange={(e) => setLimitToOneUser(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Min Price</Form.Label>
-                            <Form.Control value={minPrice} onChange={(e) => setMinPrice(e.target.value)} type="number" />
+                            <Form.Control value={minPrice} onChange={(e) => setMinPrice(e.target.value)} type="text" />
                         </Form.Group>
 
                         {voucherRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
