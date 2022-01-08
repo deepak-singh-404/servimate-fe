@@ -36,7 +36,7 @@ export const addServiceCategory = (serviceCategoryCredentials) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: local_url + "api/v1/serviceCategory",
+                url: prod_url + "api/v1/serviceCategory",
                 data: serviceCategoryCredentials
             })
             dispatch(loader(false))
@@ -72,7 +72,7 @@ export const updateServiceCategory = (id, _data, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: local_url + `api/v1/serviceCategory/${id}`,
+                url: prod_url + `api/v1/serviceCategory/${id}`,
                 data: _data
             })
             dispatch(loader(false))
@@ -102,7 +102,7 @@ export const getServiceCategories = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: local_url + "api/v1/serviceCategory/",
+                url: prod_url + "api/v1/serviceCategory/",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -134,7 +134,7 @@ export const deleteServiceCategory = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: local_url + `api/v1/serviceCategory/${id}`,
+                url: prod_url + `api/v1/serviceCategory/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -283,7 +283,7 @@ export const deleteService = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: local_url + `api/v1/service/${id}`,
+                url: prod_url + `api/v1/service/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
@@ -311,7 +311,7 @@ export const getServiceCategory = (id) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: local_url + `api/v1/serviceCategory/${id}`,
+                url: prod_url + `api/v1/serviceCategory/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
