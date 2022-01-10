@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { adminLogout } from '../redux/actions/adminAction'
-import { NavDropdown, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
+import { NavDropdown, Navbar, Nav, Button } from 'react-bootstrap'
 
 
 const AdminNavbar = () => {
@@ -26,34 +26,36 @@ const AdminNavbar = () => {
                         <Nav.Link><Link to="/serviceCategory">SERVICE CATEGORY</Link></Nav.Link>
                         <NavDropdown title="PARTNER" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/partner">SERVICE PROVIDER</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/partner/registrationRequest">REGISTRATION REQUEST</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/partner/homeScreen/banner">HOME SCREEN BANNER</Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item><Link to="/partner/screen/slider">SLIDER SCREEN</Link></NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link><Link to="/city">CITY</Link></Nav.Link>
                         <Nav.Link><Link to="/voucher">VOUCHER</Link></Nav.Link>
                         <NavDropdown title="CUSTOMER" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/customer">Customers</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/abandonedCart">Abandoned Cart</Link></NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="BOOKING" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/booking/new">New Bookings</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/booking/current">Current Bookings</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/booking/history">Bookings History</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/cancellationRequests">Cancellation Requests</Link></NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="HOME SCREEN" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/homeScreen/banner">BANNER</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/homeScreen/bottomSlider">BOTTOM SLIDER</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/homeScreen/topPick">TOP PICK</Link></NavDropdown.Item>
-                            <NavDropdown.Divider/>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/homeScreen/homeScreenReview">HOME SCREEN REVIEW</Link></NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Button} onClick={logoutHandler} variant="outline-danger">Logout</Nav.Link>

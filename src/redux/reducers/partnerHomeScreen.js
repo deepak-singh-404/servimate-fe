@@ -1,6 +1,7 @@
 const initialState = {
     banners: [],
     loader: false,
+    sliderScreens: []
 }
 
 const partnerHomeScreen = (state = initialState, action) => {
@@ -24,6 +25,23 @@ const partnerHomeScreen = (state = initialState, action) => {
             return {
                 ...state,
                 banners: state.banners.filter(obj => {
+                    return obj._id !== action.payload._id
+                }),
+            }
+        case "PARTNER_SET_SLIDER_SCREEN":
+            return {
+                ...state,
+                sliderScreens: [...state.sliderScreens, action.payload],
+            }
+        case "PARTNER_SET_SLIDER_SCREENS":
+            return {
+                ...state,
+                sliderScreens: action.payload,
+            }
+        case "PARTNER_DELETE_SLIDER_SCREEN":
+            return {
+                ...state,
+                sliderScreens: state.sliderScreens.filter(obj => {
                     return obj._id !== action.payload._id
                 }),
             }
