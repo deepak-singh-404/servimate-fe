@@ -16,6 +16,7 @@ export const setBanners = (data) => {
     }
 }
 
+
 //ADD BANNER
 export const addBanners = (_data, cb) => {
     return async (dispatch) => {
@@ -23,7 +24,7 @@ export const addBanners = (_data, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: prod_url + "partner/api/v1/homeScreen/banner",
+                url: prod_url + "api/v1/serviceProvider/banner",
                 data: _data
             })
             dispatch(loader(false))
@@ -53,7 +54,7 @@ export const getBanners = () => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: prod_url + "partner/api/v1/homeScreen/banner",
+                url: prod_url + "api/v1/serviceProvider/banner",
             })
             dispatch(loader(false))
             if (data.success) {
@@ -78,7 +79,7 @@ export const partnerDeleteBanner = (id, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Delete",
-                url: prod_url + `partner/api/v1/homeScreen/banner/${id}`,
+                url: prod_url + `api/v1/serviceProvider/banner/${id}`,
             })
             dispatch(loader(false))
             if (data.success) {
