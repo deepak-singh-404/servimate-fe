@@ -85,7 +85,7 @@ const ServiceProvider = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {serviceProviders.length !== 0 ? serviceProviders.map((s, index) =>
+                                {serviceProviders.map((s, index) =>
                                     <tr>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-center">{s.name}</td>
@@ -122,7 +122,7 @@ const ServiceProvider = () => {
                                                 onClick={() => deleteHandler(s)} variant="outline-info">DELETE</Button>
                                         </td>
                                     </tr>
-                                ) : null}
+                                )}
                             </tbody>
                         </Table>
                     </Col>
