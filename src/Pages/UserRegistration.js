@@ -13,7 +13,6 @@ Geocode.setApiKey(googleApikey)
 Geocode.enableDebug()
 
 
-
 const UserRegistration = () => {
     const dispatch  =  useDispatch()
     const data = useSelector((store)=>store.userRoot)

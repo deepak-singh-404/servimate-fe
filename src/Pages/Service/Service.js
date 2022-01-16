@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table, Container, Row, Col, Button } from 'react-bootstrap'
 import AddServiceModal from '../../Components/Service/AddServiceModal'
-import { getCities } from '../../redux/actions/cityAction'
 import { getServices, setServices } from '../../redux/actions/serviceAction'
 import DeleteModal from '../../Components/DeleteModal'
 import UpdateServiceModal from '../../Components/Service/UpdateServiceModal'
@@ -19,7 +18,6 @@ const Service = (props) => {
     const [previousData, setPreviousData] = useState({})
 
     useEffect(() => {
-        // dispatch(getCities())
         dispatch(getServices(props.match.params.serviceSubCategoryId))
         return ()=>{
             dispatch(setServices([]))

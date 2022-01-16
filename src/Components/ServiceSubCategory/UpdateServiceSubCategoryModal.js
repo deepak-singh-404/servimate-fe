@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Modal } from "react-bootstrap";
 import { updateServiceSubCategory } from "../../redux/actions/serviceAction";

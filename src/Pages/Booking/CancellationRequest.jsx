@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { timeStampHelper } from '../../utils/commonFunction'
 import {
   Container,
   Row,
@@ -13,7 +14,6 @@ import {
   getCancellationRequest,
   approveCancellationRequest,
 } from "../../redux/actions/booking";
-import Moment from "react-moment";
 import Loader from "../../Components/Loader";
 
 const CancellationRequest = () => {
@@ -117,7 +117,7 @@ const CancellationRequest = () => {
                       </td>
                       <td className="text-center">{b.price}</td>
                       <td className="text-center">
-                        <Moment>{b.timeOfBooking}</Moment>
+                        {timeStampHelper(b.createdAt)["date"] + " / " + timeStampHelper(b.createdAt)["time"]}
                       </td>
                       <td className="text-center">{b.serviceDate}</td>
                       <td className="text-center">{b.timeSlot}</td>

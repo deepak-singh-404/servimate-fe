@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {Modal, Button, Form} from 'react-bootstrap'
 import {addBanners} from '../../redux/actions/partnerHomeScreen'

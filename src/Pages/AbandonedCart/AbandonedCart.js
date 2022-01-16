@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table, Button, Card, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { getAbandonedCart } from "../../redux/actions/commonAction";
 
 
@@ -35,7 +35,7 @@ const Abandoned = () => {
                       <td className="text-center">{a.name}</td>
                       <td className="text-center">{a.phoneNumber}</td>
                       <td className="text-center">{a.cart.length}</td>
-                      <td className="text-center">{a.cart.map(o=><>{o.serviceName} <br/></>)}</td>
+                      <td className="text-center">{a.cart.map(o => <>{o.serviceName} <br /></>)}</td>
                       {/* <td>
                         <Table striped bordered hover>
                           <thead>

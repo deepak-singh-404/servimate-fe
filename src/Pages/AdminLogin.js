@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { adminLogin } from '../redux/actions/adminAction'
-import { getNewBookings, healthCheck } from '../redux/actions/booking'
+import { healthCheck } from '../redux/actions/booking'
 import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 
 
@@ -24,7 +24,7 @@ const AdminLogin = () => {
 
     useEffect(() => {
         if (data.isAuthenticated) {
-            history.push('/serviceCategory')
+            history.push('/booking/new')
         }
         dispatch(healthCheck())
     }, [])
@@ -54,7 +54,7 @@ const AdminLogin = () => {
                     </Form.Group>
                     {loader ? <Loader /> : <Button variant="outline-primary" type="submit">
                         Submit
-        </Button>}
+                    </Button>}
                 </Form>
             </Col>
         </Row>

@@ -7,9 +7,8 @@ import {
 } from "../../redux/actions/booking";
 import { getServiceProviders } from "../../redux/actions/serviceProvider";
 import AssignServiceProviderModal from "../../Components/Booking/AssignServiceProviderModal";
-import Moment from "react-moment";
 import Loader from "../../Components/Loader";
-import moment from 'moment'
+import { timeStampHelper } from '../../utils/commonFunction'
 
 const NewBooking = () => {
   const { newBookings, loader } = useSelector((store) => store.bookingRoot);
@@ -20,9 +19,7 @@ const NewBooking = () => {
   const [date, setDate] = useState("")
   const [bookingId, setBookingId] = useState("")
   const [customerName, setCustomerName] = useState("")
-
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     setBookings(newBookings)
@@ -120,37 +117,35 @@ const NewBooking = () => {
             <Button onClick={refreshHandler}>Refresh</Button>
           </Col>
         </Row>
-        <Row className="mt-2">
-          <Col>
-            {loader ? (
-              <Loader />
-            ) : (
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th className="text-center">S.No ({bookings.length})</th>
-                    <th className="text-center">Booking Id</th>
-                    <th className="text-center">Customer Name</th>
-                    <th className="text-center">Final Amount</th>
-                    <th className="text-center">Cart Amount</th>
-                    <th className="text-center">Services
-                      <tr>
-                        <td>Service (Price)</td>
-                      </tr>
-                    </th>
-                    <th className="text-center">Address</th>
-                    <th className="text-center">Booking time</th>
-                    <th className="text-center">Service Date (yyyy/mm/dd)</th>
-                    <th className="text-center">Time Slot</th>
-                    <th className="text-center">Mode Of Payment</th>
-                    <th className="text-center">Pay</th>
-                    <th className="text-center">Assign Customer</th>
-                    <th className="text-center">Cancel Service</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {bookings.length !== 0 ? (
-                    bookings.map((b, index) => (
+        {loader ? <Loader /> : <>
+          {newBookings.length === 0 ? <h5>No Bookings Found</h5> :
+            <>
+              <Col>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th className="text-center">S.No ({bookings.length})</th>
+                      <th className="text-center">Booking Id</th>
+                      <th className="text-center">Customer Name</th>
+                      <th className="text-center">Final Amount</th>
+                      <th className="text-center">Cart Amount</th>
+                      <th className="text-center">Services
+                        <tr>
+                          <td>Service (Price)</td>
+                        </tr>
+                      </th>
+                      <th className="text-center">Address</th>
+                      <th className="text-center">Booking time</th>
+                      <th className="text-center">Service Date (yyyy/mm/dd)</th>
+                      <th className="text-center">Time Slot</th>
+                      <th className="text-center">Mode Of Payment</th>
+                      <th className="text-center">Pay</th>
+                      <th className="text-center">Assign Customer</th>
+                      <th className="text-center">Cancel Service</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookings.map((b, index) => (
                       <tr>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{b.bookingId}</td>
@@ -175,7 +170,7 @@ const NewBooking = () => {
                           </tr>
                         </td>
                         <td className="text-center">
-                          <Moment>{b.timeOfBooking}</Moment>
+                          {timeStampHelper(b.createdAt)["date"] + " / " + timeStampHelper(b.createdAt)["time"]}
                         </td>
                         <td className="text-center">{b.serviceDate}</td>
                         <td className="text-center">{b.timeSlot}</td>
@@ -206,14 +201,13 @@ const NewBooking = () => {
                         </td>
                       </tr>
                     ))
-                  ) : (
-                    <h5 className="text-center">Oops No new bookings found</h5>
-                  )}
-                </tbody>
-              </Table>
-            )}
-          </Col>
-        </Row>
+                    }
+                  </tbody>
+                </Table>
+              </Col>
+            </>
+          }
+        </>}
       </Container>
     </>
   );

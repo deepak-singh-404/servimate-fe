@@ -33,7 +33,6 @@ import RegistrationRequest from './Pages/ServiceProvider/RegistrationRequest'
 import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
 import PartnerScreenSlider from './Pages/PartnerHomeScreen/ScreenSlider'
 
-
 if (window.localStorage.servimateToken) {
   setAuthToken(localStorage.servimateToken);
   const decoded = jwt_decode(localStorage.servimateToken);
@@ -44,9 +43,6 @@ if (window.localStorage.servimateToken) {
     window.location.href = '/';
   }
 }
-
-
-
 
 function App() {
   const store = useSelector(store => store.adminRoot)

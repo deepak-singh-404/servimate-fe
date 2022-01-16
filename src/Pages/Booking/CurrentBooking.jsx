@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Form, Table, Button } from "react-bootstrap";
 import { getCurrentBookings } from "../../redux/actions/booking";
-import Moment from "react-moment";
-import moment from "moment";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { getServiceProviders } from "../../redux/actions/serviceProvider";
+import { timeStampHelper } from '../../utils/commonFunction'
+import Loader from '../../Components/Loader'
 
 const CurrentBooking = () => {
-  const { currentBookings } = useSelector((store) => store.bookingRoot);
+  const { loader, currentBookings } = useSelector((store) => store.bookingRoot);
   const { serviceProviders } = useSelector(
-    (store) => store.serviceProviderRoot
-  );
+    store => store.serviceProviderRoot
+  )
   const dispatch = useDispatch();
   const [bookings, setBookings] = useState([]);
   const [date, setDate] = useState("");
@@ -59,7 +59,6 @@ const CurrentBooking = () => {
             <Button onClick={refreshHandler}>Refresh</Button>
           </Col>
         </Row>
-        {console.log("ServiceProvider", serviceProvider)}
         <Row className="mt-2">
           <Col md={2}>
             <Form className="d-flex">
@@ -89,68 +88,71 @@ const CurrentBooking = () => {
             </Form>
           </Col>
         </Row>
-        <Row className="mt-5">
-          <Col>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th className="text-center">S.No ({bookings.length})</th>
-                  <th className="text-center">Booking Id</th>
-                  <th className="text-center">Customer Name</th>
-                  <th className="text-center">SericeProvider Assigned</th>
-                  <th className="text-center">Final Amount</th>
-                  <th className="text-center">Cart Amount</th>
-                  <th className="text-center">Services</th>
-                  <th className="text-center">Booking time</th>
-                  <th className="text-center">Service Date (yyyy/mm/dd)</th>
-                  <th className="text-center">Time Slot</th>
-                  <th className="text-center">Mode Of Payment</th>
-                  <th className="text-center">Pay</th>
-                  
-                  
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.length !== 0 ? (
-                  bookings.map((b, index) => (
-                    <tr>
-                      <td className="text-center">{index + 1}</td>
-                      <td className="text-center">{b.bookingId}</td>
-                      <td className="text-center">{b.customer.name}</td>
-                      <td className="text-center">{b.serviceProviderName}</td>
-                      <td className="text-center">{b.finalPrice}</td>
-                      <td className="text-center">{b.cartAmount}</td>
-                      <td>
-                        {b.services.map((d) => (
+        {loader ? <Loader /> : <>
+          {currentBookings.length === 0 ? <h5>No Bookings Found</h5> :
+            <>
+              <Row className="mt-5">
+                <Col>
+                  <Table striped bordered hover>
+                    <thead>
+                      <tr>
+                        <th className="text-center">S.No ({bookings.length})</th>
+                        <th className="text-center">Booking Id</th>
+                        <th className="text-center">Customer Name</th>
+                        <th className="text-center">SericeProvider Assigned</th>
+                        <th className="text-center">Final Amount</th>
+                        <th className="text-center">Cart Amount</th>
+                        <th className="text-center">Services</th>
+                        <th className="text-center">Booking time</th>
+                        <th className="text-center">Service Date (yyyy/mm/dd)</th>
+                        <th className="text-center">Time Slot</th>
+                        <th className="text-center">Mode Of Payment</th>
+                        <th className="text-center">Pay</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {bookings.length !== 0 ? (
+                        bookings.map((b, index) => (
                           <tr>
-                            <td>{d.serviceName} ({d.discountedPrice})</td>
-                          </tr>
-                        ))}
-                      </td>
+                            <td className="text-center">{index + 1}</td>
+                            <td className="text-center">{b.bookingId}</td>
+                            <td className="text-center">{b.customer.name}</td>
+                            <td className="text-center">{b.serviceProviderName}</td>
+                            <td className="text-center">{b.finalPrice}</td>
+                            <td className="text-center">{b.cartAmount}</td>
+                            <td>
+                              {b.services.map((d) => (
+                                <tr>
+                                  <td>{d.serviceName} ({d.discountedPrice})</td>
+                                </tr>
+                              ))}
+                            </td>
+                            <td className="text-center">
+                              {timeStampHelper(b.createdAt)["date"] + " / " + timeStampHelper(b.createdAt)["time"]}
+                            </td>
+                            <td className="text-center">{b.serviceDate}</td>
+                            <td className="text-center">{b.timeSlot}</td>
+                            <td className="text-center">{b.modeOfPayment}</td>
+                            <td className="text-center">
+                              {b.isPaid ? (
+                                <strong>Paid</strong>
+                              ) : (
+                                <string>Pending</string>
+                              )}
+                            </td>
 
-                      <td className="text-center">
-                        <Moment>{b.timeOfBooking}</Moment>
-                      </td>
-                      <td className="text-center">{b.serviceDate}</td>
-                      <td className="text-center">{b.timeSlot}</td>
-                      <td className="text-center">{b.modeOfPayment}</td>
-                      <td className="text-center">
-                        {b.isPaid ? (
-                          <strong>Paid</strong>
-                        ) : (
-                          <string>Pending</string>
-                        )}
-                      </td>
-                    
-                    </tr>
-                  ))
-                ) : (
-                  <h5 className="text-center">Oops No new bookings found</h5>
-                )}
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
+                          </tr>
+                        ))
+                      ) : (
+                        <h5 className="text-center">Oops No new bookings found</h5>
+                      )}
+                    </tbody>
+                  </Table>
+                </Col>
+              </Row>
+            </>
+          }
+        </>}
       </Container>
     </>
   );
