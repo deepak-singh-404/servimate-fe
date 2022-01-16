@@ -80,10 +80,8 @@ const CancellationRequest = () => {
                 <tr>
                   <th className="text-center">S.No</th>
                   <th className="text-center">Booking Id</th>
-                  <th className="text-center">Final Price</th>
                   <th className="text-center">Cart Price</th>
                   <th className="text-center">Services</th>
-                  <th className="text-center">Price</th>
                   <th className="text-center">Booking time</th>
                   <th className="text-center">Service Date (yyyy/mm/dd)</th>
                   <th className="text-center">Time Slot</th>
@@ -99,7 +97,6 @@ const CancellationRequest = () => {
                     <tr>
                       <td className="text-center">{index + 1}</td>
                       <td className="text-center">{b.bookingId}</td>
-                      <td className="text-center">{b.finalPrice}</td>
                       <td className="text-center">{b.cartAmount}</td>
                       <td>
                         <tr>
@@ -115,7 +112,6 @@ const CancellationRequest = () => {
                           </tr>
                         ))}
                       </td>
-                      <td className="text-center">{b.price}</td>
                       <td className="text-center">
                         {timeStampHelper(b.createdAt)["date"] + " / " + timeStampHelper(b.createdAt)["time"]}
                       </td>
@@ -129,8 +125,8 @@ const CancellationRequest = () => {
                           <string>Pending</string>
                         )}
                       </td>
-                      <td className="text-center">{b.customerName}</td>
-                      <td>{b.serviceProviderName}</td>
+                      <td className="text-center">{b.customer.name}</td>
+                      <td>{b.serviceProviderName ? b.serviceProviderName : "NA" }</td>
 
                       <td>
                         <Button onClick={() => clickHandler(b._id)}>
