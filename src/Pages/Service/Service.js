@@ -53,14 +53,15 @@ const Service = (props) => {
             />}
 
             <Container >
+                <Row className="my-2">
+                    <Col >
+                        <h6>{props.match.params.serviceSubCategoryName}</h6>
+                        <Button variant="primary" type="button" onClick={() => setAddServiceModal(true)}>ADD NEW</Button>
+                    </Col>
+                </Row>
                 {loader ? <Loader /> : <>
-                    {services.length === 0 ? <h5>No Services Found</h5> : <>
-                        <Row className="my-2">
-                            <Col >
-                                <h6>{props.match.params.serviceSubCategoryName}</h6>
-                                <Button variant="primary" type="button" onClick={() => setAddServiceModal(true)}>ADD NEW</Button>
-                            </Col>
-                        </Row>
+                    {services.length === 0 ? <h5>No Services Found</h5> : 
+                    <>
                         <Row>
                             <Col >
                                 <Table striped bordered hover>

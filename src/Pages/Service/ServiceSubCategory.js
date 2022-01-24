@@ -54,16 +54,17 @@ const ServiceSubCategory = (props) => {
         previousData={previousData}
       />}
       <Container>
+        <Row className="my-2">
+          <Col >
+            <h5>{props.match.params.serviceCategoryName}</h5>
+            <Button onClick={() => setAddServiceSubCategoryModal(true)}>
+              ADD NEW
+            </Button>
+          </Col>
+        </Row>
         {loader ? <Loader /> : <>
           {serviceSubCategories.length === 0 ? <h5>No ServiceSubCategories Found</h5> : <>
-            <Row className="my-2">
-              <Col >
-                <h5>{props.match.params.serviceCategoryName}</h5>
-                <Button onClick={() => setAddServiceSubCategoryModal(true)}>
-                  ADD NEW
-                </Button>
-              </Col>
-            </Row>
+
             <Row>
               <Col className="mt-2">
                 <Table striped bordered hover>
