@@ -22,7 +22,7 @@ export const healthCheck = () => {
         try {
             const { data } = await axios({
                 method: "Get",
-                url: "https://servimate-admin.herokuapp.com"
+                url: prod_url
             })
         }
         catch (err) {
