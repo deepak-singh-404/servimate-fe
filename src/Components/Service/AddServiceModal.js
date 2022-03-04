@@ -16,6 +16,7 @@ const AddServiceModal = ({
   const [includes, setIncludes] = useState("");
   const [iconUrl, setIconUrl] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [index, setIndex] = useState("")
 
   const dispatch = useDispatch();
   const serviceRoot = useSelector((store) => store.serviceRoot);
@@ -75,6 +76,7 @@ const formHandler = (e) => {
   formData.append("includes",  JSON.stringify(includes.split(", ")))
   formData.append("iconUrl", iconUrl)
   formData.append("imgUrl", imgUrl)
+  formData.append("index", Number(index))
   dispatch(addService(formData));
   setServiceName("")
   setPrice([])
@@ -96,6 +98,14 @@ return (
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formHandler}>
+        <Form.Group>
+            <Form.Label>Index</Form.Label>
+            <Form.Control
+              value={index}
+              onChange={(e) => setIndex(e.target.value)}
+              type="text"
+            />
+          </Form.Group>
           <Form.Group>
             <Form.Label>Service Name</Form.Label>
             <Form.Control

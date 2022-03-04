@@ -71,6 +71,7 @@ const ServiceSubCategory = (props) => {
                   <thead>
                     <tr>
                       <th className="text-center">S.No ({serviceSubCategories.length})</th>
+                      <th className="text-center">Index</th>
                       <th className="text-center">Service-Sub-Category</th>
                       <th className="text-center">IconUrl</th>
                       <th className="text-center">Update</th>
@@ -81,6 +82,7 @@ const ServiceSubCategory = (props) => {
                     {serviceSubCategories.map((serviceSubCategory, index) =>
                       <tr>
                         <td className="text-center">{index + 1}</td>
+                        <td className="text-center">{serviceSubCategory.index}</td>
                         <td className="text-center"><Link to={`/serviceSubCategory/${serviceSubCategory.name}/${serviceSubCategory._id}`}>{serviceSubCategory.name}</Link></td>
                         <td className="text-center"><a href={serviceSubCategory.iconUrl} target="_blank">{serviceSubCategory.iconUrl && "url"} </a></td>
                         <td className="text-center"><Button onClick={

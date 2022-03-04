@@ -10,6 +10,7 @@ const UpdateServiceSubCategoryModal = ({
   serviceCategory,
   previousData
 }) => {
+  const [index, setIndex] = useState(previousData.index)
   const [name, setName] = useState(previousData.name);
   const [iconUrl, setIconUrl] = useState("");
   const dispatch = useDispatch();
@@ -30,11 +31,12 @@ const UpdateServiceSubCategoryModal = ({
       formData.append("iconUrl", iconUrl)
     }
     formData.append("serviceCategory", serviceCategory)
-    dispatch(updateServiceSubCategory(previousData._id,formData,()=>{
-        setUpdateServiceSubCategoryModal(false)
-        setName("")
-        setIconUrl("")
-       
+    formData.append("index", Number(index))
+    dispatch(updateServiceSubCategory(previousData._id, formData, () => {
+      setUpdateServiceSubCategoryModal(false)
+      setName("")
+      setIconUrl("")
+
     }))
   };
 
@@ -49,6 +51,14 @@ const UpdateServiceSubCategoryModal = ({
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formHandler}>
+          <Form.Group>
+              <Form.Label>INDEX</Form.Label>
+              <Form.Control
+                value={index}
+                onChange={(e) => setIndex(e.target.value)}
+                type="text"
+              />
+            </Form.Group>
             <Form.Group>
               <Form.Label>SERVICE-SUB-CATEGORY NAME</Form.Label>
               <Form.Control

@@ -11,7 +11,7 @@ const UpdateServiceCategoryModal = ({
   setUpdateServiceCategoryModal,
   data
 }) => {
-
+  const [index, setIndex] = useState(data.index)
   const [name, setName] = useState(data.name);
   const [iconUrl, setIconUrl] = useState("");
   const [minAmountForCheckout, setMinAmountForCheckout] = useState(data.minAmountForCheckout)
@@ -55,14 +55,15 @@ const UpdateServiceCategoryModal = ({
     if (iconUrl !== "") {
       formData.append("iconUrl", iconUrl);
     }
-    formData.append("cities",JSON.stringify(checkedCity))
+    formData.append("cities", JSON.stringify(checkedCity))
     formData.append("minAmountForCheckout", minAmountForCheckout)
     formData.append("partnerShare", String(partnerShare))
-    dispatch(updateServiceCategory(data._id, formData,()=>{
-        setUpdateServiceCategoryModal(false)
-        setName("")
-        setMinAmountForCheckout(0)
-        setCheckedCity([])
+    formData.append("index", Number(index))
+    dispatch(updateServiceCategory(data._id, formData, () => {
+      setUpdateServiceCategoryModal(false)
+      setName("")
+      setMinAmountForCheckout(0)
+      setCheckedCity([])
     }));
   }
 
@@ -77,6 +78,14 @@ const UpdateServiceCategoryModal = ({
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formHandler}>
+            <Form.Group>
+              <Form.Label>INDEX</Form.Label>
+              <Form.Control
+                value={index}
+                onChange={(e) => setIndex(e.target.value)}
+                type="text"
+              />
+            </Form.Group>
             <Form.Group>
               <Form.Label>SERVICE-CATEGORY NAME</Form.Label>
               <Form.Control

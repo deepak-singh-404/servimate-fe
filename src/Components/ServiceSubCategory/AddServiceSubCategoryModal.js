@@ -9,6 +9,7 @@ const AddServiceSubCategoryModal = ({
   setAddServiceSubCategoryModal,
   serviceCategory
 }) => {
+  const [index, setIndex] = useState("")
   const [name, setName] = useState("");
   const [iconUrl, setIconUrl] = useState("");
   const dispatch = useDispatch();
@@ -31,14 +32,15 @@ const AddServiceSubCategoryModal = ({
       formData.append("iconUrl", iconUrl)
     }
     formData.append("serviceCategory", serviceCategory)
+    formData.append("index", Number(index))
     dispatch(addServiceSubCategory(formData))
   };
 
   useEffect(() => {
     if (success) {
-        setAddServiceSubCategoryModal(false);
-        setName("")
-        setIconUrl("")
+      setAddServiceSubCategoryModal(false);
+      setName("")
+      setIconUrl("")
     }
   }, [success]);
 
@@ -53,6 +55,14 @@ const AddServiceSubCategoryModal = ({
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formHandler}>
+            <Form.Group>
+              <Form.Label>INDEX</Form.Label>
+              <Form.Control
+                value={index}
+                onChange={(e) => setIndex(e.target.value)}
+                type="text"
+              />
+            </Form.Group>
             <Form.Group>
               <Form.Label>SERVICE-SUB-CATEGORY NAME</Form.Label>
               <Form.Control

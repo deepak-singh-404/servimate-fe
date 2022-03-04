@@ -68,6 +68,7 @@ const Service = (props) => {
                                     <thead>
                                         <tr>
                                             <th className="text-center">S.No ({services.length})</th>
+                                            <th className="text-center">Index</th>
                                             <th className="text-center">Service</th>
                                             <th className="text-center">Price</th>
                                             <th className="text-center">Icon Url</th>
@@ -81,6 +82,7 @@ const Service = (props) => {
                                         {services.map((service, index) =>
                                             <tr>
                                                 <td className="text-center">{index + 1}</td>
+                                                <td className="text-center">{service.index}</td>
                                                 <td className="text-center">{service.serviceName}</td>
                                                 <td>
                                                     <tr>

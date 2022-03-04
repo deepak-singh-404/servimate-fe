@@ -71,6 +71,7 @@ const ServiceCategory = () => {
                             <thead>
                                 <tr>
                                     <th className="text-center">S.No ({serviceCategories.length})</th>
+                                    <th className="text-center">Index</th>
                                     <th className="text-center">Service-Category</th>
                                     <th className="text-center">M.C.P</th>
                                     <th className="text-center">Partner Share</th>
@@ -84,6 +85,7 @@ const ServiceCategory = () => {
                                 {serviceCategories.length !== 0 ? serviceCategories.map((serviceCategory, index) =>
                                     <tr>
                                         <td className="text-center">{index +  1}</td>
+                                        <td className="text-center">{serviceCategory.index}</td>
                                         <td className="text-center"><Link to={`/serviceCategory/${serviceCategory.name}/${serviceCategory._id}`}>{serviceCategory.name}</Link></td>
                                         <td className="text-center">{serviceCategory.minAmountForCheckout}</td>
                                         <td className="text-center">{serviceCategory.partnerShare ? serviceCategory.partnerShare : null}</td>

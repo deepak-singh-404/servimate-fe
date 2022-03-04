@@ -12,6 +12,7 @@ const UpdateServiceModal = ({
   serviceSubCategory,
   previousData
 }) => {
+  const [index, setIndex] = useState(previousData.index)
   const [serviceName, setServiceName] = useState(previousData.serviceName);
   const [price, setPrice] = useState(previousData.price);
   const [includes, setIncludes] = useState(previousData.includes.join(", "));
@@ -66,6 +67,7 @@ const UpdateServiceModal = ({
     formData.append("includes", JSON.stringify(includes.split(", ")))
     formData.append("iconUrl", iconUrl)
     formData.append("imgUrl", imgUrl)
+    formData.append("index", Number(index))
     dispatch(updateService(previousData._id, formData, () => {
       setUpdateServiceModal(false)
       setServiceName("")
@@ -84,6 +86,14 @@ const UpdateServiceModal = ({
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formHandler}>
+          <Form.Group>
+              <Form.Label>Index</Form.Label>
+              <Form.Control
+                value={index}
+                onChange={(e) => setIndex(e.target.value)}
+                type="text"
+              />
+            </Form.Group>
             <Form.Group>
               <Form.Label>Service Name</Form.Label>
               <Form.Control
