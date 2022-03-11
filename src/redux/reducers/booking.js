@@ -1,12 +1,12 @@
 const initialState = {
-    allBookings:[],
+    allBookings: [],
     newBookings: [],
     currentBookings: [],
     bookingHistory: [],
     cancellationRequests: [],
+    outOfReachBookings: [],
     loader: false
 }
-
 
 const booking = (state = initialState, action) => {
     switch (action.type) {
@@ -35,6 +35,11 @@ const booking = (state = initialState, action) => {
         //         ...state,
         //         cancellationRequests: state.cancellationRequests.map(d => d._id.toString() === action.payload._id.toString() ? action.payload : d)
         //     }
+        case "SET_OUT_OF_REACH_BOOKINGS":
+            return {
+                ...state,
+                outOfReachBookings: action.payload,
+            }
         case "SET_LOADER":
             return {
                 ...state,

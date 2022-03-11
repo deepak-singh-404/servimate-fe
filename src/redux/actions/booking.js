@@ -224,3 +224,31 @@ export const assignServiceProvider = (cred, cb) => {
     }
 }
 
+//GET ALL OUTOFREACH BOOKINGS
+export const getOutOfReachBookings = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url + "dev/api/v1/bookings/outofreach",
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_OUT_OF_REACH_BOOKINGS",
+                    payload: data.response
+                })
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("GET OUT OF REACH BOOKINGS ", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+

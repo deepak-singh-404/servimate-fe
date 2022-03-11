@@ -28,6 +28,7 @@ import BottomSlider from './Pages/HomeScreen/BottomSlider';
 import TopPick from './Pages/HomeScreen/TopPick';
 import HomeScreenReview from './Pages/HomeScreen/HomePageReview'
 import RegistrationRequest from './Pages/ServiceProvider/RegistrationRequest'
+import OutOfReachBooking from './Pages/Booking/OutOfReachBooking'
 
 //PARTNER
 import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
@@ -64,6 +65,7 @@ function App() {
           <Route exact path='/booking/new' component={NewBooking} />
           <Route exact path='/booking/current' component={CurrentBooking} />
           <Route exact path='/booking/history' component={BookingHistory} />
+           <Route exact path='/booking/out-of-reach' component={OutOfReachBooking} />
           <Route exact path='/cancellationRequests' component={CancellationRequest} />
           <Route exact path="/abandonedCart" component={AbandonedCart} />
           <Route exact path="/customer" component={Customer} />

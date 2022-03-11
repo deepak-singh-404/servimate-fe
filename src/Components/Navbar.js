@@ -61,6 +61,8 @@ const AdminNavbar = () => {
                             <NavDropdown.Item><Link to="/booking/history">BOOKING HISTORY</Link></NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/cancellationRequests">CANCELLATION REQUEST</Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item><Link to="/booking/out-of-reach">OUT OF REACH</Link></NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link as={Button} onClick={logoutHandler} variant="outline-danger">LOGOUT</Nav.Link>
                     </Nav>
