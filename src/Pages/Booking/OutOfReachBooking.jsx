@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { getOutOfReachBookings } from "../../redux/actions/booking";
 import Loader from "../../Components/Loader";
-import { timeStampHelper } from '../../utils/commonFunction'
 
 const NewBooking = () => {
     const { outOfReachBookings, loader } = useSelector((store) => store.bookingRoot);
