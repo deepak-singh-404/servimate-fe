@@ -101,12 +101,10 @@ const ServiceProvider = () => {
                                         <td className="text-center">{s.isAccountOnHold ?
                                             <Button variant="outline-info" onClick={() => {
                                                 dispatch(updateServiceProvider({ isAccountOnHold: false },s._id,()=>{
-                                                    console.log("Success")
                                                 }))
                                             }}>UNHOLD</Button> :
                                             <Button variant="outline-info" onClick={() => {
                                                 dispatch(updateServiceProvider({ isAccountOnHold: true }, s._id, ()=>{
-                                                    console.log("Success")
                                                 }))
                                             }}>HOLD</Button>}</td>
                                         <td className="text-center"><Button variant="outline-info" onClick={() => {

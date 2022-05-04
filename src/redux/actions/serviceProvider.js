@@ -86,7 +86,6 @@ export const deleteServiceProvider = (id, cb) => {
             })
             dispatch(loader(false))
             if (data.success) {
-                console.log("insode", data)
                 dispatch({
                     type: "DELETE_SERVICE_PROVIDER",
                     payload: data.response._id

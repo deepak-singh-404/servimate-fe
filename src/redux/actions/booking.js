@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { local_url, prod_url } from '../../config/constant'
 
-console.log(prod_url)
-
 const loader = (data) => {
     return {
         type: "SET_LOADER",
