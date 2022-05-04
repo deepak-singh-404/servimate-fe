@@ -60,7 +60,7 @@ const AssignServiceProviderModal = ({ currentBooking, assignServiceProviderModal
       setServiceP(_serviceProviders)
     }
 
-  }, [])
+  },[])
 
 
   const clickHandler = () => {
