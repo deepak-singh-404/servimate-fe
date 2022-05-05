@@ -17,15 +17,17 @@ const Abandoned = () => {
         <Row className="mt-5">
           {loader ? <Loader /> : <>
             {abandonedCart.length === 0 ? <h5>No Customers Found</h5> : <>
-              <Col md={10} className='m-auto'>
+              <Col md={12} className='m-auto'>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th className="text-center">S.No ({abandonedCart.length})</th>
                       <th className="text-center">Customer Name</th>
                       <th className="text-center">Phone Number</th>
+                      <th className="text-center">Last Item Added At</th>
                       <th className="text-center">Items In Cart</th>
                       <th className="text-center">Items</th>
+                      <th className="text-center">Address</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -34,8 +36,10 @@ const Abandoned = () => {
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
+                        <td className="text-center">{a.cart[a.cart.length - 1].createdAt &&  new Date(a.cart[a.cart.length - 1].createdAt).toISOString().slice(0, 10)}</td>
                         <td className="text-center">{a.cart.length}</td>
                         <td className="text-center">{a.cart.map(o => <>{o.serviceName} <br /></>)}</td>
+                        <td className="text-center">{JSON.stringify(a.defaultAddress)}</td>
                       </tr>
                     ))
                     }

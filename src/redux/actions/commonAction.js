@@ -19,9 +19,11 @@ export const getAbandonedCart = () => {
             })
             dispatch(loader(false))
             if (data.success) {
+                let res = data.response
+                res.sort((a,b) => (a.cart[0].createdAt < b.cart[0].createdAt) ? 1 : ((b.cart[0].createdAt < a.cart[0].createdAt) ? -1 : 0))
                 dispatch({
                     type: "SET_ABANDONED_CART",
-                    payload: data.response
+                    payload: res
                 })
             }
             else {

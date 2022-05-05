@@ -27,21 +27,24 @@ const NewBooking = () => {
                                                 </th>
                                                 <th className="text-center">Name</th>
                                                 <th className="text-center">Phone Number</th>
+                                                <th className="text-center">Tried At</th>
+                                                <th className="text-center">Service Date</th>
                                                 <th className="text-center">Address</th>
                                                 <th className="text-center">Cart</th>
-                                                <th className="text-center">Service Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {outOfReachBookings.length !== 0
                                                 ? outOfReachBookings.map((b, index) => (
                                                     <tr>
+                                                        
                                                         <td className="text-center">{index + 1}</td>
                                                         <td className="text-center">{b.reqPayload.customerId.name}</td>
                                                         <td className="text-center">{b.reqPayload.customerId.phoneNumber}</td>
+                                                        <td className="text-center">{b.createdAt && new Date(b.createdAt).toISOString().slice(0, 10)}</td>
+                                                        <td className="text-center">{b.reqPayload.serviceDate}</td>
                                                         <td className="text-center">{JSON.stringify(b.reqPayload.address)}</td>
                                                         <td className="text-center">{JSON.stringify(b.customer.cart)}</td>
-                                                        <td className="text-center">{b.reqPayload.serviceDate}</td>
                                                     </tr>
                                                 ))
                                                 : null}
