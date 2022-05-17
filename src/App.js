@@ -29,6 +29,7 @@ import TopPick from './Pages/HomeScreen/TopPick';
 import HomeScreenReview from './Pages/HomeScreen/HomePageReview'
 import RegistrationRequest from './Pages/ServiceProvider/RegistrationRequest'
 import OutOfReachBooking from './Pages/Booking/OutOfReachBooking'
+import ManualJob from './Pages/Booking/ManualJob';
 
 //PARTNER
 import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
@@ -62,10 +63,13 @@ function App() {
           <Route exact path='/serviceCategory' component={ServiceCategory} />
           <Route exact path="/serviceCategory/:serviceCategoryName/:serviceCategoryId" component={ServiceSubCategory} />
           <Route exact path='/serviceSubCategory/:serviceSubCategoryName/:serviceSubCategoryId' component={Service} />
+
           <Route exact path='/booking/new' component={NewBooking} />
           <Route exact path='/booking/current' component={CurrentBooking} />
           <Route exact path='/booking/history' component={BookingHistory} />
-           <Route exact path='/booking/out-of-reach' component={OutOfReachBooking} />
+          <Route exact path='/booking/out-of-reach' component={OutOfReachBooking} />
+          <Route exact path="/booking/manual" component={ManualJob} />
+
           <Route exact path='/cancellationRequests' component={CancellationRequest} />
           <Route exact path="/abandonedCart" component={AbandonedCart} />
           <Route exact path="/customer" component={Customer} />
@@ -75,6 +79,7 @@ function App() {
           <Route exact path="/homeScreen/homeScreenReview" component={HomeScreenReview} />
           <Route exact path="/partner/homeScreen/banner" component={PartnerHomeScreen} />
           <Route exact path="/partner/screen/slider" component={PartnerScreenSlider} />
+
         </Switch>
       </Router>
     </div>

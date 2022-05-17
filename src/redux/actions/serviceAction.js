@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { local_url, prod_url } from '../../config/constant'
+import { local_url, prod_url, prod_url1 } from '../../config/constant'
 
 
 const loader = (data) => {
@@ -28,6 +28,14 @@ export const setServices = (data) => {
         type: "SET_SERVICES",
         payload: data
     }
+}
+
+export const setServicesByServiceCategory = (data) => {
+    return {
+        type: "SET_SERVICES_BY_SERVICE_CATEGORY",
+        payload: data
+    }
+
 }
 
 export const addServiceCategory = (serviceCategoryCredentials) => {
@@ -94,7 +102,6 @@ export const updateServiceCategory = (id, _data, cb) => {
         }
     }
 }
-
 
 export const getServiceCategories = () => {
     return async (dispatch) => {
@@ -191,7 +198,6 @@ export const addServiceSubCategory = (serviceSubCategoryCredentials) => {
         }
     }
 }
-
 
 export const updateServiceSubCategory = (id, _data, cb) => {
     return async (dispatch) => {
@@ -368,7 +374,6 @@ export const addService = (serviceCredentials) => {
     }
 }
 
-
 export const updateService = (id, _data, cb) => {
     return async (dispatch) => {
         try {
@@ -407,6 +412,7 @@ export const getServices = (id) => {
                 url: prod_url + `api/v1/service/${id}`
             })
             dispatch(loader(false))
+            console.log("============+++DATA===============", data)
             if (data.success) {
                 dispatch(setServices(data.response))
                 dispatch({
@@ -430,6 +436,37 @@ export const getServices = (id) => {
     }
 }
 
+export const getServicesByServiceCategory = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url1 + `api/v1/service/${id}/services`
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch(setServicesByServiceCategory(data.response))
+                dispatch({
+                    type: "SET_SUCCESS",
+                    payload: true
+                })
+                dispatch({
+                    type: "SET_SUCCESS",
+                    payload: false
+                })
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("GET SERVICES BY SERVICE CATEGORY", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
 
 export const getAllServiceSubCategory = () => {
     return async (dispatch) => {

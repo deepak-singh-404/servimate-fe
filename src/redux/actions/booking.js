@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { local_url, prod_url } from '../../config/constant'
+import { local_url, prod_url, prod_url1 } from '../../config/constant'
 
 const loader = (data) => {
     return {
@@ -202,7 +202,7 @@ export const assignServiceProvider = (cred, cb) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: prod_url + "dev/api/v1/assignServiceProvider",
+                url: prod_url1 + "dev/api/v1/assignServiceProvider",
                 data: cred
             })
             dispatch(loader(false))

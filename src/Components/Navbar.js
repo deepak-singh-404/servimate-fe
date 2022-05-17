@@ -54,6 +54,8 @@ const AdminNavbar = () => {
 
                         </NavDropdown>
                         <NavDropdown title="BOOKING" id="basic-nav-dropdown">
+                            <NavDropdown.Item><Link to="/booking/manual">ASSIGN JOB MANUALLY</Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/booking/new">NEW BOOKINGS</Link></NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/booking/current">CURRENT BOOKINGS</Link></NavDropdown.Item>

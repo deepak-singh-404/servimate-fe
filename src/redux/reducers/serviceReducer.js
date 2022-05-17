@@ -24,6 +24,11 @@ const serviceReducer = (state = initialState, action) => {
         ...state,
         services: action.payload,
       };
+    case "SET_SERVICES_BY_SERVICE_CATEGORY":
+      return {
+        ...state,
+        services: action.payload
+      }
     case "UPDATE_SERVICE":
       return {
         ...state,
