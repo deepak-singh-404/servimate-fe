@@ -34,7 +34,7 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
     const formHandler = (e) => {
         e.preventDefault()
     }
-    
+
     //Handle Sevices (Get Service by Service Category)
     useEffect(() => {
         if (serviceCategories.length > 0 && serviceCategory && serviceCategory !== "Select") {
@@ -42,6 +42,7 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
         }
     }, [serviceCategory])
 
+    //Get All the primary Data.
     useEffect(() => {
         dispatch(getServiceCategories())
         dispatch(getServiceProviders())
@@ -50,6 +51,7 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
         }
     }, [])
 
+    //Manage serviceprovider by zipcode and serviceCategory
     useEffect(() => {
         if (serviceProviders.length > 0) {
             //Get the zipcode and serviceCategory from current booking.
