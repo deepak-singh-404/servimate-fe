@@ -5,12 +5,13 @@ import Loader from '../Loader'
 import { getServiceCategories, getServicesByServiceCategory } from '../../redux/actions/serviceAction'
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { getServiceProviders } from "../../redux/actions/serviceProvider";
+import { getCities } from '../../redux/actions/cityAction'
 
 const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
 
     //Redux Data
     const reduxData = useSelector(store => store)
-    const { serviceRoot, serviceProviderRoot } = reduxData
+    const { serviceRoot, serviceProviderRoot, cityRoot } = reduxData
     const { serviceCategories, services, loader } = serviceRoot
     let serviceProviders = serviceProviderRoot.serviceProviders
 
@@ -20,16 +21,25 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
     const [serviceCategory, setServiceCategory] = useState("")
     const [zipcode, setZipcode] = useState("")
     const [price, setPrice] = useState("")
+    const [city, setCity] = useState("")
     const [_services, _setServices] = useState([]);
+    const [address, setAddress] = useState("")
 
     const dispatch = useDispatch()
 
-    // useEffect(()=>{
-    //     if (_services.length > 0){
-    //         console.log("_services",_services)
-
-    //     }
-    // },[_services])
+    //Handle Price
+    useEffect(() => {
+        if (_services.length > 0) {
+            let price = 0
+            for (const s of _services) {
+                const p = s.price.find((d) => d["city"] === city)
+                if (p) {
+                    price = price + p["discountedPrice"]
+                }
+            }
+            setPrice(price)
+        }
+    }, [_services, city])
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -49,6 +59,8 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
         if (serviceProviders) {
             setServiceP(serviceProviders)
         }
+        dispatch(getCities())
+
     }, [])
 
     //Manage serviceprovider by zipcode and serviceCategory
@@ -96,6 +108,7 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
         }
     }, [serviceProviders, zipcode])
 
+
     return (
         <>
             <Modal show={addManualJobModal} onHide={() => setAddManulJobModal(false)}>
@@ -128,14 +141,33 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                             />
                         </Form.Group>
 
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>City *</Form.Label>
+                            <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
+                                <option>Select</option>
+                                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
+                                    <option value={c._id}>{c.name}</option>
+                                ) : null}
+                            </Form.Control>
+                        </Form.Group>
+
                         <Form.Group >
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control value={price} onChange={(e) => setPrice(e.target.value)} type="text" />
+                        </Form.Group>
+
+                        <Form.Group >
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control value={address} onChange={(e) => setAddress(e.target.value)} type="text" />
+                        </Form.Group>
+
+                        {/* <Form.Group >
                             <Form.Label>Pin Code</Form.Label>
                             <Form.Control value={zipcode} onChange={(e) => setZipcode(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group >
                             <Form.Label>Service Provider</Form.Label>
-
                             <Typeahead
                                 id="basic-typeahead-single"
                                 labelKey="name"
@@ -144,8 +176,7 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                                 placeholder="Choose ServiceProvider ..."
                                 selected={serviceProvider}
                             />
-
-                        </Form.Group>
+                        </Form.Group> */}
 
                         {/* {serviceProviderRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
