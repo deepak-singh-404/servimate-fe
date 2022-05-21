@@ -4,28 +4,61 @@ import { Form, Button, Modal } from 'react-bootstrap'
 import Loader from '../Loader'
 import { getServiceCategories, getServicesByServiceCategory } from '../../redux/actions/serviceAction'
 import { Typeahead } from 'react-bootstrap-typeahead';
-import { getServiceProviders } from "../../redux/actions/serviceProvider";
 import { getCities } from '../../redux/actions/cityAction'
+import moment from 'moment'
+
+const Slots = [
+    '09:00 AM  -  09:30 AM',
+    '09:30 AM  -  10:30 AM',
+    '10:30 AM  -  11:30 AM',
+    '11:30 AM  -  12:00 PM',
+    '12:00 PM  -  12:30 PM',
+    '12:30 PM  -  01:00 PM',
+    '01:00 PM  -  01:30 PM',
+    '01:30 PM  -  02:00 PM',
+    '02:00 PM  -  02:30 PM',
+    '02:30 PM  -  03:00 PM',
+    '03:00 PM  -  03:30 PM',
+    '03:30 PM  -  04:00 PM',
+    '04:00 PM  -  04:30 PM',
+    '04:30 PM  -  05:00 PM',
+    '05:00 PM  -  05:30 PM',
+    '05:30 PM  -  06:00 PM',
+    '06:00 PM  -  06:30 PM',
+    '06:30 PM  -  07:00 PM'
+]
 
 const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
 
     //Redux Data
     const reduxData = useSelector(store => store)
-    const { serviceRoot, serviceProviderRoot, cityRoot } = reduxData
+    const { serviceRoot, cityRoot } = reduxData
     const { serviceCategories, services, loader } = serviceRoot
-    let serviceProviders = serviceProviderRoot.serviceProviders
 
     //Component States
-    let [serviceP, setServiceP] = useState([])
-    const [serviceProvider, setServiceProvider] = useState([]);
     const [serviceCategory, setServiceCategory] = useState("")
-    const [zipcode, setZipcode] = useState("")
     const [price, setPrice] = useState("")
     const [city, setCity] = useState("")
     const [_services, _setServices] = useState([]);
     const [address, setAddress] = useState("")
+    const [serviceDate, setServiceDate] = useState("")
+    const [slot, setSlot] = useState("")
+    const [pincode, setPincode] = useState("")
 
     const dispatch = useDispatch()
+
+    //Handle Sevices (Get Service by Service Category)
+    useEffect(() => {
+        if (serviceCategories.length > 0 && serviceCategory && serviceCategory !== "Select") {
+            dispatch(getServicesByServiceCategory(serviceCategory))
+        }
+    }, [serviceCategory])
+
+    //Get All the primary Data.
+    useEffect(() => {
+        dispatch(getServiceCategories())
+        dispatch(getCities())
+    }, [])
 
     //Handle Price
     useEffect(() => {
@@ -43,71 +76,45 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
 
     const formHandler = (e) => {
         e.preventDefault()
+        console.log({
+            "services": _services,
+            "address": address,
+            "serviceDate": serviceDate,
+            "pincode":pincode,
+            "slot": slot,
+            "price": price
+        })
+
+        //Validation
+        if (_services.length == 0){
+            alert("Please select atleast one service.")
+            return;
+        }
+
+        if (!price || Number(price) == 0){
+            alert("Invalid price.")
+            return;
+        }
+      
+        if (!serviceDate){
+            alert("Please select service date.")
+            return;
+        }
+        if (!pincode || pincode.length !== 6){
+            alert("Invalid pincode.")
+            return;
+        }
+        if (!address || address.length < 5){
+            alert("Invalid address.")
+            return;
+        }
+       
+        if (!slot || slot == "Select"){
+            alert("Invalid Slot.");
+            return;
+        }
+        console.log("-----------PAPA")
     }
-
-    //Handle Sevices (Get Service by Service Category)
-    useEffect(() => {
-        if (serviceCategories.length > 0 && serviceCategory && serviceCategory !== "Select") {
-            dispatch(getServicesByServiceCategory(serviceCategory))
-        }
-    }, [serviceCategory])
-
-    //Get All the primary Data.
-    useEffect(() => {
-        dispatch(getServiceCategories())
-        dispatch(getServiceProviders())
-        if (serviceProviders) {
-            setServiceP(serviceProviders)
-        }
-        dispatch(getCities())
-
-    }, [])
-
-    //Manage serviceprovider by zipcode and serviceCategory
-    useEffect(() => {
-        if (serviceProviders.length > 0) {
-            //Get the zipcode and serviceCategory from current booking.
-            let bookingZipcode = zipcode
-            //const bookingServiceCategory = currentBooking.services[0].serviceCategory
-            //Filter all service providers who serve above service at above location.
-
-            let _serviceProviders = []
-            for (const sp of serviceProviders) {
-                let serviceCategoryMatch = false
-                let zipcodeMatch = false
-
-                //Handle serviceCategory
-                // if (bookingServiceCategory) {
-                //     for (const sc of sp.serviceCategoryId) {
-                //         if (sc._id == bookingServiceCategory) {
-                //             serviceCategoryMatch = true
-                //         }
-                //     }
-                // }
-
-                //Handler pincode
-                if (bookingZipcode && bookingZipcode.length == 6) {
-                    for (const zc of sp.zipcodes) {
-                        if (zc == bookingZipcode) {
-                            zipcodeMatch = true
-                        }
-                    }
-                }
-
-                if (zipcodeMatch) {
-                    _serviceProviders.push(sp)
-                }
-
-            }
-            setServiceP(_serviceProviders)
-
-            //Handle If no zipcode selected.
-            if (zipcode === "") {
-                setServiceP(serviceProviders)
-            }
-        }
-    }, [serviceProviders, zipcode])
-
 
     return (
         <>
@@ -157,30 +164,33 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                         </Form.Group>
 
                         <Form.Group >
+                            <Form.Label>Pincode</Form.Label>
+                            <Form.Control value={pincode} onChange={(e) => setPincode(e.target.value)} type="text" />
+                        </Form.Group>
+
+                        <Form.Group >
                             <Form.Label>Address</Form.Label>
                             <Form.Control value={address} onChange={(e) => setAddress(e.target.value)} type="text" />
                         </Form.Group>
 
-                        {/* <Form.Group >
-                            <Form.Label>Pin Code</Form.Label>
-                            <Form.Control value={zipcode} onChange={(e) => setZipcode(e.target.value)} type="text" />
+                        <Form.Group>
+                            <Form.Label>Service Date</Form.Label>
+                            <Form.Control min={moment().format("YYYY-MM-DD")} required type="date" value={serviceDate} onChange={(e) => setServiceDate(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group >
-                            <Form.Label>Service Provider</Form.Label>
-                            <Typeahead
-                                id="basic-typeahead-single"
-                                labelKey="name"
-                                onChange={setServiceProvider}
-                                options={serviceP}
-                                placeholder="Choose ServiceProvider ..."
-                                selected={serviceProvider}
-                            />
-                        </Form.Group> */}
+                            <Form.Label>Time Slot</Form.Label>
+                            <Form.Control onChange={(e) => setSlot(e.target.value)} as="select">
+                                <option>Select </option>
+                                {Slots.map(data =>
+                                    <option value={data} >{data}</option>
+                                )}
+                            </Form.Control>
+                        </Form.Group>
 
-                        {/* {serviceProviderRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
+                        {loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
-                        </Button>} */}
+                        </Button>}
                     </Form>
                 </Modal.Body>
             </Modal>
