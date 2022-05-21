@@ -37,13 +37,17 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
 
     //Component States
     const [serviceCategory, setServiceCategory] = useState("")
-    const [price, setPrice] = useState("")
-    const [city, setCity] = useState("")
     const [_services, _setServices] = useState([]);
+    const [city, setCity] = useState("")
+    const [price, setPrice] = useState("")
+    const [extracharge, setExtracharge] = useState("0")
+    const [pincode, setPincode] = useState("")
     const [address, setAddress] = useState("")
     const [serviceDate, setServiceDate] = useState("")
     const [slot, setSlot] = useState("")
-    const [pincode, setPincode] = useState("")
+    const [customerName, setCustomerName] = useState("")
+    const [customerPhoneNumber, setCustomerPhoneNumber] = useState("")
+
 
     const dispatch = useDispatch()
 
@@ -80,40 +84,62 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
             "services": _services,
             "address": address,
             "serviceDate": serviceDate,
-            "pincode":pincode,
+            "pincode": pincode,
             "slot": slot,
-            "price": price
+            "price": price,
+            "extraCharge": extracharge,
+            "customerName": customerName,
+            "customerPhoneNo.": customerPhoneNumber
         })
 
         //Validation
-        if (_services.length == 0){
+        if (_services.length == 0) {
             alert("Please select atleast one service.")
             return;
         }
 
-        if (!price || Number(price) == 0){
+        if (!price || Number(price) == 0) {
             alert("Invalid price.")
             return;
         }
-      
-        if (!serviceDate){
+
+        if (!serviceDate) {
             alert("Please select service date.")
             return;
         }
-        if (!pincode || pincode.length !== 6){
+        if (!pincode || pincode.length !== 6) {
             alert("Invalid pincode.")
             return;
         }
-        if (!address || address.length < 5){
+        if (!address || address.length < 5) {
             alert("Invalid address.")
             return;
         }
-       
-        if (!slot || slot == "Select"){
+
+        if (!slot || slot == "Select") {
             alert("Invalid Slot.");
             return;
         }
-        console.log("-----------PAPA")
+        if (!customerName || customerName.length < 3) {
+            alert("Invalid customer name.")
+            return;
+        }
+        if (!customerPhoneNumber || !customerPhoneNumber.length == 10) {
+            alert("Invalid PhoneNo.")
+            return;
+        }
+
+        console.log("----------FINAL DATA ===============>", {
+            "services": _services,
+            "address": address,
+            "serviceDate": serviceDate,
+            "pincode": pincode,
+            "slot": slot,
+            "price": price,
+            "extraCharge": extracharge,
+            "customerName": customerName,
+            "customerPhoneNo.": customerPhoneNumber
+        })
     }
 
     return (
@@ -135,6 +161,16 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                             </Form.Control>
                         </Form.Group>
 
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>City *</Form.Label>
+                            <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
+                                <option>Select</option>
+                                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
+                                    <option value={c._id}>{c.name}</option>
+                                ) : null}
+                            </Form.Control>
+                        </Form.Group>
+
                         <Form.Group >
                             <Form.Label>Service</Form.Label>
                             <Typeahead
@@ -148,19 +184,14 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                             />
                         </Form.Group>
 
-                        <Form.Group controlId="exampleForm.ControlSelect1">
-                            <Form.Label>City *</Form.Label>
-                            <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
-                                <option>Select</option>
-                                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
-                                    <option value={c._id}>{c.name}</option>
-                                ) : null}
-                            </Form.Control>
-                        </Form.Group>
-
                         <Form.Group >
                             <Form.Label>Price</Form.Label>
                             <Form.Control value={price} onChange={(e) => setPrice(e.target.value)} type="text" />
+                        </Form.Group>
+
+                        <Form.Group >
+                            <Form.Label>Extra Charge</Form.Label>
+                            <Form.Control value={extracharge} onChange={(e) => setExtracharge(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group >
@@ -186,6 +217,16 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                                     <option value={data} >{data}</option>
                                 )}
                             </Form.Control>
+                        </Form.Group>
+
+                        <Form.Group >
+                            <Form.Label>Customer Name</Form.Label>
+                            <Form.Control value={customerName} onChange={(e) => setCustomerName(e.target.value)} type="text" />
+                        </Form.Group>
+
+                        <Form.Group >
+                            <Form.Label>Customer PhoneNo.</Form.Label>
+                            <Form.Control value={customerPhoneNumber} onChange={(e) => setCustomerPhoneNumber(e.target.value)} type="text" />
                         </Form.Group>
 
                         {loader ? <Loader /> : <Button variant="primary" type="submit">
