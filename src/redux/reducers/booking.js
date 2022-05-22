@@ -5,11 +5,22 @@ const initialState = {
     bookingHistory: [],
     cancellationRequests: [],
     outOfReachBookings: [],
-    loader: false
+    loader: false,
+    manuallyAddedJobs: []
 }
 
 const booking = (state = initialState, action) => {
     switch (action.type) {
+        case "MANUALLY_ADDED_JOBS":
+            return {
+                ...state,
+                manuallyAddedJobs: action.payload
+            }
+        case "ADMIN_ADD_JOB_MANUALLY":
+            return {
+                ...state,
+                manuallyAddedJobs: [action.payload, ...state.manuallyAddedJobs]
+            }
         case "SET_NEW_BOOKINGS":
             return {
                 ...state,

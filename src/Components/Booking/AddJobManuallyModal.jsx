@@ -6,6 +6,7 @@ import { getServiceCategories, getServicesByServiceCategory } from '../../redux/
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { getCities } from '../../redux/actions/cityAction'
 import moment from 'moment'
+import { adminAddJobManually } from '../../redux/actions/booking'
 
 const Slots = [
     '09:00 AM  -  09:30 AM',
@@ -37,8 +38,9 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
 
     //Component States
     const [serviceCategory, setServiceCategory] = useState("")
-    const [_services, _setServices] = useState([]);
+    let [_services, _setServices] = useState([]);
     const [city, setCity] = useState("")
+    const [cityName, setCityName] = useState("")
     const [price, setPrice] = useState("")
     const [extracharge, setExtracharge] = useState("0")
     const [pincode, setPincode] = useState("")
@@ -64,12 +66,14 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
         dispatch(getCities())
     }, [])
 
+
     //Handle Price
     useEffect(() => {
         if (_services.length > 0) {
             let price = 0
             for (const s of _services) {
                 const p = s.price.find((d) => d["city"] === city)
+                setCityName(p["cityName"])
                 if (p) {
                     price = price + p["discountedPrice"]
                 }
@@ -80,18 +84,6 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
 
     const formHandler = (e) => {
         e.preventDefault()
-        console.log({
-            "services": _services,
-            "address": address,
-            "serviceDate": serviceDate,
-            "pincode": pincode,
-            "slot": slot,
-            "price": price,
-            "extraCharge": extracharge,
-            "customerName": customerName,
-            "customerPhoneNo.": customerPhoneNumber
-        })
-
         //Validation
         if (_services.length == 0) {
             alert("Please select atleast one service.")
@@ -128,20 +120,46 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
             alert("Invalid PhoneNo.")
             return;
         }
-
-        console.log("----------FINAL DATA ===============>", {
-            "services": _services,
-            "address": address,
-            "serviceDate": serviceDate,
-            "pincode": pincode,
-            "slot": slot,
-            "price": price,
-            "extraCharge": extracharge,
-            "customerName": customerName,
-            "customerPhoneNo.": customerPhoneNumber
+        _services = _services.map((d) => {
+            let p = {}
+            p["serviceName"] = d["serviceName"]
+            p["serviceCategory"] = d["serviceCategory"]
+            p["serviceId"] = d["_id"]
+            p["quantity"] = 1
+            return p
         })
-    }
 
+        let data = {
+            services: _services,
+            address: {
+                name: customerName,
+                phoneNumber: String(customerPhoneNumber).startsWith("+91") ? String(customerPhoneNumber) : "+91" + String(customerPhoneNumber),
+                address: address,
+                zipcode: Number(pincode),
+                city: cityName
+            },
+            serviceDate,
+            extraCharge: {
+                type: "hygenic",
+                amount: Number(extracharge)
+            },
+            cartAmount: Number(price),
+            finalAmount: Number(price) + Number(extracharge),
+            customer: {
+                name: customerName,
+                phoneNumber: String(customerPhoneNumber).startsWith("+91") ? String(customerPhoneNumber) : "+91" + String(customerPhoneNumber)
+            },
+            city: {
+                _id: city,
+                name: cityName
+            },
+            timeSlot: slot
+        }
+        dispatch(adminAddJobManually(data, () => {
+            setAddManulJobModal(false)
+           
+        }))
+    }
     return (
         <>
             <Modal show={addManualJobModal} onHide={() => setAddManulJobModal(false)}>

@@ -250,3 +250,59 @@ export const getOutOfReachBookings = () => {
     }
 }
 
+
+//ADD JOB MANUALLY
+export const adminAddJobManually = (_data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + "dev/api/v1/manual/bookService",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "ADMIN_ADD_JOB_MANUALLY",
+                    payload: data.response
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+        }
+    }
+}
+
+//MANUALLY ADDDED JOBS
+export const adminManuallyAddedJobs = (data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url + "dev/api/v1/manual/bookings",
+            })
+            dispatch(loader(false))
+            console.log("========data", data)
+            if (data.success) {
+                dispatch({
+                    type: "MANUALLY_ADDED_JOBS",
+                    payload: data.response
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+        }
+    }
+}
