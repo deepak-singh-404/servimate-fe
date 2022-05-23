@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Container, Row, Col, Button } from 'react-bootstrap'
+import { Table, Container, Row, Col, Button, Form} from 'react-bootstrap'
 import AddServiceProviderModal from '../../Components/ServiceProvider/AddServiceProviderModal'
 import { getServiceProviders, updatePartnerWallet, updateServiceProvider } from '../../redux/actions/serviceProvider'
 import DeleteModal from '../../Components/DeleteModal'
@@ -20,7 +20,29 @@ const ServiceProvider = () => {
     const [partnerId, setPartnerId] = useState("")
     const [updateServiceProviderModal, setUpdateServiceProviderModal] = useState(false)
     const [previousData, setPreviousData] = useState({})
+    const [partners, setPartners] = useState([])
+    const [fpincode, setfpincode] = useState("")
 
+    useEffect(() => {
+        if(serviceProviders.length > 0){
+            setPartners(serviceProviders)
+        }
+    }, [serviceProviders])
+
+    //Handler Zipcode Filter
+    useEffect(() => {
+        let _partners = []
+        if (serviceProviders.length>0 && fpincode.length == 6){
+            for (const p of partners){
+                const isExist = p.zipcodes.find(d => d == Number(fpincode))
+                if (isExist){
+                    _partners.push(p)
+                }
+            }
+            setPartners(_partners)
+        }
+    }, [fpincode])
+   
     const deleteHandler = (s) => {
         const temp_data = {
             _id: s._id,
@@ -63,12 +85,30 @@ const ServiceProvider = () => {
                         {loader ? <Loader /> : null}
                     </Col>
                 </Row>
-                <Row >
+
+                {/* Filter Handler */}
+
+                <Row className="mt-2">
+                    <Col md={2}>
+                        <Form className="d-flex">
+                            <Form.Group>
+                                <Form.Label>Pincode</Form.Label>
+                                <Form.Control
+                                    value={fpincode}
+                                    onChange={(e) => setfpincode(e.target.value)}
+                                    type="text"
+                                />
+                            </Form.Group>
+                        </Form>
+                    </Col>
+                </Row>
+
+                {partners.length > 0 && <Row >
                     <Col>
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th className="text-center">S.No ({serviceProviders.length})</th>
+                                    <th className="text-center">S.No ({partners.length})</th>
                                     <th className="text-center">Name</th>
                                     <th className="text-center">Phone Number</th>
                                     <th className="text-center">Wallet Money</th>
@@ -85,7 +125,7 @@ const ServiceProvider = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {serviceProviders.map((s, index) =>
+                                {partners.map((s, index) =>
                                     <tr>
                                         <td className="text-center">{index + 1}</td>
                                         <td className="text-center">{s.name}</td>
@@ -100,11 +140,11 @@ const ServiceProvider = () => {
                                         <td className="text-center">{s.email}</td>
                                         <td className="text-center">{s.isAccountOnHold ?
                                             <Button variant="outline-info" onClick={() => {
-                                                dispatch(updateServiceProvider({ isAccountOnHold: false },s._id,()=>{
+                                                dispatch(updateServiceProvider({ isAccountOnHold: false }, s._id, () => {
                                                 }))
                                             }}>UNHOLD</Button> :
                                             <Button variant="outline-info" onClick={() => {
-                                                dispatch(updateServiceProvider({ isAccountOnHold: true }, s._id, ()=>{
+                                                dispatch(updateServiceProvider({ isAccountOnHold: true }, s._id, () => {
                                                 }))
                                             }}>HOLD</Button>}</td>
                                         <td className="text-center"><Button variant="outline-info" onClick={() => {
@@ -124,7 +164,7 @@ const ServiceProvider = () => {
                             </tbody>
                         </Table>
                     </Col>
-                </Row>
+                </Row>}
             </Container>
         </>
     )
