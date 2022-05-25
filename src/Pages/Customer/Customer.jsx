@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import { getCustomers } from "../../redux/actions/commonAction";
 import Loader from '../../Components/Loader'
+import moment from "moment";
 
 const Customer = () => {
   const { loader, customers } = useSelector(store => store.root)
@@ -10,6 +11,8 @@ const Customer = () => {
   useEffect(() => {
     dispatch(getCustomers())
   }, [])
+
+  console.log("Customers", customers)
 
   return (
     <>
@@ -22,6 +25,7 @@ const Customer = () => {
                   <thead>
                     <tr>
                       <th className="text-center">S.No ({customers.length})</th>
+                      <th className="text-center">Joined On</th>
                       <th className="text-center">Customer Name</th>
                       <th className="text-center">Phone Number</th>
                       <th className="text-center">Service Booked</th>
@@ -36,6 +40,7 @@ const Customer = () => {
                     {customers.map((a, index) => (
                       <tr key={a._id}>
                         <td className="text-center">{index + 1}</td>
+                        <td className="text-center"> {moment(a.createdAt).format("YYYY-MM-DD")}</td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
                         <td className="text-center">{a.serviceBooked.length}</td>

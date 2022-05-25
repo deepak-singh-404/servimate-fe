@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Container, Row, Col, Button, Form} from 'react-bootstrap'
+import { Table, Container, Row, Col, Button, Form } from 'react-bootstrap'
 import AddServiceProviderModal from '../../Components/ServiceProvider/AddServiceProviderModal'
 import { getServiceProviders, updatePartnerWallet, updateServiceProvider } from '../../redux/actions/serviceProvider'
 import DeleteModal from '../../Components/DeleteModal'
 import Loader from '../../Components/Loader'
 import UpdateWalletModal from '../../Components/ServiceProvider/UpdateWalletModal'
 import UpdateServiceProviderModal from '../../Components/ServiceProvider/UpdateServiceproviderModal'
+import { getServiceCategories } from '../../redux/actions/serviceAction'
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 
 const ServiceProvider = () => {
-    const serviceProviderRoot = useSelector(store => store.serviceProviderRoot)
+    const reduxData = useSelector(store => store)
+    const { serviceRoot, serviceProviderRoot } = reduxData
     const { loader, serviceProviders } = serviceProviderRoot
     const dispatch = useDispatch()
     const [addServiceProviderModal, setAddServiceProviderModal] = useState(false)
@@ -22,9 +25,10 @@ const ServiceProvider = () => {
     const [previousData, setPreviousData] = useState({})
     const [partners, setPartners] = useState([])
     const [fpincode, setfpincode] = useState("")
+    const [serviceCategory, setServiceCategory] = useState([])
 
     useEffect(() => {
-        if(serviceProviders.length > 0){
+        if (serviceProviders.length > 0) {
             setPartners(serviceProviders)
         }
     }, [serviceProviders])
@@ -32,17 +36,30 @@ const ServiceProvider = () => {
     //Handler Zipcode Filter
     useEffect(() => {
         let _partners = []
-        if (serviceProviders.length>0 && fpincode.length == 6){
-            for (const p of partners){
+        if (serviceProviders.length > 0 && fpincode.length == 6) {
+            for (const p of partners) {
                 const isExist = p.zipcodes.find(d => d == Number(fpincode))
-                if (isExist){
+                if (isExist) {
                     _partners.push(p)
                 }
             }
             setPartners(_partners)
         }
     }, [fpincode])
-   
+
+    useEffect(() => {
+        let _partners = []
+        if (serviceProviders.length > 0 && serviceCategory.length > 0) {
+            for (const p of partners) {
+                const isExist = p.serviceCategoryId.find(d => d._id == serviceCategory[0]._id)
+                if (isExist) {
+                    _partners.push(p)
+                }
+            }
+            setPartners(_partners)
+        }
+    }, [serviceCategory])
+
     const deleteHandler = (s) => {
         const temp_data = {
             _id: s._id,
@@ -55,8 +72,14 @@ const ServiceProvider = () => {
 
     useEffect(() => {
         dispatch(getServiceProviders())
+        dispatch(getServiceCategories())
     }, [])
 
+    const refreshHandler = () => {
+        setfpincode("")
+        setServiceCategory([])
+        setPartners(serviceProviders)
+    }
     return (
         <>
             {deleteModal && <DeleteModal
@@ -79,27 +102,41 @@ const ServiceProvider = () => {
 
             {addServiceProviderModal && <AddServiceProviderModal addServiceProviderModal={addServiceProviderModal} setAddServiceProviderModal={setAddServiceProviderModal} />}
             <Container fluid>
-                <Row className="my-2">
-                    <Col >
+                <Row>
+                    <Col md={2} className="my-auto" >
                         <Button variant="primary" type="button" onClick={() => setAddServiceProviderModal(true)}>ADD SERVICE PROVIDER</Button>
                         {loader ? <Loader /> : null}
                     </Col>
-                </Row>
-
-                {/* Filter Handler */}
-
-                <Row className="mt-2">
-                    <Col md={2}>
-                        <Form className="d-flex">
+                    <Col md={2} className="my-auto" >
+                        <Form>
                             <Form.Group>
                                 <Form.Label>Pincode</Form.Label>
                                 <Form.Control
                                     value={fpincode}
+                                    placeholder="Pincode"
                                     onChange={(e) => setfpincode(e.target.value)}
                                     type="text"
                                 />
                             </Form.Group>
                         </Form>
+                    </Col>
+
+                    <Col md={2}>
+                        <Form.Group >
+                            <Form.Label>Service Category</Form.Label>
+                            <Typeahead
+                                id="basic-typeahead-single"
+                                labelKey="name"
+                                single
+                                onChange={setServiceCategory}
+                                options={serviceRoot.serviceCategories}
+                                placeholder="Choose ServiceCategory ..."
+                                selected={serviceCategory}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={2} className="my-auto">
+                        <Button onClick={refreshHandler} >Refresh</Button>
                     </Col>
                 </Row>
 
