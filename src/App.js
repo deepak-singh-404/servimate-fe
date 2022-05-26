@@ -35,6 +35,9 @@ import ManualJob from './Pages/Booking/ManualJob';
 import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
 import PartnerScreenSlider from './Pages/PartnerHomeScreen/ScreenSlider'
 
+//DASHBOARD
+import Dashboard from './Pages/Dashboard/Dashboard';
+
 if (window.localStorage.servimateToken) {
   setAuthToken(localStorage.servimateToken);
   const decoded = jwt_decode(localStorage.servimateToken);
@@ -80,6 +83,7 @@ function App() {
           <Route exact path="/partner/homeScreen/banner" component={PartnerHomeScreen} />
           <Route exact path="/partner/screen/slider" component={PartnerScreenSlider} />
 
+          <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </Router>
     </div>

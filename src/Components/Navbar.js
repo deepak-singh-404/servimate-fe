@@ -23,6 +23,7 @@ const AdminNavbar = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link><Link to={`/profile`}>{name.toUpperCase()}</Link></Nav.Link>
+                        <Nav.Link><Link to={`/dashboard`}>DASHBOARD</Link></Nav.Link>
                         <NavDropdown title="CUSTOMER APP" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/serviceCategory">SERVICE CATEGORY</Link></NavDropdown.Item>
                             <NavDropdown.Divider />

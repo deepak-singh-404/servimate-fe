@@ -12,8 +12,6 @@ const Customer = () => {
     dispatch(getCustomers())
   }, [])
 
-  console.log("Customers", customers)
-
   return (
     <>
       <Container fluid>

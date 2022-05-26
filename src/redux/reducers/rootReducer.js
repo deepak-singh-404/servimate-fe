@@ -6,6 +6,7 @@ import serviceProvider from './serviceProvider'
 import voucher from './voucher'
 import booking from './booking'
 import commonReducer from './commonReducer';
+import dashboardReducer from './dashboard';
 import homeScreen from './homeScreen'
 import partnerHomeScreen from './partnerHomeScreen'
 
@@ -20,5 +21,6 @@ export default combineReducers({
     bookingRoot: booking,
     homeScreenRoot: homeScreen,
     partnerHomeScreenRoot: partnerHomeScreen,
-    root: commonReducer
+    root: commonReducer,
+    dashboard: dashboardReducer
 });
