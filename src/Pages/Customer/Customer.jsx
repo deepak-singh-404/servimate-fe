@@ -4,12 +4,22 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { getCustomers } from "../../redux/actions/commonAction";
 import Loader from '../../Components/Loader'
 import moment from "moment";
+import { apiAuth } from '../../config/constant'
+import { Alert } from "bootstrap";
 
 const Customer = () => {
   const { loader, customers } = useSelector(store => store.root)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getCustomers())
+    let p = prompt('Enter Password:');
+    if (p) {
+      if (p == apiAuth["customer"]) {
+        dispatch(getCustomers())
+      }
+      else {
+        alert("Wrong password")
+      }
+    }
   }, [])
 
   return (
