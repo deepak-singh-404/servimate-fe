@@ -8,7 +8,7 @@ import { apiAuth } from '../../config/constant'
 import { Alert } from "bootstrap";
 
 const Customer = () => {
-  const { loader, customers } = useSelector(store => store.root)
+  let { loader, customers } = useSelector(store => store.root)
   const dispatch = useDispatch()
   useEffect(() => {
     let p = prompt('Enter Password:');
