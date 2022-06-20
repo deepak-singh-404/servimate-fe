@@ -37,10 +37,9 @@ const NewBooking = () => {
                                             {outOfReachBookings.length !== 0
                                                 ? outOfReachBookings.map((b, index) => (
                                                     <tr>
-                                                        
                                                         <td className="text-center">{index + 1}</td>
-                                                        <td className="text-center">{b.reqPayload.customerId.name}</td>
-                                                        <td className="text-center">{b.reqPayload.customerId.phoneNumber}</td>
+                                                        <td className="text-center">{b?.reqPayload?.customerId?.name}</td>
+                                                        <td className="text-center">{b?.reqPayload?.customerId?.phoneNumber}</td>
                                                         <td className="text-center">{b.createdAt && new Date(b.createdAt).toISOString().slice(0, 10)}</td>
                                                         <td className="text-center">{b.reqPayload.serviceDate}</td>
                                                         <td className="text-center">{JSON.stringify(b.reqPayload.address)}</td>

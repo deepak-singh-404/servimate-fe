@@ -1,24 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table } from "react-bootstrap";
-import { getAbandonedCart } from "../../redux/actions/commonAction";
+import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
+import { getAbandonedCart, reviewAdminAction } from "../../redux/actions/commonAction";
 import Loader from "../../Components/Loader";
 
 
 const Abandoned = () => {
   const { loader, abandonedCart } = useSelector(store => store.root)
   const dispatch = useDispatch()
+  const [review, setReview] = useState("")
   useEffect(() => {
     dispatch(getAbandonedCart())
   }, [])
+
+  //Review Action
+  const reviewAction = (d, index) => {
+    if (!d.customerId || !d.actionKey || !d.actionValue || !index) {
+      alert("Fields Are Empty.")
+      return
+    }
+    dispatch(reviewAdminAction(d, index))
+  }
   return (
     <>
-      <Container>
-        <Row className="mt-5">
+      <Container fluid>
+        <Row >
           {loader ? <Loader /> : <>
             {abandonedCart.length === 0 ? <h5>No Customers Found</h5> : <>
-              <Col md={12} className='m-auto'>
-                <Table striped bordered hover>
+              <Col >
+                <Table striped bordered hover >
                   <thead>
                     <tr>
                       <th className="text-center">S.No ({abandonedCart.length})</th>
@@ -28,6 +38,7 @@ const Abandoned = () => {
                       <th className="text-center">Items In Cart</th>
                       <th className="text-center">Items</th>
                       <th className="text-center">Address</th>
+                      <th className="text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -36,10 +47,28 @@ const Abandoned = () => {
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
-                        <td className="text-center">{a.cart[a.cart.length - 1].createdAt &&  new Date(a.cart[a.cart.length - 1].createdAt).toISOString().slice(0, 10)}</td>
+                        <td className="text-center">{a.cart[a.cart.length - 1].createdAt && new Date(a.cart[a.cart.length - 1].createdAt).toISOString().slice(0, 10)}</td>
                         <td className="text-center">{a.cart.length}</td>
                         <td className="text-center">{a.cart.map(o => <>{o.serviceName} <br /></>)}</td>
                         <td className="text-center">{JSON.stringify(a.defaultAddress)}</td>
+                        <td >
+                          <Form>
+                            <Form.Group>
+                              <Form.Label>Review</Form.Label>
+                              <Form.Control
+                                value={review || a?.adminAction?.abandonedCartReview}
+                                placeholder="Review"
+                                onChange={(e) => setReview(e.target.value)}
+                                type="text"
+                              />
+                            </Form.Group>
+                          </Form>
+                          <Button onClick={() => reviewAction({
+                            "customerId": a._id,
+                            "actionKey": "abandonedCartReview",
+                            "actionValue": review
+                          }, index)} variant="primary" type="button">Add</Button>
+                        </td>
                       </tr>
                     ))
                     }

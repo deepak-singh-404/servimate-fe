@@ -289,7 +289,6 @@ export const adminManuallyAddedJobs = (data, cb) => {
                 url: prod_url + "dev/api/v1/manual/bookings",
             })
             dispatch(loader(false))
-            console.log("========data", data)
             if (data.success) {
                 dispatch({
                     type: "MANUALLY_ADDED_JOBS",
