@@ -75,6 +75,7 @@ export const reviewAdminAction = (_data, index) => {
             const { data } = await axios({
                 method: "Post",
                 url: prod_url + "dev/api/v1/customer/adminAction",
+                data: _data
             })
             dispatch(loader(false))
             if (data.success) {

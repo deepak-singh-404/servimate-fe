@@ -12,9 +12,11 @@ const commonReducer = (state = initialState, action) => {
                 abandonedCart: action.payload,
             }
         case "UPDATE_ABANDONED_CART":
+            let temp = state.abandonedCart
+            temp[action.index] = action.payload
             return {
                 ...state,
-                abandonedCart: state.abandonedCart[action.index] = action.payload,
+                abandonedCart: [...state.abandonedCart, ...temp],
             }
         case "SET_CUSTOMERS":
             return {

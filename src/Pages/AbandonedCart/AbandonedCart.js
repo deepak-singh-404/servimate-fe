@@ -15,6 +15,7 @@ const Abandoned = () => {
 
   //Review Action
   const reviewAction = (d, index) => {
+    index = index.toString()
     if (!d.customerId || !d.actionKey || !d.actionValue || !index) {
       alert("Fields Are Empty.")
       return
@@ -38,6 +39,7 @@ const Abandoned = () => {
                       <th className="text-center">Items In Cart</th>
                       <th className="text-center">Items</th>
                       <th className="text-center">Address</th>
+                      <th className="text-center">Admin Review</th>
                       <th className="text-center">Action</th>
                     </tr>
                   </thead>
@@ -51,12 +53,11 @@ const Abandoned = () => {
                         <td className="text-center">{a.cart.length}</td>
                         <td className="text-center">{a.cart.map(o => <>{o.serviceName} <br /></>)}</td>
                         <td className="text-center">{JSON.stringify(a.defaultAddress)}</td>
+                        <td className="text-center">{a?.adminActions?.abandonedCartReview}</td>
                         <td >
                           <Form>
                             <Form.Group>
-                              <Form.Label>Review</Form.Label>
                               <Form.Control
-                                value={review || a?.adminAction?.abandonedCartReview}
                                 placeholder="Review"
                                 onChange={(e) => setReview(e.target.value)}
                                 type="text"
@@ -67,7 +68,7 @@ const Abandoned = () => {
                             "customerId": a._id,
                             "actionKey": "abandonedCartReview",
                             "actionValue": review
-                          }, index)} variant="primary" type="button">Add</Button>
+                          }, index)} variant="primary" type="button">+</Button>
                         </td>
                       </tr>
                     ))
