@@ -141,16 +141,10 @@ export const getBookingHistory = () => {
 //GET CANCELLATION REQUEST
 export const getCancellationRequest = (_data) => {
     return async (dispatch) => {
-        if (_data['isServiceProviderAssigned'] === true || _data['isServiceProviderAssigned'] === 'true') {
-            _data['isServiceProviderAssigned'] = true
-        }
-        else {
-            _data['isServiceProviderAssigned'] = false
-        }
         try {
             dispatch(loader(true))
             const { data } = await axios({
-                method: "Post",
+                method: "Get",
                 url: prod_url + "dev/api/v1/cancellationRequest",
                 data: _data
             })

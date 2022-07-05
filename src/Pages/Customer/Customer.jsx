@@ -3,17 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
 import { getCustomers } from "../../redux/actions/commonAction";
 import Loader from '../../Components/Loader'
+import { getCities } from '../../redux/actions/cityAction'
 import moment from "moment";
 import { apiAuth } from '../../config/constant'
-import { Alert } from "bootstrap";
 import Fuse from 'fuse.js';
 
 const Customer = () => {
-  let { loader, customers } = useSelector(store => store.root)
+  const reduxData = useSelector(store => store)
+  const { cityRoot, root } = reduxData
+  let { loader, customers } = root
 
   const [_customers, _setCustomers] = useState([])
   const [customer, setCustomer] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
+  const [city, setCity] = useState("")
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -28,6 +31,15 @@ const Customer = () => {
     }
   }, [])
 
+  useEffect(() => {
+    // dispatch(getCustomers())
+    dispatch(getCities())
+  }, [])
+
+  useEffect(()=>{
+    const filteredData = customers.filter((d)=> d.cityName == city)
+    _setCustomers(filteredData)
+  },[city])
 
   useEffect(() => {
     _setCustomers(customers)
@@ -89,6 +101,17 @@ const Customer = () => {
                 />
               </Form.Group>
             </Form>
+          </Col>
+          <Col md={2} >
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>City *</Form.Label>
+              <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
+                <option>Select</option>
+                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
+                  <option value={c.name}>{c.name}</option>
+                ) : null}
+              </Form.Control>
+            </Form.Group>
           </Col>
           <Col md={2} >
             <Button onClick={refreshHandler}>Refresh</Button>

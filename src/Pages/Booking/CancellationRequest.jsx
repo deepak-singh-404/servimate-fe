@@ -17,60 +17,21 @@ import {
 import Loader from "../../Components/Loader";
 
 const CancellationRequest = () => {
-  const { cancellationRequests, loader } = useSelector(
-    (store) => store.bookingRoot
-  );
+  const { cancellationRequests, loader } = useSelector((store) => store.bookingRoot);
   const dispatch = useDispatch();
 
-  const [isServiceProviderAssigned, setIsServiceProviderAssigned] =
-    useState(false);
-
   useEffect(() => {
-    dispatch(
-      getCancellationRequest({
-        isServiceProviderAssigned,
-      })
-    );
+    dispatch(getCancellationRequest());
   }, []);
-
-  const formHandler = (e) => {
-    e.preventDefault();
-    dispatch(
-      getCancellationRequest({
-        isServiceProviderAssigned,
-      })
-    );
-  };
 
   const clickHandler = (id) => {
     if (!id) return;
-    dispatch(
-      approveCancellationRequest(id, () => {
-        window.location.reload();
-      })
-    );
+    dispatch(approveCancellationRequest(id, () => { window.location.reload() }));
   };
+  
   return (
     <>
       <Container fluid className="mt-3">
-        <Col md={2} className="m-auto">
-          <Row>
-            <Form className="d-flex" onSubmit={formHandler}>
-              <FormControl
-                onChange={(e) => setIsServiceProviderAssigned(e.target.value)}
-                as="select"
-                className="mr-2"
-              >
-                <option>Select</option>
-                <option value={true}>Partner Assigned</option>
-                <option value={false}>Need to Assign Partner</option>
-              </FormControl>
-              <Button type="submit" variant="outline-primary">
-                Filter
-              </Button>
-            </Form>
-          </Row>
-        </Col>
         {loader ? (
           <Loader className="m-auto" />
         ) : (
@@ -126,7 +87,7 @@ const CancellationRequest = () => {
                         )}
                       </td>
                       <td className="text-center">{b.customer.name}</td>
-                      <td>{b.serviceProviderName ? b.serviceProviderName : "NA" }</td>
+                      <td>{b.serviceProviderName ? b.serviceProviderName : "NA"}</td>
 
                       <td>
                         <Button onClick={() => clickHandler(b._id)}>
