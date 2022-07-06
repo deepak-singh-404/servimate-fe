@@ -1,32 +1,197 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
 import { getBookingHistory } from "../../redux/actions/booking";
 import { timeStampHelper } from '../../utils/commonFunction'
 import Loader from '../../Components/Loader'
+import Fuse from 'fuse.js';
 
 const BookingHistory = () => {
   const { loader, bookingHistory } = useSelector((store) => store.bookingRoot);
   const dispatch = useDispatch();
 
+  const [_bookingHistory, _setbookingHistory] = useState([])
+  const [fbookingId, fsetbookingId] = useState("")
+  const [fcustomerName, fsetcustomerName] = useState("")
+  const [fphoneNumber, fsetphoneNumber] = useState("+91")
+  const [fserviceProvider, fsetserviceProvider] = useState("")
+  const [fcancelled, fsetcancelled] = useState("")
+
+
   useEffect(() => {
     dispatch(getBookingHistory());
   }, []);
 
+  useEffect(() => {
+    if (bookingHistory) {
+      _setbookingHistory(bookingHistory)
+    }
+  }, [bookingHistory])
+
+  //Filter As Per BookingId
+  useEffect(() => {
+    const _bookings = new Fuse(bookingHistory, {
+      keys: ["bookingId"]
+    });
+    let result = _bookings.search(fbookingId);
+
+    if (result && result.length > 0) {
+      result = result.map(a => a.item)
+      _setbookingHistory(result)
+    }
+  }, [fbookingId])
+
+
+  //Filter As Per Customer Name
+  useEffect(() => {
+    const _bookings = new Fuse(bookingHistory, {
+      keys: ["customer.name"]
+    });
+    let result = _bookings.search(fcustomerName);
+
+    if (result && result.length > 0) {
+      result = result.map(a => a.item)
+      _setbookingHistory(result)
+    }
+  }, [fcustomerName])
+
+
+  //Filter As Per Phone Number
+  useEffect(() => {
+    const _bookings = new Fuse(bookingHistory, {
+      keys: ["customer.phoneNumber"]
+    });
+    let result = _bookings.search(fphoneNumber);
+
+    if (result && result.length > 0) {
+      result = result.map(a => a.item)
+      _setbookingHistory(result)
+    }
+  }, [fphoneNumber])
+
+
+  //Filter As Per Service Provider
+  useEffect(() => {
+    const _bookings = new Fuse(bookingHistory, {
+      keys: ["serviceProviderName"]
+    });
+    let result = _bookings.search(fserviceProvider);
+
+    if (result && result.length > 0) {
+      result = result.map(a => a.item)
+      _setbookingHistory(result)
+    }
+  }, [fserviceProvider])
+
+  useEffect(() => {
+    console.log(fcancelled)
+
+  }, [fcancelled])
+
+  const refreshHandler = () => {
+    _setbookingHistory(bookingHistory)
+  }
+
   return (
     <>
       <Container fluid>
+        <Row className="mt-2">
+          <Col md={1} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>Booking Id</Form.Label>
+                <Form.Control
+                  value={fbookingId}
+                  onChange={(e) => fsetbookingId(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+          <Col md={1} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>Customer Name</Form.Label>
+                <Form.Control
+                  value={fcustomerName}
+                  onChange={(e) => fsetcustomerName(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+          <Col md={1} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  value={fphoneNumber}
+                  onChange={(e) => fsetphoneNumber(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+          <Col md={1} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>Service Provider</Form.Label>
+                <Form.Control
+                  value={fserviceProvider}
+                  onChange={(e) => fsetserviceProvider(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+            </Form>
+          </Col>
+          {/* <Col md={2} >
+            <Form>
+              <Form.Check
+              checked = {fcancelled}
+                type="switch"
+                id="custom-switch"
+                label="Cancelled"
+                onChange={(e) => fsetcancelled(e.target.value)}
+              />
+            </Form>
+          </Col> */}
+          {/* <Col md={2} >
+            <Form className="d-flex">
+              <Form.Group>
+                <Form.Label>Phonenumber</Form.Label>
+                <Form.Control
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  type="text"
+                />
+              </Form.Group>
+            </Form>
+          </Col> */}
+          {/* <Col md={2} >
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>City *</Form.Label>
+              <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
+                <option>Select</option>
+                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
+                  <option value={c.name}>{c.name}</option>
+                ) : null}
+              </Form.Control>
+            </Form.Group>
+          </Col> */}
+          <Col md={2} >
+            <Button onClick={refreshHandler}>Refresh</Button>
+          </Col>
+        </Row>
         <Row className="mt-5">
           <Col>
             {loader ? <Loader /> : <>
-              {bookingHistory.length == 0 ? <h5>No Bookings Found</h5> :
+              {_bookingHistory.length == 0 ? <h5>No Bookings Found</h5> :
                 <>
-                {console.log(bookingHistory[0])}
                   <Table striped bordered hover>
                     <thead>
                       <tr>
                         <th className="text-center">
-                          S.No ({bookingHistory.length})
+                          S.No ({_bookingHistory.length})
                         </th>
                         <th className="text-center">Booking Id</th>
                         <th className="text-center">Customer Name</th>
@@ -44,8 +209,8 @@ const BookingHistory = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {bookingHistory.length !== 0
-                        ? bookingHistory.map((b, index) => (
+                      {_bookingHistory.length !== 0
+                        ? _bookingHistory.map((b, index) => (
                           <tr>
                             <td className="text-center">{index + 1}</td>
                             <td className="text-center">{b.bookingId}</td>
@@ -66,7 +231,7 @@ const BookingHistory = () => {
                             </td>
                             <td className="text-center">{b.serviceDate}</td>
                             <td className="text-center">{b.modeOfPayment}</td>
-                            <td className="text-center">{b.isFeedbackGivenByCustomer &&  b.customerReview?.rating + " " + b.customerReview?.message}</td>
+                            <td className="text-center">{b.isFeedbackGivenByCustomer && b.customerReview?.rating + " " + b.customerReview?.message}</td>
                           </tr>
                         ))
                         : null}
