@@ -9,9 +9,33 @@ const Abandoned = () => {
   const { loader, abandonedCart } = useSelector(store => store.root)
   const dispatch = useDispatch()
   const [review, setReview] = useState("")
+  const [_abandonedCart, _setabandonedCart] = useState([])
+  const [reviewFilter, setReviewFilter] = useState("")
+
   useEffect(() => {
     dispatch(getAbandonedCart())
   }, [])
+
+  useEffect(() => {
+    _setabandonedCart(abandonedCart)
+  }, [abandonedCart])
+
+  const refreshHandler = () => {
+    _setabandonedCart(abandonedCart)
+  }
+
+  useEffect(() => {
+    if (["reviewed", "unreviewed"].includes(reviewFilter)) {
+      if (reviewFilter == "reviewed") {
+        const filteredData = abandonedCart.filter((a) => a?.adminActions?.abandonedCartReview)
+        _setabandonedCart(filteredData)
+      }
+      if (reviewFilter == "unreviewed") {
+        const filteredData = abandonedCart.filter((a) => !a?.adminActions?.abandonedCartReview)
+        _setabandonedCart(filteredData)
+      }
+    }
+  }, [reviewFilter])
 
   //Review Action
   const reviewAction = (d, index) => {
@@ -25,16 +49,34 @@ const Abandoned = () => {
   return (
     <>
       <Container fluid>
+        <Row className="mt-2">
+          <Col md={1} >
+            <Form >
+              <Form.Group >
+                <Form.Label>Admin Review</Form.Label>
+                <Form.Control required onChange={(e) => setReviewFilter(e.target.value)} as="select">
+                  <option>Select </option>
+                  <option value="reviewed">Reviewed</option>
+                  <option value="unreviewed">Unreviewed</option>
+                </Form.Control>
+              </Form.Group>
+            </Form>
+          </Col>
+          <Col md={1} >
+            <Button onClick={refreshHandler}>Refresh</Button>
+          </Col>
+        </Row>
         <Row >
           {loader ? <Loader /> : <>
-            {abandonedCart.length === 0 ? <h5>No Customers Found</h5> : <>
+            {_abandonedCart.length === 0 ? <h5>No Customers Found</h5> : <>
               <Col >
                 <Table striped bordered hover >
                   <thead>
                     <tr>
-                      <th className="text-center">S.No ({abandonedCart.length})</th>
+                      <th className="text-center">S.No ({_abandonedCart.length})</th>
                       <th className="text-center">Customer Name</th>
                       <th className="text-center">Phone Number</th>
+                      <th className="text-center">City</th>
                       <th className="text-center">Last Item Added At</th>
                       <th className="text-center">Items In Cart</th>
                       <th className="text-center">Items</th>
@@ -44,11 +86,12 @@ const Abandoned = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {abandonedCart.map((a, index) => (
+                    {_abandonedCart.map((a, index) => (
                       <tr key={a._id}>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
+                        <td className="text-center">{a.cityName}</td>
                         <td className="text-center">{a.cart[a.cart.length - 1].createdAt && new Date(a.cart[a.cart.length - 1].createdAt).toISOString().slice(0, 10)}</td>
                         <td className="text-center">{a.cart.length}</td>
                         <td className="text-center">{a.cart.map(o => <>{o.serviceName} <br /></>)}</td>
