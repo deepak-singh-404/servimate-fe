@@ -104,8 +104,8 @@ const Customer = () => {
           </Col>
           <Col md={2} >
           <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label>City *</Form.Label>
-              <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
+          <Form.Label>City</Form.Label>
+              <Form.Control onChange={(e) => setCity(e.target.value)} as="select">
                 <option>Select</option>
                 {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
                   <option value={c.name}>{c.name}</option>

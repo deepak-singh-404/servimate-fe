@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
 import { getBookingHistory } from "../../redux/actions/booking";
 import { timeStampHelper } from '../../utils/commonFunction'
+import { getCities } from '../../redux/actions/cityAction'
 import Loader from '../../Components/Loader'
 import Fuse from 'fuse.js';
 
 const BookingHistory = () => {
   const { loader, bookingHistory } = useSelector((store) => store.bookingRoot);
+  const cities = useSelector((store) => store.cityRoot.cities)
   const dispatch = useDispatch();
 
   const [_bookingHistory, _setbookingHistory] = useState([])
@@ -15,11 +17,13 @@ const BookingHistory = () => {
   const [fcustomerName, fsetcustomerName] = useState("")
   const [fphoneNumber, fsetphoneNumber] = useState("+91")
   const [fserviceProvider, fsetserviceProvider] = useState("")
-  const [fcancelled, fsetcancelled] = useState("")
-
+  const [fcancelled, fsetcancelled] = useState(false)
+  const [city, setCity] = useState("")
+  const [fcustomerFeedback, fsetcustomerFeedback] = useState(false)
 
   useEffect(() => {
     dispatch(getBookingHistory());
+    dispatch(getCities())
   }, []);
 
   useEffect(() => {
@@ -83,12 +87,42 @@ const BookingHistory = () => {
     }
   }, [fserviceProvider])
 
+  //Filter As Per City
   useEffect(() => {
-    console.log(fcancelled)
+    if (city == "Select" || city == "") {
+      _setbookingHistory(bookingHistory)
+    }
+    else {
+      const filteredData = bookingHistory.filter((b) => b?.customerId?.cityName == city)
+      _setbookingHistory(filteredData)
+    }
+  }, [city])
+
+  //Filter As Per Customer Feedback
+  useEffect(() => {
+    if (fcustomerFeedback) {
+      const filteredData = bookingHistory.filter((b) => b.isFeedbackGivenByCustomer == true)
+      _setbookingHistory(filteredData)
+    }
+    else {
+      _setbookingHistory(bookingHistory)
+    }
+
+  }, [fcustomerFeedback])
+
+  useEffect(() => {
+    if (fcancelled) {
+      const filteredData = bookingHistory.filter((b) => b.isCancelled == true)
+      _setbookingHistory(filteredData)
+    }
+    else {
+      _setbookingHistory(bookingHistory)
+    }
 
   }, [fcancelled])
 
   const refreshHandler = () => {
+    
     _setbookingHistory(bookingHistory)
   }
 
@@ -144,40 +178,23 @@ const BookingHistory = () => {
               </Form.Group>
             </Form>
           </Col>
-          {/* <Col md={2} >
-            <Form>
-              <Form.Check
-              checked = {fcancelled}
-                type="switch"
-                id="custom-switch"
-                label="Cancelled"
-                onChange={(e) => fsetcancelled(e.target.value)}
-              />
-            </Form>
-          </Col> */}
-          {/* <Col md={2} >
-            <Form className="d-flex">
-              <Form.Group>
-                <Form.Label>Phonenumber</Form.Label>
-                <Form.Control
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  type="text"
-                />
-              </Form.Group>
-            </Form>
-          </Col> */}
-          {/* <Col md={2} >
+          <Col md={2} >
             <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>City *</Form.Label>
-              <Form.Control required onChange={(e) => setCity(e.target.value)} as="select">
+              <Form.Label>City</Form.Label>
+              <Form.Control onChange={(e) => setCity(e.target.value)} as="select">
                 <option>Select</option>
-                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
+                {cities.length !== 0 ? cities.map(c =>
                   <option value={c.name}>{c.name}</option>
                 ) : null}
               </Form.Control>
             </Form.Group>
-          </Col> */}
+          </Col>
+          <Col md={1} >
+            <Button variant="outline-info" onClick={() => fsetcustomerFeedback(!fcustomerFeedback)}>{fcustomerFeedback ? "Revert" : "Customer Feedbacks"}</Button>
+          </Col>
+          <Col md={1} >
+            <Button variant="outline-info" onClick={() => fsetcancelled(!fcancelled)}>{fcancelled ? "Revert" : "Cancelled"}</Button>
+          </Col>
           <Col md={2} >
             <Button onClick={refreshHandler}>Refresh</Button>
           </Col>
