@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
 import { getBookingHistory } from "../../redux/actions/booking";
-import { timeStampHelper } from '../../utils/commonFunction'
 import { getCities } from '../../redux/actions/cityAction'
 import Loader from '../../Components/Loader'
+import * as xlsx from "xlsx";
 import Fuse from 'fuse.js';
+import { apiAuth } from "../../config/constant";
 
 const BookingHistory = () => {
   const { loader, bookingHistory } = useSelector((store) => store.bookingRoot);
@@ -31,6 +32,7 @@ const BookingHistory = () => {
       _setbookingHistory(bookingHistory)
     }
   }, [bookingHistory])
+
 
   //Filter As Per BookingId
   useEffect(() => {
@@ -121,8 +123,23 @@ const BookingHistory = () => {
 
   }, [fcancelled])
 
+  const downloadData = () => {
+    if (_bookingHistory.length > 0) {
+      let password = prompt("Enter Password:")
+      if (password && password == apiAuth["customer"]) {
+        const worksheet = xlsx.utils.json_to_sheet(_bookingHistory);
+        const workbook = xlsx.utils.book_new();
+        xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+        xlsx.writeFile(workbook, "Bookings.xlsx");
+      }
+      else {
+        alert("Wrong password.")
+      }
+    }
+  }
+
   const refreshHandler = () => {
-    
+
     _setbookingHistory(bookingHistory)
   }
 
@@ -197,6 +214,9 @@ const BookingHistory = () => {
           </Col>
           <Col md={2} >
             <Button onClick={refreshHandler}>Refresh</Button>
+          </Col>
+          <Col md={2} >
+            <Button variant="danger" type="button" onClick={downloadData}>Export Data</Button>
           </Col>
         </Row>
         <Row className="mt-5">

@@ -6,6 +6,8 @@ import { getServices, setServices } from '../../redux/actions/serviceAction'
 import DeleteModal from '../../Components/DeleteModal'
 import UpdateServiceModal from '../../Components/Service/UpdateServiceModal'
 import Loader from '../../Components/Loader'
+import * as xlsx from "xlsx";
+import { apiAuth } from '../../config/constant'
 
 const Service = (props) => {
     const serviceRoot = useSelector(store => store.serviceRoot)
@@ -34,6 +36,21 @@ const Service = (props) => {
         setDeleteModal(true)
     }
 
+    const downloadData = () => {
+        if (services.length > 0) {
+            var password = prompt("Enter Password:")
+            if (password && password == apiAuth["customer"]) {
+                const worksheet = xlsx.utils.json_to_sheet(services);
+                const workbook = xlsx.utils.book_new();
+                xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+                xlsx.writeFile(workbook, "Service.xlsx");
+            }
+            else {
+                alert("Wrong password.")
+            }
+        }
+    }
+
     return (
         <>
             {deleteModal && <DeleteModal
@@ -59,60 +76,65 @@ const Service = (props) => {
                         <Button variant="primary" type="button" onClick={() => setAddServiceModal(true)}>ADD NEW</Button>
                     </Col>
                 </Row>
+                <Row className="my-2">
+                    <Col >
+                        <Button variant="danger" type="button" onClick={downloadData}>Export Data</Button>
+                    </Col>
+                </Row>
                 {loader ? <Loader /> : <>
-                    {services.length === 0 ? <h5>No Services Found</h5> : 
-                    <>
-                        <Row>
-                            <Col >
-                                <Table striped bordered hover>
-                                    <thead>
-                                        <tr>
-                                            <th className="text-center">S.No ({services.length})</th>
-                                            <th className="text-center">Index</th>
-                                            <th className="text-center">Service</th>
-                                            <th className="text-center">Price</th>
-                                            <th className="text-center">Icon Url</th>
-                                            <th className="text-center">Image Url</th>
-                                            <th className="text-center">Includes</th>
-                                            <th className="text-center">Update</th>
-                                            <th className="text-center">Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {services.map((service, index) =>
+                    {services.length === 0 ? <h5>No Services Found</h5> :
+                        <>
+                            <Row>
+                                <Col >
+                                    <Table striped bordered hover>
+                                        <thead>
                                             <tr>
-                                                <td className="text-center">{index + 1}</td>
-                                                <td className="text-center">{service.index}</td>
-                                                <td className="text-center">{service.serviceName}</td>
-                                                <td>
-                                                    <tr>
-                                                        <td>City</td>
-                                                        <td>Actual Price</td>
-                                                        <td>Discounted Price</td>
-                                                    </tr>
-                                                    {service.price.map(d =>
-                                                        <tr>
-                                                            <td>{d.cityName}</td>
-                                                            <td>{d.actualPrice}</td>
-                                                            <td>{d.discountedPrice}</td>
-                                                        </tr>
-                                                    )}
-                                                </td>
-                                                <td className="text-center"><a href={service.iconUrl} target="_blank">{service.iconUrl && "url"} </a></td>
-                                                <td className="text-center"><a href={service.imgUrl} target="_blank">{service.imgUrl && "url"} </a></td>
-                                                <td className="text-center">{service.includes.join(', ')}</td>
-                                                <td className="text-center"><Button onClick={() => {
-                                                    setUpdateModal(true)
-                                                    setPreviousData(service)
-                                                }} variant="outline-info">Update</Button></td>
-                                                <td className="text-center"><Button onClick={() => deleteHandler(service)} variant="outline-info">Delete</Button></td>
+                                                <th className="text-center">S.No ({services.length})</th>
+                                                <th className="text-center">Index</th>
+                                                <th className="text-center">Service</th>
+                                                <th className="text-center">Price</th>
+                                                <th className="text-center">Icon Url</th>
+                                                <th className="text-center">Image Url</th>
+                                                <th className="text-center">Includes</th>
+                                                <th className="text-center">Update</th>
+                                                <th className="text-center">Delete</th>
                                             </tr>
-                                        )}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                        </Row>
-                    </>}
+                                        </thead>
+                                        <tbody>
+                                            {services.map((service, index) =>
+                                                <tr>
+                                                    <td className="text-center">{index + 1}</td>
+                                                    <td className="text-center">{service.index}</td>
+                                                    <td className="text-center">{service.serviceName}</td>
+                                                    <td>
+                                                        <tr>
+                                                            <td>City</td>
+                                                            <td>Actual Price</td>
+                                                            <td>Discounted Price</td>
+                                                        </tr>
+                                                        {service.price.map(d =>
+                                                            <tr>
+                                                                <td>{d.cityName}</td>
+                                                                <td>{d.actualPrice}</td>
+                                                                <td>{d.discountedPrice}</td>
+                                                            </tr>
+                                                        )}
+                                                    </td>
+                                                    <td className="text-center"><a href={service.iconUrl} target="_blank">{service.iconUrl && "url"} </a></td>
+                                                    <td className="text-center"><a href={service.imgUrl} target="_blank">{service.imgUrl && "url"} </a></td>
+                                                    <td className="text-center">{service.includes.join(', ')}</td>
+                                                    <td className="text-center"><Button onClick={() => {
+                                                        setUpdateModal(true)
+                                                        setPreviousData(service)
+                                                    }} variant="outline-info">Update</Button></td>
+                                                    <td className="text-center"><Button onClick={() => deleteHandler(service)} variant="outline-info">Delete</Button></td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                        </>}
                 </>}
             </Container>
         </>
