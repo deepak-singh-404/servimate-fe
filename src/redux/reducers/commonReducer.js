@@ -1,7 +1,8 @@
 const initialState = {
     abandonedCart: [],
     customers: [],
-    loader: false
+    loader: false,
+    referAndEarnConfigs: []
 }
 
 const commonReducer = (state = initialState, action) => {
@@ -27,6 +28,23 @@ const commonReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loader: action.payload
+            }
+        case "SET_REFERANDEARN_CONFIGS":
+            return {
+                ...state,
+                referAndEarnConfigs: action.payload
+            }
+        case "SET_REFERANDEARN_CONFIG":
+            return {
+                ...state,
+                referAndEarnConfigs: [...state.referAndEarnConfigs, action.payload]
+            }
+        case "DELETE_REFERANDEARN_CONFIG":
+            return {
+                ...state,
+                referAndEarnConfigs: state.referAndEarnConfigs.filter(obj => {
+                    return obj._id !== action.payload
+                }),
             }
         default:
             return state

@@ -37,6 +37,7 @@ import PartnerScreenSlider from './Pages/PartnerHomeScreen/ScreenSlider'
 
 //DASHBOARD
 import Dashboard from './Pages/Dashboard/Dashboard';
+import ReferAndEarn from './Pages/ReferAndEarn/ReferAndEarn';
 
 if (window.localStorage.servimateToken) {
   setAuthToken(localStorage.servimateToken);
@@ -82,7 +83,7 @@ function App() {
           <Route exact path="/homeScreen/homeScreenReview" component={HomeScreenReview} />
           <Route exact path="/partner/homeScreen/banner" component={PartnerHomeScreen} />
           <Route exact path="/partner/screen/slider" component={PartnerScreenSlider} />
-
+          <Route exact path="/config/referAndEarn" component={ReferAndEarn} />
           <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </Router>
