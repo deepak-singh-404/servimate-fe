@@ -1,4 +1,4 @@
-const prod_url = "https://dev-servimate-admin.herokuapp.com/"
+const prod_url = "https://servimate-admin.herokuapp.com/"
 const local_url = "http://localhost:4000/"
 const partnerWalletActionTypes = [{ "Add": "add" }, { "Subtract": "sub" }, { "Reset": "reset" }]
 const apiAuth = {
