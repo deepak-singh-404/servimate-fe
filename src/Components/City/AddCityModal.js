@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Modal } from 'react-bootstrap'
-import {addCity} from '../../redux/actions/cityAction'
+import { addCity } from '../../redux/actions/cityAction'
 import Loader from '../Loader'
 
 const AddCityModal = ({ addCityModal, setAddCityModal }) => {
-    const cityData = useSelector(store=>store.cityRoot)
-    const {loader, success} = cityData
-    const  dispatch = useDispatch()
+    const cityData = useSelector(store => store.cityRoot)
+    const { loader, success } = cityData
+    const dispatch = useDispatch()
     const [city, setCity] = useState("")
     const [pinCodes, setPincodes] = useState("")
     const [state, setState] = useState("")
@@ -24,23 +24,23 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
                     .join(' ');
             };
             const name = toTitleCase(city);
-            const stateName  =  toTitleCase(state)
+            const stateName = toTitleCase(state)
             //FORMAT PINCODE,     STRINGS => ARRAY OF NUMBERS
             const zipcodes = pinCodes.split(',').map(function (item) {
                 return parseInt(item, 10);
             });
-            dispatch(addCity({name, zipcodes, state:stateName}))
+            dispatch(addCity({ name, zipcodes, state: stateName }))
         }
-        else{
+        else {
             alert("Fields  should not be empty")
         }
     }
 
-    useEffect(()=>{
-        if(success){
+    useEffect(() => {
+        if (success) {
             setAddCityModal(false)
         }
-    },[success])
+    }, [success])
 
     return (
         <>
@@ -63,13 +63,13 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
                             <Form.Control onChange={(e) => setPincodes(e.target.value)} value={pinCodes} as="textarea" rows={3} />
                             <Form.Text className="text-muted">
                                 Enter Pincodes in below format
-      <br />
-      201301, 201305, 201306
-    </Form.Text>
+                                <br />
+                                201301, 201305, 201306
+                            </Form.Text>
                         </Form.Group>
                         {loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
-                </Button>}
+                        </Button>}
                     </Form>
                 </Modal.Body>
             </Modal>

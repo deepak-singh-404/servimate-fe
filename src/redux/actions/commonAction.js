@@ -97,3 +97,90 @@ export const reviewAdminAction = (_data, index) => {
     }
 }
 
+//GET ALL REFER AND EARN CONFIG
+export const getAllReferAndEarnConfig = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url + "dev/api/v1/config/referAndEarn",
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_REFERANDEARN_CONFIGS",
+                    payload: data.response,
+                })
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("getAllReferAndEarnConfig", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
+//ADD REFER AND EARN CONFIG
+export const addReferAndEarnConfig = (_data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + "dev/api/v1/config/referAndEarn",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_REFERANDEARN_CONFIG",
+                    payload: data.response,
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("getAllReferAndEarnConfig", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
+
+//DELETE REFER AND EARN CONFIG
+export const deleteReferAndEarnConfig = (id) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Delete",
+                url: prod_url + "dev/api/v1/config/referAndEarn/" + id,
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "DELETE_REFERANDEARN_CONFIG",
+                    payload: id,
+                })
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("deleteReferAndEarnConfig", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+

@@ -38,6 +38,9 @@ const AdminNavbar = () => {
                             <NavDropdown.Item><Link to="/homeScreen/topPick">TOP PICK</Link></NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/homeScreen/homeScreenReview">HOME SCREEN REVIEW</Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item><Link to="/config/referAndEarn">REFER AND EARN</Link></NavDropdown.Item>
+
                         </NavDropdown>
                         <NavDropdown title="PARTNER" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/partner">SERVICE PROVIDER</Link></NavDropdown.Item>
