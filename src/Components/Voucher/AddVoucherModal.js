@@ -4,11 +4,12 @@ import { Form, Button, Modal } from 'react-bootstrap'
 import Loader from '../Loader'
 import { addVoucher } from '../../redux/actions/voucher'
 import { getAllServiceSubCategory } from '../../redux/actions/serviceAction'
+import { getCities } from '../../redux/actions/cityAction'
 import { Typeahead } from 'react-bootstrap-typeahead';
 import moment from 'moment'
 
 const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
-    const { voucherRoot, serviceRoot } = useSelector(store => store)
+    const { voucherRoot, serviceRoot, cityRoot } = useSelector(store => store)
     const [voucherType, setVoucherType] = useState(0)
     const [couponCode, setCouponCode] = useState("")
     const [discount, setDiscount] = useState("")
@@ -19,34 +20,37 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
     const [limitToOneUser, setLimitToOneUser] = useState("")
     const [minPrice, setMinPrice] = useState("")
     const [serviceSubCategory, setServiceSubCategory] = useState([]);
+    const [city, setCity] = useState("")
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getAllServiceSubCategory())
+        dispatch(getCities())
     }, [])
 
 
     const formHandler = (e) => {
         e.preventDefault()
-        if(serviceSubCategory.length === 0){
+        if (serviceSubCategory.length === 0) {
             alert("Service Sub Category field is empty, Kindly add")
-            return 
+            return
         }
-        let applyTo = serviceSubCategory.map(o=> o._id)
+        let applyTo = serviceSubCategory.map(o => o._id)
         const data = {
             couponCode,
-            discount, 
+            discount,
             discountType,
             voucherType,
-            applyTo:applyTo,
+            applyTo: applyTo,
             startDate,
             validUpto,
             totalNoUses,
             limitToOneUser,
-            minPrice
+            minPrice,
+            city
         }
-        dispatch(addVoucher(data,()=>{
+        dispatch(addVoucher(data, () => {
             setAddVoucherModal(false)
         }))
     }
@@ -67,6 +71,15 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
                                 <option value={1}>Sale</option>
                                 <option value={2}>Referal</option>
                                 <option value={4}>Promotional Code</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group >
+                            <Form.Label>City </Form.Label>
+                            <Form.Control onChange={(e) => setCity(e.target.value)} as="select">
+                                <option>Select</option>
+                                {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>
+                                    <option value={c._id}>{c.name}</option>
+                                ) : null}
                             </Form.Control>
                         </Form.Group>
                         <Form.Group >
@@ -120,10 +133,9 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
                             <Form.Label>Min Price</Form.Label>
                             <Form.Control value={minPrice} onChange={(e) => setMinPrice(e.target.value)} type="text" />
                         </Form.Group>
-
                         {voucherRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
-                </Button>}
+                        </Button>}
                     </Form>
                 </Modal.Body>
             </Modal>
