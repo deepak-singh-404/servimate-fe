@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Form, Button, NavDropdown } from "react-bootstrap";
 import { getCustomers } from "../../redux/actions/commonAction";
 import Loader from '../../Components/Loader'
 import { getCities } from '../../redux/actions/cityAction'
 import moment from "moment";
 import { apiAuth, byPassEmails } from '../../config/constant'
 import Fuse from 'fuse.js';
+import UpdateWalletModal from "../../Components/Customer/UpdateWalletModal";
 
 const Customer = () => {
   const reduxData = useSelector(store => store)
@@ -15,8 +16,10 @@ const Customer = () => {
 
   const [_customers, _setCustomers] = useState([])
   const [customer, setCustomer] = useState("")
+  const [customerInfo, setCustomerInfo] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
   const [city, setCity] = useState("")
+  const [updateWalletModal, setUpdateWalletModal] = useState(false)
   const dispatch = useDispatch()
 
   //Auth process
@@ -91,6 +94,9 @@ const Customer = () => {
 
   return (
     <>
+   
+      {updateWalletModal && <UpdateWalletModal updateWalletModal={updateWalletModal}
+        setUpdateWalletModal={setUpdateWalletModal} customerInfo={customerInfo} />}
       <Container fluid>
         <Row className="mt-2">
           <Col md={2} >
@@ -140,9 +146,11 @@ const Customer = () => {
                   <thead>
                     <tr>
                       <th className="text-center">S.No ({_customers.length})</th>
+                      <th className="text-center"> Actions</th>
                       <th className="text-center">Joined On</th>
                       <th className="text-center">Customer Name</th>
                       <th className="text-center">Phone Number</th>
+                      <th className="text-center">Wallet</th>
                       <th className="text-center">Service Booked</th>
                       <th className="text-center">Items In Cart</th>
                       <th className="text-center">City</th>
@@ -155,9 +163,21 @@ const Customer = () => {
                     {_customers.map((a, index) => (
                       <tr key={a._id}>
                         <td className="text-center">{index + 1}</td>
+                        <td className="text-center">
+                          <NavDropdown title="Actions" id="basic-nav-dropdown">
+                            <NavDropdown.Item><Button variant='danger' onClick={() => {
+                              setUpdateWalletModal(true)
+                              setCustomerInfo(a)
+                            }} type="button">
+                              UPDATE WALLET
+                            </Button></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                          </NavDropdown>
+                        </td>
                         <td className="text-center"> {moment(a.createdAt).format("YYYY-MM-DD")}</td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
+                        <td className="text-center">{a.walletAmount || 0}</td>
                         <td className="text-center">{a.serviceBooked.length}</td>
                         <td className="text-center">{a.cart.length}</td>
                         <td className="text-center">{a.cityName}</td>
