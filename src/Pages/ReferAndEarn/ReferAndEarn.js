@@ -38,6 +38,7 @@ const ReferAndEarn = () => {
                                             <th className="text-center">ReferredBy Share</th>
                                             <th className="text-center">Start Date</th>
                                             <th className="text-center">End Date</th>
+                                            <th className="text-center">Validity</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -50,6 +51,7 @@ const ReferAndEarn = () => {
                                                 <td className="text-center">{d.referredByShare}</td>
                                                 <td className="text-center">{d.startDate}</td>
                                                 <td className="text-center">{d.endDate}</td>
+                                                <td className="text-center">{d.validity}</td>
                                                 <td className="text-center">
                                                     {/* <Button onClick={() => {
                                                     setPreviousData(city)

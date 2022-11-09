@@ -10,16 +10,22 @@ const AddReferAndEarnModal = ({ addModal, setAddModal }) => {
     const dispatch = useDispatch()
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
-    const [discountType, setDiscountType] = useState("")
+    const [discountType, setDiscountType] = useState("INR")
     const [referredByShare, setReferredByShare] = useState("")
     const [referralShare, setReferralShare] = useState("")
     const [referralAmount, setReferralAmount] = useState("")
+    const [validity, setValidity] = useState("30")
 
     const formHandler = (e) => {
         e.preventDefault()
-        if (startDate && endDate && discountType && referredByShare && referralShare && referralAmount) {
-
-            dispatch(addReferAndEarnConfig({ startDate, endDate, discountType, referredByShare: Number(referredByShare), referralShare: Number(referralShare), referralAmount: Number(referralAmount) }, () => {
+        if (startDate && endDate && discountType && referredByShare && referralShare && referralAmount && validity) {
+            dispatch(addReferAndEarnConfig({
+                startDate, endDate, discountType,
+                referredByShare: Number(referredByShare),
+                referralShare: Number(referralShare),
+                referralAmount: Number(referralAmount),
+                validity: Number(validity)
+            }, () => {
                 setAddModal(false)
             }))
         }
@@ -62,6 +68,10 @@ const AddReferAndEarnModal = ({ addModal, setAddModal }) => {
                         <Form.Group >
                             <Form.Label>Referal Amount</Form.Label>
                             <Form.Control value={referralAmount} onChange={(e) => setReferralAmount(e.target.value)} type="text" />
+                        </Form.Group>
+                        <Form.Group >
+                            <Form.Label>Validity</Form.Label>
+                            <Form.Control value={validity} onChange={(e) => setValidity(e.target.value)} type="text" />
                         </Form.Group>
                         {loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
