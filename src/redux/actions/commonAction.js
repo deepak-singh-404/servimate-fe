@@ -184,3 +184,33 @@ export const deleteReferAndEarnConfig = (id) => {
     }
 }
 
+//UPDATE CUSTOMER WALLET
+//ADD REFER AND EARN CONFIG
+export const updateCustomerWallet = (_data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + "api/v1/customer/wallet",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_CUSTOMER_WALLET",
+                    payload: data.response,
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("updateCustomerWallet", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}

@@ -46,6 +46,11 @@ const commonReducer = (state = initialState, action) => {
                     return obj._id !== action.payload
                 }),
             }
+        case "UPDATE_CUSTOMER_WALLET":
+            return {
+                ...state,
+                customers: state.customers.map(d => d._id == action.payload._id ? action.payload : d),
+            };
         default:
             return state
     }
