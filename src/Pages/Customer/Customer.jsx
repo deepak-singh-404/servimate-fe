@@ -5,7 +5,7 @@ import { getCustomers } from "../../redux/actions/commonAction";
 import Loader from '../../Components/Loader'
 import { getCities } from '../../redux/actions/cityAction'
 import moment from "moment";
-import { apiAuth } from '../../config/constant'
+import { apiAuth, byPassEmails } from '../../config/constant'
 import Fuse from 'fuse.js';
 
 const Customer = () => {
@@ -19,7 +19,8 @@ const Customer = () => {
   const [city, setCity] = useState("")
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  //Auth process
+  const authProcess = () => {
     let p = prompt('Enter Password:');
     if (p) {
       if (p == apiAuth["customer"]) {
@@ -29,6 +30,20 @@ const Customer = () => {
         alert("Wrong password")
       }
     }
+  }
+
+  useEffect(() => {
+    if (reduxData?.adminRoot?.isAuthenticated) {
+      if (byPassEmails.includes(reduxData?.adminRoot?.admin?.email)) {
+        dispatch(getCustomers())
+      }
+      else {
+        authProcess()
+      }
+    }
+    else {
+      authProcess()
+    }
   }, [])
 
   useEffect(() => {
@@ -36,10 +51,10 @@ const Customer = () => {
     dispatch(getCities())
   }, [])
 
-  useEffect(()=>{
-    const filteredData = customers.filter((d)=> d.cityName == city)
+  useEffect(() => {
+    const filteredData = customers.filter((d) => d.cityName == city)
     _setCustomers(filteredData)
-  },[city])
+  }, [city])
 
   useEffect(() => {
     _setCustomers(customers)
@@ -103,8 +118,8 @@ const Customer = () => {
             </Form>
           </Col>
           <Col md={2} >
-          <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label>City</Form.Label>
+            <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>City</Form.Label>
               <Form.Control onChange={(e) => setCity(e.target.value)} as="select">
                 <option>Select</option>
                 {cityRoot.cities.length !== 0 ? cityRoot.cities.map(c =>

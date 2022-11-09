@@ -5,9 +5,12 @@ const apiAuth = {
     "customer": "Admin@789"
 }
 
+const byPassEmails = ["web.dev.deepaksingh@gmail.com"]
+
 module.exports = {
     prod_url,
     local_url,
     partnerWalletActionTypes,
-    apiAuth
+    apiAuth,
+    byPassEmails
 }

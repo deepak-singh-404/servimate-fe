@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { local_url, prod_url, prod_url1 } from '../../config/constant'
+import { local_url, prod_url } from '../../config/constant'
 
 
 const loader = (data) => {
@@ -442,7 +442,7 @@ export const getServicesByServiceCategory = (id) => {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Get",
-                url: prod_url1 + `api/v1/service/${id}/services`
+                url: prod_url + `api/v1/service/${id}/services`
             })
             dispatch(loader(false))
             if (data.success) {
