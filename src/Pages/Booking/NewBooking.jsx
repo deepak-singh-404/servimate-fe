@@ -9,6 +9,7 @@ import { getServiceProviders } from "../../redux/actions/serviceProvider";
 import AssignServiceProviderModal from "../../Components/Booking/AssignServiceProviderModal";
 import Loader from "../../Components/Loader";
 import { timeStampHelper } from '../../utils/commonFunction'
+import CancelBookingModal from "../../Components/Booking/CancelBookingModal";
 
 const NewBooking = () => {
   const { newBookings, loader } = useSelector((store) => store.bookingRoot);
@@ -19,6 +20,8 @@ const NewBooking = () => {
   const [date, setDate] = useState("")
   const [bookingId, setBookingId] = useState("")
   const [customerName, setCustomerName] = useState("")
+  const [cancelBookingModal, setCancelBookingModal] = useState(false)
+  const [booking, setBooking] = useState("")
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,13 +54,9 @@ const NewBooking = () => {
     setAssignServiceProviderModal(true);
   };
 
-  const cancelHandler = (id) => {
-    if (!id) return;
-    dispatch(
-      adminCancelBooking(id, () => {
-        window.location.reload();
-      })
-    );
+  const cancelHandler = (booking) => {
+    setCancelBookingModal(true)
+    setBooking(booking)
   };
 
   const refreshHandler = () => {
@@ -68,6 +67,8 @@ const NewBooking = () => {
   }
   return (
     <>
+      {cancelBookingModal && <CancelBookingModal cancelBookingModal={cancelBookingModal}
+        setCancelBookingModal={setCancelBookingModal} booking={booking} />}
       {assignServiceProviderModal && (
         <AssignServiceProviderModal
           currentBooking={currentBooking}
@@ -193,7 +194,7 @@ const NewBooking = () => {
                         </td>
                         <td>
                           <Button
-                            onClick={() => cancelHandler(b._id)}
+                            onClick={() => cancelHandler(b)}
                             variant="primary"
                           >
                             Cancel Service

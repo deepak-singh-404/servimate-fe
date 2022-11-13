@@ -139,8 +139,23 @@ const BookingHistory = () => {
   }
 
   const refreshHandler = () => {
-
     _setbookingHistory(bookingHistory)
+  }
+
+  const statusHandler = (b) => {
+    if (b.isCancelled) {
+      return "CANCELLED"
+    }
+    else if (!b.isServiceProviderAssigned) {
+      return "PENDING"
+    }
+    else if (b.isServiceProviderAssigned) {
+      return b.serviceProviderName
+    }
+    else {
+      return "STATUS UNKNOWN"
+    }
+
   }
 
   return (
@@ -242,6 +257,8 @@ const BookingHistory = () => {
                         <th className="text-center">Services</th>
                         <th className="text-center">Service Date (yyyy/mm/dd)</th>
                         <th className="text-center">Mode Of Payment</th>
+                        <th className="text-center">Cancelled By</th>
+                        <th className="text-center">Cancellation Reason</th>
                         <th className="text-center">Feedback</th>
                       </tr>
                     </thead>
@@ -254,7 +271,7 @@ const BookingHistory = () => {
                             <td className="text-center">{b.customer.name}</td>
                             <td className="text-center">{b.customer.phoneNumber}</td>
                             <td className="text-center">{b?.customerId?.cityName || "N.A"}</td>
-                            <td className="text-center">{b.serviceProviderName || "CANCELLED"}</td>
+                            <td className="text-center">{statusHandler(b)}</td>
                             <td className="text-center">{b.finalPrice.toFixed(2)}</td>
                             <td className="text-center">{b.coupon?.name || "N.A"}</td>
                             <td className="text-center">{b.bookingJourney.amountPaidByCustomer}</td>
@@ -268,6 +285,8 @@ const BookingHistory = () => {
                             </td>
                             <td className="text-center">{b.serviceDate}</td>
                             <td className="text-center">{b.modeOfPayment}</td>
+                            <td className="text-center">{b.isAdminCancelledService ? "ADMIN" : "CUSTOMER"}</td>
+                            <td className="text-center">{b.customerCancellationReason || b.adminCancellationReason}</td>
                             <td className="text-center">{b.isFeedbackGivenByCustomer && b.customerReview?.rating + " " + b.customerReview?.message}</td>
                           </tr>
                         ))
