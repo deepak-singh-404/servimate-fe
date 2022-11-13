@@ -168,7 +168,6 @@ const AddJobManuallyModal = ({ addManualJobModal, setAddManulJobModal }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={formHandler}>
-
                         <Form.Group controlId="exampleForm.ControlSelect1">
                             <Form.Label>Service Category *</Form.Label>
                             <Form.Control required onChange={(e) => setServiceCategory(e.target.value)} as="select">

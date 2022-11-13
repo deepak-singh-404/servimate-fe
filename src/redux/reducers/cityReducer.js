@@ -28,7 +28,7 @@ const cityReducer = (state = initialState, action) => {
                 ...state,
                 cities: state.cities.filter(obj => {
                     return obj._id !== action.payload
-                }),
+                })
             }
         case "UPDATE_CITY":
             return {
