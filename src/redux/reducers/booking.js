@@ -51,6 +51,12 @@ const booking = (state = initialState, action) => {
                 ...state,
                 outOfReachBookings: action.payload,
             }
+        case "ADMIN_CANCEL_BOOKING":
+            return {
+                newBookings: state.newBookings.filter(obj => {
+                    return obj._id !== action.payload._id
+                })
+            }
         case "SET_LOADER":
             return {
                 ...state,

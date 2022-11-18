@@ -9,8 +9,16 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
     const { loader, success } = cityData
     const dispatch = useDispatch()
     const [city, setCity] = useState("")
+    const [iconUrl, setIconUrl] = useState("");
     const [pinCodes, setPincodes] = useState("")
     const [state, setState] = useState("")
+
+    const imagehandler = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            let img = e.target.files[0];
+            setIconUrl(img);
+        }
+    };
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -29,12 +37,20 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
             const zipcodes = pinCodes.split(',').map(function (item) {
                 return parseInt(item, 10);
             });
-            dispatch(addCity({ name, zipcodes, state: stateName }))
+            const formData = new FormData();
+            formData.append("name", name);
+            if (iconUrl !== "") {
+                formData.append("iconUrl", iconUrl);
+            }
+            formData.append("zipcodes", zipcodes)
+            formData.append("state", stateName)
+            dispatch(addCity(formData))
         }
         else {
             alert("Fields  should not be empty")
         }
     }
+
 
     useEffect(() => {
         if (success) {
@@ -57,6 +73,14 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
                         <Form.Group >
                             <Form.Label>State</Form.Label>
                             <Form.Control value={state} onChange={(e) => setState(e.target.value)} type="text" placeholder="Enter name of the state" />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>ICON</Form.Label>
+                            <Form.Control
+                                accept=".jpg,.png,.jpeg"
+                                onChange={imagehandler}
+                                type="file"
+                            />
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Pincodes</Form.Label>

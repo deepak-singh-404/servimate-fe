@@ -58,16 +58,21 @@ export const getNewBookings = () => {
 }
 
 //ADMIN CANCEL BOOKING
-export const adminCancelBooking = (id, cb) => {
+export const adminCancelBooking = (_data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
-                method: "Get",
-                url: prod_url + `dev/api/v1/adminCancelService/${id}`,
+                method: "Post",
+                url: prod_url + `dev/api/v1/adminCancelService`,
+                data: _data
             })
             dispatch(loader(false))
             if (data.success) {
+                dispatch({
+                    type: "ADMIN_CANCEL_BOOKING",
+                    payload: data.response
+                })
                 cb()
             }
             else {
