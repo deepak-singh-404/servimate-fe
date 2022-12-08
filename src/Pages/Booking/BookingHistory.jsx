@@ -155,7 +155,6 @@ const BookingHistory = () => {
     else {
       return "STATUS UNKNOWN"
     }
-
   }
 
   return (

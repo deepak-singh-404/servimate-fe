@@ -4,6 +4,8 @@ import { Container, Row, Col, Table, Form, Button, NavDropdown } from "react-boo
 import { getAbandonedCart, reviewAdminAction } from "../../redux/actions/commonAction";
 import Loader from "../../Components/Loader";
 
+import downloadData from '../../utils/xlsx'
+
 
 const Abandoned = () => {
   const { loader, abandonedCart } = useSelector(store => store.root)
@@ -37,6 +39,18 @@ const Abandoned = () => {
     }
   }, [reviewFilter])
 
+  const downloadHandler = () => {
+    let data = _abandonedCart.map((d) => {
+      return {
+        "Customer": d.name,
+        "City": d.cityName,
+        "PhoneNumber": d.phoneNumber,
+        "Cart": d.cart.length
+      }
+    })
+    downloadData("AbandonedCart.xlsx", data)
+  }
+
   //Whatsapp Handler
   const whatsappHandler = (number) => {
     window.location.href = 'http://wa.me/' + number
@@ -69,6 +83,9 @@ const Abandoned = () => {
           </Col>
           <Col md={1} >
             <Button onClick={refreshHandler}>Refresh</Button>
+          </Col>
+          <Col md={2} >
+            <Button variant="danger" type="button" onClick={downloadHandler}>Export Data</Button>
           </Col>
         </Row>
         <Row >
