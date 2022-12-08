@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Table, Form, Button, NavDropdown } from "react-bootstrap";
 import { getAbandonedCart, reviewAdminAction } from "../../redux/actions/commonAction";
 import Loader from "../../Components/Loader";
 
@@ -36,6 +36,11 @@ const Abandoned = () => {
       }
     }
   }, [reviewFilter])
+
+  //Whatsapp Handler
+  const whatsappHandler = (number) => {
+    window.location.href = 'http://wa.me/' + number
+  }
 
   //Review Action
   const reviewAction = (d, index) => {
@@ -74,6 +79,7 @@ const Abandoned = () => {
                   <thead>
                     <tr>
                       <th className="text-center">S.No ({_abandonedCart.length})</th>
+                      <th className="text-center"> Actions</th>
                       <th className="text-center">Customer Name</th>
                       <th className="text-center">Phone Number</th>
                       <th className="text-center">City</th>
@@ -88,6 +94,14 @@ const Abandoned = () => {
                   <tbody>
                     {_abandonedCart.map((a, index) => (
                       <tr key={a._id}>
+                        <td className="text-center">
+                          <NavDropdown title="Actions" id="basic-nav-dropdown">
+                            <NavDropdown.Item><Button variant='info' onClick={() => whatsappHandler(a.phoneNumber)} type="button">
+                              WHATSAPP
+                            </Button></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                          </NavDropdown>
+                        </td>
                         <td className="text-center">{index + 1}</td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
