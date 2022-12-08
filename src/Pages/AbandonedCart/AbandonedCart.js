@@ -94,15 +94,12 @@ const Abandoned = () => {
                   <tbody>
                     {_abandonedCart.map((a, index) => (
                       <tr key={a._id}>
-                        <td className="text-center">
-                          <NavDropdown title="Actions" id="basic-nav-dropdown">
-                            <NavDropdown.Item><Button variant='info' onClick={() => whatsappHandler(a.phoneNumber)} type="button">
-                              WHATSAPP
-                            </Button></NavDropdown.Item>
-                            <NavDropdown.Divider />
-                          </NavDropdown>
-                        </td>
                         <td className="text-center">{index + 1}</td>
+                        <td className="text-center">
+                          <Button variant='info' onClick={() => whatsappHandler(a.phoneNumber)} type="button">
+                            WHATSAPP
+                          </Button>
+                        </td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
                         <td className="text-center">{a.cityName}</td>

@@ -86,6 +86,11 @@ const Customer = () => {
     }
   }, [phoneNumber])
 
+  //Whatsapp Handler
+  const whatsappHandler = (number) => {
+    window.location.href = 'http://wa.me/' + number
+  }
+
   const refreshHandler = () => {
     _setCustomers(customers)
     setCustomer("")
@@ -94,7 +99,7 @@ const Customer = () => {
 
   return (
     <>
-   
+
       {updateWalletModal && <UpdateWalletModal updateWalletModal={updateWalletModal}
         setUpdateWalletModal={setUpdateWalletModal} customerInfo={customerInfo} />}
       <Container fluid>
@@ -148,6 +153,7 @@ const Customer = () => {
                       <th className="text-center">S.No ({_customers.length})</th>
                       <th className="text-center"> Actions</th>
                       <th className="text-center">Joined On</th>
+                      <th className="text-center">Whatsapp</th>
                       <th className="text-center">Customer Name</th>
                       <th className="text-center">Phone Number</th>
                       <th className="text-center">Wallet</th>
@@ -175,6 +181,11 @@ const Customer = () => {
                           </NavDropdown>
                         </td>
                         <td className="text-center"> {moment(a.createdAt).format("YYYY-MM-DD")}</td>
+                        <td className="text-center">
+                          <Button variant='info' onClick={() => whatsappHandler(a.phoneNumber)} type="button">
+                            WHATSAPP
+                          </Button>
+                        </td>
                         <td className="text-center">{a.name}</td>
                         <td className="text-center">{a.phoneNumber}</td>
                         <td className="text-center">{a.walletAmount || 0}</td>
