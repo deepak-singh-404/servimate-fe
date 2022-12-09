@@ -11,7 +11,9 @@ const downloadData = (fileName, data) => {
             xlsx.writeFile(workbook, fileName);
         }
         else {
-            alert("Wrong password.")
+            if (password.length > 0) {
+                alert("Wrong password.")
+            }
         }
     }
 }

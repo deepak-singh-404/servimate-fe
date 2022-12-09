@@ -8,6 +8,7 @@ import moment from "moment";
 import { apiAuth, byPassEmails } from '../../config/constant'
 import Fuse from 'fuse.js';
 import UpdateWalletModal from "../../Components/Customer/UpdateWalletModal";
+import downloadData from "../../utils/xlsx";
 
 const Customer = () => {
   const reduxData = useSelector(store => store)
@@ -86,6 +87,23 @@ const Customer = () => {
     }
   }, [phoneNumber])
 
+  //Download Handler
+  const downloadHandler = () => {
+    let data = _customers.map((d) => {
+      return {
+        "Customer": d.name,
+        "City": d.cityName,
+        "PhoneNumber": d.phoneNumber,
+        "Email": d.email,
+        "Cart": d.cart.length,
+        "WalletAmount": d.walletAmount,
+        "ServicesBooked": d.serviceBooked.length,
+
+      }
+    })
+    downloadData("Customer.xlsx", data)
+  }
+
   //Whatsapp Handler
   const whatsappHandler = (number) => {
     window.location.href = 'http://wa.me/' + number
@@ -99,7 +117,6 @@ const Customer = () => {
 
   return (
     <>
-
       {updateWalletModal && <UpdateWalletModal updateWalletModal={updateWalletModal}
         setUpdateWalletModal={setUpdateWalletModal} customerInfo={customerInfo} />}
       <Container fluid>
@@ -138,6 +155,9 @@ const Customer = () => {
                 ) : null}
               </Form.Control>
             </Form.Group>
+          </Col>
+          <Col md={2} >
+            <Button variant="danger" type="button" onClick={downloadHandler}>Export Data</Button>
           </Col>
           <Col md={2} >
             <Button onClick={refreshHandler}>Refresh</Button>
