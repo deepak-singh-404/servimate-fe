@@ -42,7 +42,7 @@ const AdminLogin = () => {
     return (<Container >
         <Row className="mx-auto my-auto">
             <Col md={5} className="my-auto">
-                <h5 className="text-center">WELCOME TO SERVIMATE</h5>
+                <h5 className="text-center">WELCOME TO SERVIMATE ADMIN PORTAL</h5>
                 <Form onSubmit={formHandler}>
                     <Form.Group >
                         <Form.Label>Phone Number</Form.Label>
