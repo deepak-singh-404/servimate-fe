@@ -26,7 +26,7 @@ const Banner = () => {
         }
     }, [])
 
-    //Initial Data
+    //INITIAL DATA
     useEffect(() => {
         if (banners) {
             _setBanners(banners)
