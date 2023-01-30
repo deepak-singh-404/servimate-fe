@@ -30,6 +30,7 @@ import HomeScreenReview from './Pages/HomeScreen/HomePageReview'
 import RegistrationRequest from './Pages/ServiceProvider/RegistrationRequest'
 import OutOfReachBooking from './Pages/Booking/OutOfReachBooking'
 import ManualJob from './Pages/Booking/ManualJob';
+import UtilityContentManager from './Pages/UtilityContentManager/UtilityContentManager';
 
 //PARTNER
 import PartnerHomeScreen from './Pages/PartnerHomeScreen/Banner'
@@ -85,6 +86,7 @@ function App() {
           <Route exact path="/partner/screen/slider" component={PartnerScreenSlider} />
           <Route exact path="/config/referAndEarn" component={ReferAndEarn} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/utilityContentManger" component={UtilityContentManager} />
         </Switch>
       </Router>
     </div>

@@ -11,6 +11,7 @@ import {
 import { deleteServiceProvider } from '../redux/actions/serviceProvider'
 import { partnerDeleteBanner, partnerDeleteSliderScreen } from '../redux/actions/partnerHomeScreen'
 import Loader from './Loader'
+import { deleteUtilityContent } from '../redux/actions/commonAction'
 
 const DeleteModal = ({ data, deleteModal, setDeleteModal }) => {
     const { loader } = useSelector(store => store.serviceRoot)
@@ -73,6 +74,10 @@ const DeleteModal = ({ data, deleteModal, setDeleteModal }) => {
         }
         if (data.actionType === "partner_delete_slider_screen") {
             dispatch(partnerDeleteSliderScreen(data._id, () => setDeleteModal(false)))
+            return
+        }
+        if (data.actionType === "delete_utility_content") {
+            dispatch(deleteUtilityContent(`contentId=${data._id}`, () => setDeleteModal(false)))
             return
         }
     }

@@ -214,3 +214,92 @@ export const updateCustomerWallet = (_data, cb) => {
         }
     }
 }
+
+//ADD UTILITY CONTENT
+export const addUtilityContent = (params, _data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + "dev/api/v1/addUtilityContent?" + params,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_UTILITY_CONTENT",
+                    payload: data.response,
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("addUtilityContent", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
+//GET ALL UTILITY CONTENT
+export const getAllUtilityContents = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url + "dev/api/v1/getAllUtilityContent"
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_UTILITY_CONTENTS",
+                    payload: data.response,
+                })
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("getAllUtilityContents", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
+
+//DELETE UTILITY CONTENT
+export const deleteUtilityContent = (params, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Delete",
+                url: prod_url + "dev/api/v1/deleteUtilityContent?" + params
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "DELETE_UTILITY_CONTENT",
+                    payload: data.response,
+                })
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("deleteUtilityContent", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+

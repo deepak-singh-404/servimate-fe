@@ -2,7 +2,8 @@ const initialState = {
     abandonedCart: [],
     customers: [],
     loader: false,
-    referAndEarnConfigs: []
+    referAndEarnConfigs: [],
+    utilityContents: []
 }
 
 const commonReducer = (state = initialState, action) => {
@@ -37,7 +38,7 @@ const commonReducer = (state = initialState, action) => {
         case "SET_REFERANDEARN_CONFIG":
             return {
                 ...state,
-                referAndEarnConfigs: [...state.referAndEarnConfigs, action.payload]
+                referAndEarnConfigs: [action.payload, ...state.referAndEarnConfigs]
             }
         case "DELETE_REFERANDEARN_CONFIG":
             return {
@@ -49,8 +50,30 @@ const commonReducer = (state = initialState, action) => {
         case "UPDATE_CUSTOMER_WALLET":
             return {
                 ...state,
-                customers: state.customers.map(d => d._id == action.payload._id ? action.payload : d),
+                customers: state.customers.map(d => d._id == action.payload._id ? action.payload : d)
             };
+        case "SET_UTILITY_CONTENT":
+            return {
+                ...state,
+                utilityContents: [action.payload, ...state.utilityContents]
+            }
+        case "SET_UTILITY_CONTENTS":
+            return {
+                ...state,
+                utilityContents: action.payload
+            }
+        case "UPDATE_UTILITY_CONTENT":
+            return {
+                ...state,
+                utilityContents: state.utilityContents.map(d => d._id == action.payload._id ? action.payload : d)
+            }
+        case "DELETE_UTILITY_CONTENT":
+            return {
+                ...state,
+                utilityContents: state.utilityContents.filter(obj => {
+                    return obj._id !== action.payload._id
+                })
+            }
         default:
             return state
     }
