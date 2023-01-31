@@ -1,6 +1,7 @@
 const prod_url = "https://api.servimate.in/admin/"
 const local_url = "http://localhost:4000/"
 const partnerWalletActionTypes = [{ "Add": "add" }, { "Subtract": "sub" }, { "Reset": "reset" }]
+
 const utilityContentTypes = [
     {
         "title": "Refer and Earn",
@@ -9,8 +10,26 @@ const utilityContentTypes = [
     {
         "title": "Popular Services",
         "value": "POPULAR_SERVICES"
+    },
+    {
+        "title": "Home Screen Banner",
+        "value": "HOMESCREEN_BANNER"
+    },
+    {
+        "title": "Home Screen Banner",
+        "value": "HOMESCREEN_REVIEWS"
+    },
+    {
+        "title": "Home Screen Banner",
+        "value": "HOMESCREEN_TOP_PICKS"
+    },
+    {
+        "title": "Home Screen Banner",
+        "value": "HOMESCREEN_BOTTOM_SLIDERS"
     }
 ]
+
+
 const apiAuth = {
     "customer": "Admin@789"
 }
