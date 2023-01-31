@@ -103,7 +103,7 @@ const Banner = () => {
                                         {_banners.map((b, index) =>
                                             <tr>
                                                 <td className="text-center">{index + 1}</td>
-                                                <img width="20%" height="20%" src={b.picture} />
+                                                <img width="100%" height="10%" src={b.picture} />
                                                 <td >{b.title}</td>
                                                 <td className="text-center"><Button onClick={() => deleteHandler(b)} variant="outline-info">Delete</Button></td>
                                             </tr>

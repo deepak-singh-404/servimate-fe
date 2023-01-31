@@ -9,14 +9,14 @@ const loader = (data) => {
 }
 
 //ADD CITY
-export const addCity = (cityCredentials) => {
+export const addCity = (params, _data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Post",
-                url: prod_url + "api/v1/city",
-                data: cityCredentials
+                url: prod_url + "api/v1/city?" + params,
+                data: _data
             })
             dispatch(loader(false))
             if (data.success) {
@@ -24,14 +24,7 @@ export const addCity = (cityCredentials) => {
                     type: "SET_CITY",
                     payload: data.response
                 })
-                dispatch({
-                    type: "SET_SUCCESS",
-                    payload: true
-                })
-                dispatch({
-                    type: "SET_SUCCESS",
-                    payload: false
-                })
+                cb()
             }
             else {
                 alert(data.message)
@@ -46,13 +39,13 @@ export const addCity = (cityCredentials) => {
 }
 
 //UPDATE CITY
-export const updateCity = (id, _data, cb) => {
+export const updateCity = (params, _data, cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
             const { data } = await axios({
                 method: "Put",
-                url: prod_url + `api/v1/city/${id}`,
+                url: prod_url + "api/v1/city/updateCity?" + params,
                 data: _data
             })
             dispatch(loader(false))

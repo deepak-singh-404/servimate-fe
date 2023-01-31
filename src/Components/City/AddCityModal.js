@@ -9,14 +9,14 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
     const { loader, success } = cityData
     const dispatch = useDispatch()
     const [city, setCity] = useState("")
-    const [iconUrl, setIconUrl] = useState("");
+    const [icon, setIcon] = useState("");
     const [pinCodes, setPincodes] = useState("")
     const [state, setState] = useState("")
 
     const imagehandler = (e) => {
         if (e.target.files && e.target.files[0]) {
             let img = e.target.files[0];
-            setIconUrl(img);
+            setIcon(img);
         }
     };
 
@@ -37,26 +37,20 @@ const AddCityModal = ({ addCityModal, setAddCityModal }) => {
             const zipcodes = pinCodes.split(',').map(function (item) {
                 return parseInt(item, 10);
             });
+
             const formData = new FormData();
-            formData.append("name", name);
-            if (iconUrl !== "") {
-                formData.append("iconUrl", iconUrl);
+            if (icon !== "") {
+                formData.append("icon", icon);
             }
-            formData.append("zipcodes", zipcodes)
-            formData.append("state", stateName)
-            dispatch(addCity(formData))
+            let params = `name=${name}&zipcodes=${JSON.stringify(zipcodes)}&state=${stateName}`
+            dispatch(addCity(params, formData, () => {
+                setAddCityModal(false)
+            }))
         }
         else {
             alert("Fields  should not be empty")
         }
     }
-
-
-    useEffect(() => {
-        if (success) {
-            setAddCityModal(false)
-        }
-    }, [success])
 
     return (
         <>

@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Modal } from 'react-bootstrap'
-import {updateCity} from '../../redux/actions/cityAction'
+import { updateCity } from '../../redux/actions/cityAction'
 import Loader from '../Loader'
 
 const UpdateCityModal = ({ updateCityModal, setUpdateCityModal, previousData }) => {
-    const cityData = useSelector(store=>store.cityRoot)
-    const {loader, success} = cityData
-    const  dispatch = useDispatch()
+    const cityData = useSelector(store => store.cityRoot)
+    const { loader, success } = cityData
+    const dispatch = useDispatch()
     const [city, setCity] = useState(previousData.name)
     const [pinCodes, setPincodes] = useState(previousData.zipcodes.join(", "))
     const [state, setState] = useState(previousData.state)
+    const [icon, setIcon] = useState("");
+
+    const imagehandler = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            let img = e.target.files[0];
+            setIcon(img);
+        }
+    };
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -24,19 +32,26 @@ const UpdateCityModal = ({ updateCityModal, setUpdateCityModal, previousData }) 
                     .join(' ');
             };
             const name = toTitleCase(city);
-            const stateName  =  toTitleCase(state)
+            const stateName = toTitleCase(state)
             //FORMAT PINCODE,     STRINGS => ARRAY OF NUMBERS
             const zipcodes = pinCodes.split(',').map(function (item) {
                 return parseInt(item, 10);
             });
-            dispatch(updateCity(previousData._id, {name, zipcodes, state:stateName}, ()=>{
+
+            const formData = new FormData();
+            if (icon !== "") {
+                formData.append("icon", icon);
+            }
+            let params = `id=${previousData._id}&name=${name}&zipcodes=${JSON.stringify(zipcodes)}&state=${stateName}`
+
+            dispatch(updateCity(params, formData, () => {
                 setUpdateCityModal(false)
                 setCity("")
                 setPincodes("")
                 setState("")
             }))
         }
-        else{
+        else {
             alert("Fields  should not be empty")
         }
     }
@@ -58,18 +73,26 @@ const UpdateCityModal = ({ updateCityModal, setUpdateCityModal, previousData }) 
                             <Form.Label>State</Form.Label>
                             <Form.Control value={state} onChange={(e) => setState(e.target.value)} type="text" placeholder="Enter name of the state" />
                         </Form.Group>
+                        <Form.Group>
+                            <Form.Label>ICON</Form.Label>
+                            <Form.Control
+                                accept=".jpg,.png,.jpeg"
+                                onChange={imagehandler}
+                                type="file"
+                            />
+                        </Form.Group>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Pincodes</Form.Label>
                             <Form.Control onChange={(e) => setPincodes(e.target.value)} value={pinCodes} as="textarea" rows={3} />
                             <Form.Text className="text-muted">
                                 Enter Pincodes in below format
-      <br />
-      201301, 201305, 201306
-    </Form.Text>
+                                <br />
+                                201301, 201305, 201306
+                            </Form.Text>
                         </Form.Group>
                         {loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit
-                </Button>}
+                        </Button>}
                     </Form>
                 </Modal.Body>
             </Modal>

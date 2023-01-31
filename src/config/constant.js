@@ -16,15 +16,15 @@ const utilityContentTypes = [
         "value": "HOMESCREEN_BANNER"
     },
     {
-        "title": "Home Screen Banner",
+        "title": "Home Screen Reviews",
         "value": "HOMESCREEN_REVIEWS"
     },
     {
-        "title": "Home Screen Banner",
+        "title": "Home Screen TopPicks",
         "value": "HOMESCREEN_TOP_PICKS"
     },
     {
-        "title": "Home Screen Banner",
+        "title": "Home Screen BottomSliders",
         "value": "HOMESCREEN_BOTTOM_SLIDERS"
     }
 ]

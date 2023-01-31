@@ -58,8 +58,8 @@ const City = () => {
                                     <thead>
                                         <tr>
                                             <th className="text-center">S.No ({cities.length})</th>
-                                            <th className="text-center">City</th>
                                             <th className="text-center">Icon</th>
+                                            <th className="text-center">City</th>
                                             <th className="text-center">State</th>
                                             <th className="text-center">PinCodes</th>
                                             <th className="text-center">Action</th>
@@ -69,8 +69,8 @@ const City = () => {
                                         {cities.length !== 0 ? cities.map((city, index) =>
                                             <tr>
                                                 <td className="text-center">{index + 1}</td>
+                                                <img width="100%" height="10%" src={city.iconUrl} />
                                                 <td className="text-center">{city.name}</td>
-                                                <td className="text-center"><a href={city.iconUrl} target="_blank">{city.iconUrl && "url"} </a></td>
                                                 <td className="text-center">{city.state}</td>
                                                 <td className="text-center">{city.zipcodes.join(', ')}</td>
                                                 <td className="text-center"><Button onClick={() => {

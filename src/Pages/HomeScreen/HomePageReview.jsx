@@ -71,7 +71,7 @@ const HomePageReview = () => {
                                         {homePageReviews.map((b, index) =>
                                             <tr>
                                                 <td className="text-center">{index + 1}</td>
-                                                <img width="20%" height="20%" src={b.picture} />
+                                                <img width="100%" height="10%" src={b.picture} />
                                                 <td className="text-center">{b.title}</td>
                                                 <td className="text-center"><Button onClick={() => deleteHandler(b)} variant="outline-info">Delete</Button></td>
                                             </tr>
