@@ -1,5 +1,5 @@
 const prod_url = "https://api.servimate.in/admin/"
-const local_url = "http://localhost:4000/"
+const local_url = "http://localhost:3001/"
 const partnerWalletActionTypes = [{ "Add": "add" }, { "Subtract": "sub" }, { "Reset": "reset" }]
 
 const utilityContentTypes = [

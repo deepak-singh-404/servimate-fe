@@ -412,7 +412,6 @@ export const getServices = (id) => {
                 url: prod_url + `api/v1/service/${id}`
             })
             dispatch(loader(false))
-            console.log("============+++DATA===============", data)
             if (data.success) {
                 dispatch(setServices(data.response))
                 dispatch({
@@ -496,5 +495,32 @@ export const getAllServiceSubCategory = () => {
 }
 
 
-
+export const addImageToTheServiceSubCategory = (_param, _data, _cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + "api/v1/serviceCategory/addImage?" + _param,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_SERVICE",
+                    payload: data.response
+                })
+                _cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("addImageToTheServiceSubCategory: ", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
 
