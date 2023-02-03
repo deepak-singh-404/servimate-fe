@@ -84,6 +84,15 @@ const ServiceCategory = () => {
     setDeleteModal(true)
   }
 
+  const imageDeleteHandler = (_data) => {
+    const temp_data = {
+      actionType: "delete_image",
+      data: _data
+    }
+    setData(temp_data)
+    setDeleteModal(true)
+  }
+
   return (
     <>
 
@@ -143,7 +152,19 @@ const ServiceCategory = () => {
                     <td className="text-center"><a href={serviceCategory.iconUrl} target="_blank">{serviceCategory.iconUrl && "url"} </a></td>
                     <td className="text-center">
                       {serviceCategory.banners && serviceCategory.banners.map((d) =>
-                        <img width="100%" height="10%" src={d.image} />
+                        <>
+                          <img width="100%" height="10%" src={d.image} />
+                          <Button variant="outline-danger" onClick={() => imageDeleteHandler({
+                            "url": d.image,
+                            "entityId": serviceCategory._id,
+                            "module": "SERVICE_CATEGORY",
+                            "fieldType": "CHILD_KEY",
+                            "fieldName": "banners",
+                            "subEntityId": d._id
+                          })}>
+                            Delete
+                          </Button>
+                        </>
                       )}
                       <Form.Control
                         accept=".jpg,.png,.jpeg"
@@ -154,7 +175,19 @@ const ServiceCategory = () => {
                     </td>
                     <td className="text-center">
                       {serviceCategory.bottomSliders && serviceCategory.bottomSliders.map((d) =>
-                        <img width="100%" height="10%" src={d.image} />
+                        <>
+                          <img width="100%" height="10%" src={d.image} />
+                          <Button variant="outline-danger" onClick={() => imageDeleteHandler({
+                            "url": d.image,
+                            "entityId": serviceCategory._id,
+                            "module": "SERVICE_CATEGORY",
+                            "fieldType": "CHILD_KEY",
+                            "fieldName": "bottomSliders",
+                            "subEntityId": d._id
+                          })}>
+                            Delete
+                          </Button>
+                        </>
                       )}
                       <Form.Control
                         accept=".jpg,.png,.jpeg"

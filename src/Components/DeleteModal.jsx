@@ -11,7 +11,7 @@ import {
 import { deleteServiceProvider } from '../redux/actions/serviceProvider'
 import { partnerDeleteBanner, partnerDeleteSliderScreen } from '../redux/actions/partnerHomeScreen'
 import Loader from './Loader'
-import { deleteUtilityContent } from '../redux/actions/commonAction'
+import { deleteImage, deleteUtilityContent } from '../redux/actions/commonAction'
 
 const DeleteModal = ({ data, deleteModal, setDeleteModal }) => {
     const { loader } = useSelector(store => store.serviceRoot)
@@ -80,6 +80,14 @@ const DeleteModal = ({ data, deleteModal, setDeleteModal }) => {
             dispatch(deleteUtilityContent(`contentId=${data._id}`, () => setDeleteModal(false)))
             return
         }
+        if (data.actionType === "delete_image") {
+            dispatch(deleteImage(data.data, () => {
+                setDeleteModal(false)
+                window.location.reload()
+            }))
+            return
+        }
+
     }
     return (
         <Modal show={deleteModal} onHide={() => setDeleteModal(false)}>

@@ -303,3 +303,30 @@ export const deleteUtilityContent = (params, cb) => {
     }
 }
 
+
+//DELETE IMAGE 
+export const deleteImage = (_data, cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Put",
+                url: prod_url + "dev/api/v1/deleteImage",
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("deleteImage", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
