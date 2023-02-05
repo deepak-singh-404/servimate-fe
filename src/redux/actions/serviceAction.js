@@ -495,7 +495,7 @@ export const getAllServiceSubCategory = () => {
 }
 
 
-export const addImageToTheServiceSubCategory = (_param, _data, _cb) => {
+export const addImageToTheServiceCategory = (_param, _data, _cb) => {
     return async (dispatch) => {
         try {
             dispatch(loader(true))
@@ -518,9 +518,39 @@ export const addImageToTheServiceSubCategory = (_param, _data, _cb) => {
         }
         catch (err) {
             dispatch(loader(false))
-            console.log("addImageToTheServiceSubCategory: ", err.response.data)
+            console.log("addImageToTheServiceCategory: ", err.response.data)
             alert(err.response.data.message)
         }
     }
 }
 
+
+
+export const addImageToTheServiceSubCategory = (_param, _data, _cb) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + "api/v1/serviceSubCategory/addImage?" + _param,
+                data: _data
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "UPDATE_SERVICE_SUB_CATEGORY",
+                    payload: data.response
+                })
+                _cb()
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("addImageToTheServiceSubCategory: ", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}

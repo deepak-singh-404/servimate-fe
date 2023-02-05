@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
-import { Container, Row, Col, Button, Table } from "react-bootstrap";
+import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from 'react-redux'
-import { getServiceSubCategories, setServiceSubCategories } from "../../redux/actions/serviceAction";
+import { addImageToTheServiceSubCategory, getServiceSubCategories, setServiceSubCategories } from "../../redux/actions/serviceAction";
 import ServiceSubCategoryModal from "../../Components/ServiceSubCategory/AddServiceSubCategoryModal";
 import UpdateServiceSubCategoryModal from "../../Components/ServiceSubCategory/UpdateServiceSubCategoryModal"
 import DeleteModal from '../../Components/DeleteModal'
@@ -15,7 +15,8 @@ const ServiceSubCategory = (props) => {
   const [updateServiceSubCategoryModal, setUpdateServiceSubCategoryModal] = useState(false)
   const [data, setData] = useState("")
   const [deleteModal, setDeleteModal] = useState(false)
-  const [previousData, setPreviousData] = useState({})
+  const [previousData, setPreviousData] = useState({});
+  const [picture, setPicture] = useState("");
 
   useEffect(() => {
     dispatch(getServiceSubCategories(props.match.params.serviceCategoryId))
@@ -24,6 +25,40 @@ const ServiceSubCategory = (props) => {
       dispatch(setServiceSubCategories([]))
     }
   }, [props.match.params.serviceCategoryId])
+
+  const imagehandler = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+      setPicture(img);
+    }
+  };
+
+
+  const upload = (type, serviceSubCategoryId) => {
+    if ((type == "picture") && (picture == "")) {
+      alert("Please select banner.")
+      return
+    }
+    let params = `serviceSubCategoryId=${serviceSubCategoryId}`
+
+    if ((type == "picture") && picture) {
+      const formData = new FormData();
+      formData.append("picture", picture)
+      dispatch(addImageToTheServiceSubCategory(params, formData, () => {
+        window.location.reload();
+      }))
+    }
+
+  }
+
+  const imageDeleteHandler = (_data) => {
+    const temp_data = {
+      actionType: "delete_image",
+      data: _data
+    }
+    setData(temp_data)
+    setDeleteModal(true)
+  }
 
   const deleteHandler = (serviceSubCategory) => {
     const temp_data = {
@@ -85,6 +120,31 @@ const ServiceSubCategory = (props) => {
                         <td className="text-center">{serviceSubCategory.index}</td>
                         <td className="text-center"><Link to={`/serviceSubCategory/${serviceSubCategory.name}/${serviceSubCategory._id}`}>{serviceSubCategory.name}</Link></td>
                         <td className="text-center"><a href={serviceSubCategory.iconUrl} target="_blank">{serviceSubCategory.iconUrl && "url"} </a></td>
+                        <td>
+                          {serviceSubCategory.picture ?
+                            <>
+                              <img width="100%" height="10%" src={serviceSubCategory.picture} />
+                              <Button variant="outline-danger" onClick={() => imageDeleteHandler({
+                                "url": serviceSubCategory.picture,
+                                "entityId": serviceSubCategory._id,
+                                "module": "SERVICE_SUB_CATEGORY",
+                                "fieldType": "PARENT_KEY",
+                                "fieldName": "picture"
+                              })}>
+                                Delete
+                              </Button>
+                            </>
+                            :
+                            <>
+                              <Form.Control
+                                accept=".jpg,.png,.jpeg"
+                                onChange={imagehandler}
+                                type="file"
+                              />
+                              <Button onClick={() => upload("picture", serviceSubCategory._id)} variant="outline-danger">Upload</Button>
+                            </>
+                          }
+                        </td>
                         <td className="text-center"><Button onClick={
                           () => {
                             setUpdateServiceSubCategoryModal(true)

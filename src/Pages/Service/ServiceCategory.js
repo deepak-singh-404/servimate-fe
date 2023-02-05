@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Table, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from 'react-redux'
-import { addImageToTheServiceSubCategory, getServiceCategories, setServiceSubCategories } from "../../redux/actions/serviceAction";
+import { addImageToTheServiceCategory, getServiceCategories, setServiceSubCategories } from "../../redux/actions/serviceAction";
 import ServiceCategoryModal from "../../Components/ServiceCategory/AddServiceCategoryModal";
 import UpdateServiceCategoryModal from '../../Components/ServiceCategory/UpdateServiceCategoryModal'
 import DeleteModal from '../../Components/DeleteModal'
@@ -58,7 +58,7 @@ const ServiceCategory = () => {
     if ((type == "banner") && banner) {
       const formData = new FormData();
       formData.append("banner", banner)
-      dispatch(addImageToTheServiceSubCategory(params, formData, () => {
+      dispatch(addImageToTheServiceCategory(params, formData, () => {
         window.location.reload();
       }))
     }
@@ -66,7 +66,7 @@ const ServiceCategory = () => {
     if ((type == "bottomSlider") && bottomSlider) {
       const formData = new FormData();
       formData.append("bottomSlider", bottomSlider)
-      dispatch(addImageToTheServiceSubCategory(params, formData, () => {
+      dispatch(addImageToTheServiceCategory(params, formData, () => {
         window.location.reload();
       }))
     }
