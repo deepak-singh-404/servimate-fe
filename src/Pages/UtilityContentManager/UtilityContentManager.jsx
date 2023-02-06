@@ -5,6 +5,7 @@ import Loader from "../../Components/Loader";
 import AddUtilityContentModal from "../../Components/UtilityContentManager/AddUtilityContentModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUtilityContents } from "../../redux/actions/commonAction";
+import { utilityContentTypes } from "../../config/constant";
 
 
 const UtilityContentManager = () => {
@@ -14,10 +15,27 @@ const UtilityContentManager = () => {
     const [data, setData] = useState({})
     const [deleteModal, setDeleteModal] = useState(false)
     const [addUtilityContentModal, setAddUtilityContentModal] = useState(false)
+    const [contentType, setContentType] = useState("")
+    const [_utilityContents, _setUtilityContents] = useState([])
+
+    useEffect(() => {
+        dispatch(getAllUtilityContents())
+    }, [])
 
     const clickHandler1 = () => {
         setAddUtilityContentModal(true)
     }
+
+    useEffect(() => {
+        _setUtilityContents(utilityContents)
+    }, [utilityContents])
+
+    useEffect(() => {
+        if (contentType) {
+            const filteredData = utilityContents.filter((d) => d.contentType === contentType)
+            _setUtilityContents(filteredData)
+        }
+    }, [contentType])
 
     const deleteHandler = (d) => {
         const temp_data = {
@@ -28,10 +46,6 @@ const UtilityContentManager = () => {
         setData(temp_data)
         setDeleteModal(true)
     }
-
-    useEffect(() => {
-        dispatch(getAllUtilityContents())
-    }, [])
 
     return (
         <>
@@ -53,21 +67,21 @@ const UtilityContentManager = () => {
                             ADD
                         </Button>
                     </Col>
-                    {/* <Col md={3} >
-                        <Form.Group >
-                            <Form.Label>City</Form.Label>
-                            <Form.Control onChange={(e) => setCity(e.target.value)} as="select">
+                    <Col md={3} >
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>FILTER</Form.Label>
+                            <Form.Control onChange={(e) => setContentType(e.target.value)} as="select">
                                 <option>Select</option>
-                                {cities.length !== 0 ? cities.map(c =>
-                                    <option value={c.name}>{c.name}</option>
-                                ) : null}
+                                {utilityContentTypes.map(d =>
+                                    <option value={d.value}>{d.title}</option>
+                                )}
                             </Form.Control>
                         </Form.Group>
-                    </Col> */}
+                    </Col>
                 </Row>
                 <Row>
                     {loader ? <Loader /> : <>
-                        {utilityContents.length === 0 ? <h5>Not found.</h5> : <>
+                        {_utilityContents.length === 0 ? <h5>Not found.</h5> : <>
                             <Col  >
                                 <Table striped bordered hover>
                                     <thead>
@@ -81,7 +95,7 @@ const UtilityContentManager = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {utilityContents.map((b, index) =>
+                                        {_utilityContents.map((b, index) =>
                                             <tr>
                                                 <td className="text-center">{index + 1}</td>
                                                 <img width="100%" height="10%" src={b.picture} />
