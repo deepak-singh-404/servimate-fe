@@ -14,7 +14,7 @@ const bookingHistoryMapper = (bookings) => {
             "Partner": b.serviceProviderName,
             "Coupon Code": b.coupon?.name,
             "Coupon Discount": "",
-            "Address": b.customerId?.lastServiceAddress?.houseNo + b.customerId?.lastServiceAddress?.landmark,
+            "Address": JSON.stringify(b.customerId?.lastServiceAddress?.houseNo) + b.customerId?.lastServiceAddress?.landmark,
         }
     })
     return mappedBookings
