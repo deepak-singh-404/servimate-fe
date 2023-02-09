@@ -7,6 +7,7 @@ import Loader from '../../Components/Loader'
 import * as xlsx from "xlsx";
 import Fuse from 'fuse.js';
 import { apiAuth } from "../../config/constant";
+import { bookingHistoryMapper } from "../../mapper/bookingMapper";
 
 const BookingHistory = () => {
   const { loader, bookingHistory } = useSelector((store) => store.bookingRoot);
@@ -127,7 +128,8 @@ const BookingHistory = () => {
     if (_bookingHistory.length > 0) {
       let password = prompt("Enter Password:")
       if (password && password == apiAuth["customer"]) {
-        const worksheet = xlsx.utils.json_to_sheet(_bookingHistory);
+        let mappedData = bookingHistoryMapper(_bookingHistory)
+        const worksheet = xlsx.utils.json_to_sheet(mappedData);
         const workbook = xlsx.utils.book_new();
         xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
         xlsx.writeFile(workbook, "Bookings.xlsx");
