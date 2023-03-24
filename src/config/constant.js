@@ -26,6 +26,10 @@ const utilityContentTypes = [
     {
         "title": "Home Screen BottomSliders",
         "value": "HOMESCREEN_BOTTOM_SLIDERS"
+    },
+    {
+        "title": "Home Screen to Services",
+        "value": "HOME_SCREEN_TO_SERVICES"
     }
 ]
 
