@@ -52,10 +52,13 @@ const AddUtilityContentModal = ({
       return;
     }
     let _redirectionUrl = "";
+    let metaData = {};
     if (city) {
       const _city = cityRoot.cities.find((c) => c._id == city);
       if (_city) {
         _redirectionUrl = `cityId=${_city._id}/cityName=${_city.name}`;
+        metaData["cityId"] = _city._id;
+        metaData["cityName"] = _city.name;
       }
     }
     if (serviceCategory) {
@@ -66,6 +69,8 @@ const AddUtilityContentModal = ({
         _redirectionUrl =
           _redirectionUrl +
           `/serviceCategoryId=${_serviceCategory._id}/serviceCategoryName=${_serviceCategory.name}`;
+        metaData["serviceCategoryId"] = _serviceCategory._id;
+        metaData["serviceCategoryName"] = _serviceCategory.name;
       }
     }
     if (serviceSubCategory) {
@@ -76,13 +81,14 @@ const AddUtilityContentModal = ({
         _redirectionUrl =
           _redirectionUrl +
           `/serviceSubCategoryId=${_serviceSubCategory._id}/serviceSubCategoryName=${_serviceSubCategory.name}`;
+          metaData["serviceSubCategoryId"] = _serviceSubCategory._id};
+          metaData["serviceSubCategoryName"] = _serviceSubCategory.name;
       }
-    }
     const formData = new FormData();
     formData.append("picture", picture);
     let params = `contentType=${contentType}&title=${title}&index=${index}&redirectionUrl=${
-      _redirectionUrl ? JSON.stringify(_redirectionUrl) : redirectionUrl
-    }`;
+      _redirectionUrl ? JSON.stringify(_redirectionUrl) : redirectionUrl}&metaData=${JSON.stringify(metaData)}
+    `;
     dispatch(
       addUtilityContent(params, formData, () => {
         setAddUtilityContentModal(false);
