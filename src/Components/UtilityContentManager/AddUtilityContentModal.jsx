@@ -71,6 +71,8 @@ const AddUtilityContentModal = ({
           `/serviceCategoryId=${_serviceCategory._id}/serviceCategoryName=${_serviceCategory.name}`;
         metaData["serviceCategoryId"] = _serviceCategory._id;
         metaData["serviceCategoryName"] = _serviceCategory.name;
+        metaData["minAmountForCheckout"] =
+          _serviceCategory["minAmountForCheckout"];
       }
     }
     if (serviceSubCategory) {
@@ -81,13 +83,15 @@ const AddUtilityContentModal = ({
         _redirectionUrl =
           _redirectionUrl +
           `/serviceSubCategoryId=${_serviceSubCategory._id}/serviceSubCategoryName=${_serviceSubCategory.name}`;
-          metaData["serviceSubCategoryId"] = _serviceSubCategory._id};
-          metaData["serviceSubCategoryName"] = _serviceSubCategory.name;
+        metaData["serviceSubCategoryId"] = _serviceSubCategory._id;
+        metaData["serviceSubCategoryName"] = _serviceSubCategory.name;
       }
+    }
     const formData = new FormData();
     formData.append("picture", picture);
     let params = `contentType=${contentType}&title=${title}&index=${index}&redirectionUrl=${
-      _redirectionUrl ? JSON.stringify(_redirectionUrl) : redirectionUrl}&metaData=${JSON.stringify(metaData)}
+      _redirectionUrl ? JSON.stringify(_redirectionUrl) : redirectionUrl
+    }&metaData=${JSON.stringify(metaData)}
     `;
     dispatch(
       addUtilityContent(params, formData, () => {
