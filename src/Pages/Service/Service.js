@@ -96,6 +96,7 @@ const Service = (props) => {
                                                 <th className="text-center">Icon Url</th>
                                                 <th className="text-center">Image Url</th>
                                                 <th className="text-center">Includes</th>
+                                                <th className="text-center">Description</th>
                                                 <th className="text-center">Update</th>
                                                 <th className="text-center">Delete</th>
                                             </tr>
@@ -123,6 +124,7 @@ const Service = (props) => {
                                                     <td className="text-center"><a href={service.iconUrl} target="_blank">{service.iconUrl && "url"} </a></td>
                                                     <td className="text-center"><a href={service.imgUrl} target="_blank">{service.imgUrl && "url"} </a></td>
                                                     <td className="text-center">{service.includes.join(', ')}</td>
+                                                    <td className="text-center">{service.description}</td>
                                                     <td className="text-center"><Button onClick={() => {
                                                         setUpdateModal(true)
                                                         setPreviousData(service)

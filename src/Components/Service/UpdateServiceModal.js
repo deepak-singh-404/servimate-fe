@@ -18,6 +18,7 @@ const UpdateServiceModal = ({
   const [includes, setIncludes] = useState(previousData.includes.join(", "));
   const [iconUrl, setIconUrl] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [description, setDescription] = useState(previousData?.description || "")
 
   const dispatch = useDispatch();
   const serviceRoot = useSelector((store) => store.serviceRoot);
@@ -68,6 +69,7 @@ const UpdateServiceModal = ({
     formData.append("iconUrl", iconUrl)
     formData.append("imgUrl", imgUrl)
     formData.append("index", Number(index))
+    formData.append("description", description)
     dispatch(updateService(previousData._id, formData, () => {
       setUpdateServiceModal(false)
       setServiceName("")
@@ -86,7 +88,7 @@ const UpdateServiceModal = ({
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formHandler}>
-          <Form.Group>
+            <Form.Group>
               <Form.Label>Index</Form.Label>
               <Form.Control
                 value={index}
@@ -144,7 +146,11 @@ const UpdateServiceModal = ({
             </Form.Group>
             <Form.Group>
               <Form.Label>Includes</Form.Label>
-              <Form.Control value={includes} onChange={(e) => setIncludes(e.target.value)} as="textarea" rows={3} />
+              <Form.Control value={includes} onChange={(e) => setIncludes(e.target.value)} as="textarea" rows={5} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control value={description} onChange={(e) => setDescription(e.target.value)} as="textarea" rows={5} />
             </Form.Group>
             {loader ? (
               <Loader />

@@ -14,6 +14,7 @@ const AddServiceModal = ({
   const [serviceName, setServiceName] = useState("");
   const [price, setPrice] = useState([]);
   const [includes, setIncludes] = useState("");
+  const [description, setDescription] = useState("");
   const [iconUrl, setIconUrl] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [index, setIndex] = useState("")
@@ -36,7 +37,7 @@ const AddServiceModal = ({
     }
   }
 
-  const handleInputChange = (city,name, type, value) => {
+  const handleInputChange = (city, name, type, value) => {
     const newPrice = [...price]
     const index = newPrice.findIndex(o => o.city === city)
     if (index === -1) {
@@ -60,116 +61,122 @@ const AddServiceModal = ({
     setPrice(newPrice)
   }
 
-useEffect(() => {
-  const service_category = localStorage.getItem("service-category")
-  if (service_category) {
-    dispatch(getServiceCategory(service_category))
-  }
-}, [])
+  useEffect(() => {
+    const service_category = localStorage.getItem("service-category")
+    if (service_category) {
+      dispatch(getServiceCategory(service_category))
+    }
+  }, [])
 
-const formHandler = (e) => {
-  e.preventDefault();
-  const formData = new FormData();
-  formData.append("serviceSubCategory",serviceSubCategory)
-  formData.append("serviceName",serviceName)
-  formData.append("price", JSON.stringify(price))
-  formData.append("includes",  JSON.stringify(includes.split(", ")))
-  formData.append("iconUrl", iconUrl)
-  formData.append("imgUrl", imgUrl)
-  formData.append("index", Number(index))
-  dispatch(addService(formData));
-  setServiceName("")
-  setPrice([])
-  setIncludes("")
-};
+  const formHandler = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("serviceSubCategory", serviceSubCategory)
+    formData.append("serviceName", serviceName)
+    formData.append("price", JSON.stringify(price))
+    formData.append("includes", JSON.stringify(includes.split(", ")))
+    formData.append("iconUrl", iconUrl)
+    formData.append("imgUrl", imgUrl)
+    formData.append("description", description)
+    formData.append("index", Number(index))
+    dispatch(addService(formData));
+    setServiceName("")
+    setPrice([])
+    setIncludes("")
+    setDescription("")
+  };
 
-useEffect(() => {
-  if (success) {
-    setAddServiceModal(false);
-  }
-}, [success]);
+  useEffect(() => {
+    if (success) {
+      setAddServiceModal(false);
+    }
+  }, [success]);
 
-return (
-  <>
-  {loader ? <Loader /> : null}
-    <Modal show={addServiceModal} onHide={() => setAddServiceModal(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>SERVICE</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={formHandler}>
-        <Form.Group>
-            <Form.Label>Index</Form.Label>
-            <Form.Control
-              value={index}
-              onChange={(e) => setIndex(e.target.value)}
-              type="text"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Service Name</Form.Label>
-            <Form.Control
-              value={serviceName}
-              onChange={(e) => setServiceName(e.target.value)}
-              type="text"
-            />
-          </Form.Group>
-          <Form.Group>
-            {singleServiceCategory.cities && <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>City</th>
-                  <th>Actual Price</th>
-                  <th>Discounted Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {singleServiceCategory.cities.map(o =>
-                  <tr key={o._id}>
-                    <td>{o.cityName}</td>
-                    <td><div className="form-check">
-                      <input className="form-control" required type="text" onChange={(e) => handleInputChange(o.cityId, o.cityName, "actualPrice", e.target.value)} id="defaultCheck1" />
-                    </div></td>
-                    <td><div className="form-check">
-                      <input className="form-control" required type="text" onChange={(e) => handleInputChange(o.cityId, o.cityName, "discountedPrice", e.target.value)} id="defaultCheck1" />
-                    </div></td>
+  return (
+    <>
+      {loader ? <Loader /> : null}
+      <Modal show={addServiceModal} onHide={() => setAddServiceModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>SERVICE</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={formHandler}>
+            <Form.Group>
+              <Form.Label>Index</Form.Label>
+              <Form.Control
+                value={index}
+                onChange={(e) => setIndex(e.target.value)}
+                type="text"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Service Name</Form.Label>
+              <Form.Control
+                value={serviceName}
+                onChange={(e) => setServiceName(e.target.value)}
+                type="text"
+              />
+            </Form.Group>
+            <Form.Group>
+              {singleServiceCategory.cities && <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>City</th>
+                    <th>Actual Price</th>
+                    <th>Discounted Price</th>
                   </tr>
-                )}
-              </tbody>
-            </Table>}
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Icon Picture</Form.Label>
-            <Form.Control
-              accept=".jpg,.png,.jpeg"
-              onChange={iconUrlHandler}
-              type="file"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Image</Form.Label>
-            <Form.Control
-              accept=".jpg,.png,.jpeg"
-              onChange={imgUrlHandler}
-              type="file"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Includes</Form.Label>
-            <Form.Control value={includes} onChange={(e) => setIncludes(e.target.value)} as="textarea" rows={3} />
-          </Form.Group>
-          {loader ? (
-            <Loader />
-          ) : (
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          )}
-        </Form>
-      </Modal.Body>
-    </Modal>
-  </>
-);
+                </thead>
+                <tbody>
+                  {singleServiceCategory.cities.map(o =>
+                    <tr key={o._id}>
+                      <td>{o.cityName}</td>
+                      <td><div className="form-check">
+                        <input className="form-control" required type="text" onChange={(e) => handleInputChange(o.cityId, o.cityName, "actualPrice", e.target.value)} id="defaultCheck1" />
+                      </div></td>
+                      <td><div className="form-check">
+                        <input className="form-control" required type="text" onChange={(e) => handleInputChange(o.cityId, o.cityName, "discountedPrice", e.target.value)} id="defaultCheck1" />
+                      </div></td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>}
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Icon Picture</Form.Label>
+              <Form.Control
+                accept=".jpg,.png,.jpeg"
+                onChange={iconUrlHandler}
+                type="file"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                accept=".jpg,.png,.jpeg"
+                onChange={imgUrlHandler}
+                type="file"
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Includes</Form.Label>
+              <Form.Control value={includes} onChange={(e) => setIncludes(e.target.value)} as="textarea" rows={5} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Description</Form.Label>
+              <Form.Control value={description} onChange={(e) => setDescription(e.target.value)} as="textarea" rows={5} />
+            </Form.Group>
+            {loader ? (
+              <Loader />
+            ) : (
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            )}
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </>
+  );
 };
 
 export default AddServiceModal;
