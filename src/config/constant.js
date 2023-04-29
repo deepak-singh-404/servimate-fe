@@ -1,5 +1,5 @@
 const prod_url = "https://api.servimate.in/admin/"
-const local_url = "http://localhost:3001/"
+// const prod_url = "http://localhost:3001/"
 const partnerWalletActionTypes = [{ "Add": "add" }, { "Subtract": "sub" }, { "Reset": "reset" }]
 
 const utilityContentTypes = [
@@ -42,7 +42,7 @@ const byPassEmails = ["web.dev.deepaksingh@gmail.com"]
 
 module.exports = {
     prod_url,
-    local_url,
+    local_url:"",
     partnerWalletActionTypes,
     apiAuth,
     byPassEmails,

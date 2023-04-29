@@ -10,6 +10,7 @@ import moment from 'moment'
 
 const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
     const { voucherRoot, serviceRoot, cityRoot } = useSelector(store => store)
+    const [isVisibleToAll, setIsVisibleToAll] = useState(true)
     const [voucherType, setVoucherType] = useState(0)
     const [couponCode, setCouponCode] = useState("")
     const [discount, setDiscount] = useState("")
@@ -21,14 +22,17 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
     const [minPrice, setMinPrice] = useState("")
     const [serviceSubCategory, setServiceSubCategory] = useState([]);
     const [city, setCity] = useState("")
+    const [description, setDescription] = useState("")
 
     const dispatch = useDispatch()
-
     useEffect(() => {
         dispatch(getAllServiceSubCategory())
         dispatch(getCities())
     }, [])
 
+    const handleSetVisibleToAll = () => {
+        setIsVisibleToAll(!isVisibleToAll)
+    }
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -48,7 +52,9 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
             totalNoUses,
             limitToOneUser,
             minPrice,
-            city
+            city,
+            isVisibleToAll: isVisibleToAll,
+            description
         }
         dispatch(addVoucher(data, () => {
             setAddVoucherModal(false)
@@ -127,6 +133,20 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
                         <Form.Group>
                             <Form.Label>Limit To One Use Per Customer</Form.Label>
                             <Form.Control value={limitToOneUser} onChange={(e) => setLimitToOneUser(e.target.value)} type="text" />
+                        </Form.Group>
+
+                        <Form>
+                            <Form.Check
+                                type="checkbox"
+                                label="Visible To All"
+                                checked={isVisibleToAll}
+                                onChange={handleSetVisibleToAll}
+                            />
+                        </Form>
+
+                        <Form.Group>
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control value={description} onChange={(e) => setDescription(e.target.value)} type="text" />
                         </Form.Group>
 
                         <Form.Group>

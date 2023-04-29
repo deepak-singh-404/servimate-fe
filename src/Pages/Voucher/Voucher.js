@@ -97,6 +97,8 @@ const Voucher = () => {
                                             <th className="text-center">Valid Upto (YYYY-MM-DD)</th>
                                             <th className="text-center">Redeem</th>
                                             <th className="text-center">Action</th>
+                                            <th className="text-center">Visible to All</th>
+                                            <th className="text-center">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,7 +127,10 @@ const Voucher = () => {
                                                     setPreviousData(v)
                                                     setUpdateVoucherModal(true)
                                                 }} variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(v)} variant="outline-info">DELETE</Button></td>
+                                                <td className="text-center">{v.isVisibleToAll ? "Yes" : "No"}</td>
+                                                <td className="text-center">{v.description}</td>
                                             </tr>
+
                                         ) : null}
                                     </tbody>
                                 </Table>
