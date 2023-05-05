@@ -32,6 +32,7 @@ const UpdateVoucherModal = ({ updateVoucherModal, setUpdateVoucherModal, previou
     const [limitToOneUser, setLimitToOneUser] = useState(previousData.limitToOneUser ? previousData.limitToOneUser : "")
     const [minPrice, setMinPrice] = useState(previousData.minPrice ? previousData.minPrice : "")
     const [serviceSubCategory, setServiceSubCategory] = useState(previousData.applyTo ? previousData.applyTo : []);
+    const [title, setTitle] = useState(previousData.title ? previousData.title : "")
 
     useEffect(() => {
         dispatch(getAllServiceSubCategory())
@@ -55,7 +56,8 @@ const UpdateVoucherModal = ({ updateVoucherModal, setUpdateVoucherModal, previou
                 validUpto,
                 totalNoUses,
                 limitToOneUser,
-                minPrice
+                minPrice,
+                title
             }
             dispatch(updateVoucher(previousData._id, data, () => {
                 setUpdateVoucherModal(false)
@@ -145,6 +147,12 @@ const UpdateVoucherModal = ({ updateVoucherModal, setUpdateVoucherModal, previou
                             <Form.Label>Min Price</Form.Label>
                             <Form.Control value={minPrice} onChange={(e) => setMinPrice(e.target.value)} type="text" />
                         </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control required value={title} onChange={(e) => setTitle(e.target.value)} type="text" />
+                        </Form.Group>
+
 
                         {voucherRoot.loader ? <Loader /> : <Button variant="primary" type="submit">
                             Submit

@@ -98,6 +98,7 @@ const Voucher = () => {
                                             <th className="text-center">Redeem</th>
                                             <th className="text-center">Action</th>
                                             <th className="text-center">Visible to All</th>
+                                            <th className="text-center">Title</th>
                                             <th className="text-center">Description</th>
                                         </tr>
                                     </thead>
@@ -128,6 +129,7 @@ const Voucher = () => {
                                                     setUpdateVoucherModal(true)
                                                 }} variant="outline-info">UPDATE </Button> {" "} <Button onClick={() => deleteHandler(v)} variant="outline-info">DELETE</Button></td>
                                                 <td className="text-center">{v.isVisibleToAll ? "Yes" : "No"}</td>
+                                                <td className="text-center">{v.title}</td>
                                                 <td className="text-center">{v.description}</td>
                                             </tr>
 

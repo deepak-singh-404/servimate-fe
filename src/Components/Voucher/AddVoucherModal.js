@@ -23,6 +23,7 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
     const [serviceSubCategory, setServiceSubCategory] = useState([]);
     const [city, setCity] = useState("")
     const [description, setDescription] = useState("")
+    const [title, setTitle] = useState("")
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -54,7 +55,8 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
             minPrice,
             city,
             isVisibleToAll: isVisibleToAll,
-            description
+            description,
+            title
         }
         dispatch(addVoucher(data, () => {
             setAddVoucherModal(false)
@@ -143,6 +145,11 @@ const AddVoucherModal = ({ addVoucherModal, setAddVoucherModal }) => {
                                 onChange={handleSetVisibleToAll}
                             />
                         </Form>
+
+                        <Form.Group>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control value={title} onChange={(e) => setTitle(e.target.value)} type="text" />
+                        </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Description</Form.Label>
