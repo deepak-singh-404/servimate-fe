@@ -66,7 +66,6 @@ export const getCustomers = () => {
     }
 }
 
-
 //REVIEW ADMIN ACTION
 export const reviewAdminAction = (_data, index) => {
     return async (dispatch) => {
@@ -154,7 +153,6 @@ export const addReferAndEarnConfig = (_data, cb) => {
         }
     }
 }
-
 
 //DELETE REFER AND EARN CONFIG
 export const deleteReferAndEarnConfig = (id) => {
@@ -273,7 +271,6 @@ export const getAllUtilityContents = () => {
     }
 }
 
-
 //DELETE UTILITY CONTENT
 export const deleteUtilityContent = (params, cb) => {
     return async (dispatch) => {
@@ -303,7 +300,6 @@ export const deleteUtilityContent = (params, cb) => {
     }
 }
 
-
 //DELETE IMAGE 
 export const deleteImage = (_data, cb) => {
     return async (dispatch) => {
@@ -325,6 +321,34 @@ export const deleteImage = (_data, cb) => {
         catch (err) {
             dispatch(loader(false))
             console.log("deleteImage", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
+
+//GET CUSTOMER QUERIES
+export const getCustomerQueries = () => {
+    return async (dispatch) => {
+        try {
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Get",
+                url: prod_url + "dev/api/v1/getAllQuery"
+            })
+            dispatch(loader(false))
+            if (data.success) {
+                dispatch({
+                    type: "SET_CUSTOMER_QUERIES",
+                    payload: data.response,
+                })
+            }
+            else {
+                alert(data.message)
+            }
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("getCustomerQueries", err.response.data)
             alert(err.response.data.message)
         }
     }

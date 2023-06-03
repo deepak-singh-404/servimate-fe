@@ -39,6 +39,7 @@ import PartnerScreenSlider from './Pages/PartnerHomeScreen/ScreenSlider'
 //DASHBOARD
 import Dashboard from './Pages/Dashboard/Dashboard';
 import ReferAndEarn from './Pages/ReferAndEarn/ReferAndEarn';
+import CustomerQuery from './Pages/Query/CustomerQuery';
 
 if (window.localStorage.servimateToken) {
   setAuthToken(localStorage.servimateToken);
@@ -76,8 +77,11 @@ function App() {
           <Route exact path="/booking/manual" component={ManualJob} />
 
           <Route exact path='/cancellationRequests' component={CancellationRequest} />
+
           <Route exact path="/abandonedCart" component={AbandonedCart} />
           <Route exact path="/customer" component={Customer} />
+          <Route exact path="/customer/query" component={CustomerQuery} />
+
           <Route exact path="/homeScreen/banner" component={Banner} />
           <Route exact path="/homeScreen/bottomSlider" component={BottomSlider} />
           <Route exact path="/homeScreen/topPick" component={TopPick} />

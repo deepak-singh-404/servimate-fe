@@ -3,7 +3,8 @@ const initialState = {
     customers: [],
     loader: false,
     referAndEarnConfigs: [],
-    utilityContents: []
+    utilityContents: [],
+    customerQueries: []
 }
 
 const commonReducer = (state = initialState, action) => {
@@ -73,6 +74,11 @@ const commonReducer = (state = initialState, action) => {
                 utilityContents: state.utilityContents.filter(obj => {
                     return obj._id !== action.payload._id
                 })
+            }
+        case "SET_CUSTOMER_QUERIES":
+            return {
+                ...state,
+                customerQueries: action.payload
             }
         default:
             return state

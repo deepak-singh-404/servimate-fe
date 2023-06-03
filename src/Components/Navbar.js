@@ -53,15 +53,11 @@ const AdminNavbar = () => {
                             <NavDropdown.Item><Link to="/partner/screen/slider">SLIDER SCREEN</Link></NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="CUSTOMER" id="basic-nav-dropdown">
-                            <NavDropdown.Item><Link type='' to="/customer"><Button variant='info' type="button">
-                                CUSTOMERS
-                            </Button></Link></NavDropdown.Item>
+                            <NavDropdown.Item><Link type='' to="/customer">CUSTOMERS</Link></NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item><Link to="/abandonedCart">
-                                <Button type="button" variant='info'>
-                                    ABANDONED CART
-                                </Button>
-                            </Link></NavDropdown.Item>
+                            <NavDropdown.Item><Link to="/abandonedCart">ABANDONED CART</Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item><Link to="/customer/query">QUERIES</Link></NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="BOOKING" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/booking/manual">ASSIGN JOB MANUALLY</Link></NavDropdown.Item>

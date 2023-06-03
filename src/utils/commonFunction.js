@@ -37,4 +37,15 @@ const timeStampHelper = (_timestamp) => {
 
 }
 
-module.exports = { timeStampHelper }
+const extractDateAndTime = (timestamp) => {
+    const dateObj = new Date(timestamp);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes();
+    const seconds = dateObj.getSeconds();
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+module.exports = { timeStampHelper, extractDateAndTime }
