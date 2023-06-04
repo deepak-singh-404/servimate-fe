@@ -58,6 +58,8 @@ const AdminNavbar = () => {
                             <NavDropdown.Item><Link to="/abandonedCart">ABANDONED CART</Link></NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item><Link to="/customer/query">QUERIES</Link></NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item><Link to="/customer/notification">SEND NOTIFICATION</Link></NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="BOOKING" id="basic-nav-dropdown">
                             <NavDropdown.Item><Link to="/booking/manual">ASSIGN JOB MANUALLY</Link></NavDropdown.Item>

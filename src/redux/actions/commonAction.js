@@ -354,3 +354,30 @@ export const getCustomerQueries = () => {
     }
 }
 
+//SEND NOTIFICATON ON APP
+export const sendNotificationOnApp = (notificationType, _data, _cb) => {
+    return async (dispatch) => {
+        try {
+            let endPoint = ""
+            if (notificationType === "INDIVIDUAL") {
+                endPoint = "dev/api/v1/sendNotificationToCustomer"
+            }
+            if (notificationType === "BASED_ON_CITY") {
+                endPoint = "dev/api/v1/sendNotificationToCustomerBasedOnCity"
+            }
+            dispatch(loader(true))
+            const { data } = await axios({
+                method: "Post",
+                url: prod_url + endPoint,
+                data: _data
+            })
+            dispatch(loader(false))
+            _cb()
+        }
+        catch (err) {
+            dispatch(loader(false))
+            console.log("sendNotificationOnApp", err.response.data)
+            alert(err.response.data.message)
+        }
+    }
+}
